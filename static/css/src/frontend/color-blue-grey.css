@@ -1,0 +1,14 @@
+.navbar-inverse,
+#footer{
+	background: #607D8B;
+}
+
+
+.panel-default .panel-heading,
+.archive-group .media-heading{
+	color: #607D8B;
+}
+.archive-group a:hover .media-heading,
+.archive-group a:active .media-heading{
+	color: #795548;
+}

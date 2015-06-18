@@ -1,0 +1,52 @@
+<?php
+if(post_password_required()) 
+	return;
+
+global $wp_query;
+
+
+$have_comments = have_comments();
+$comments_open = comments_open();
+?>
+
+<div id="comments" class="comment-wrapper panel panel-default <?= $have_comments ? null : 'none';?>">
+	<div class="panel-heading">
+		<h3 class="have-comments-title panel-title">
+			<span id="comment-number-<?= $post->ID;?>" class="badge">-</span> 
+			<?= ___('Comments');?>
+
+			<a href="#respond" id="goto-comment" class="btn btn-success btn-xs">
+				<?= ___('Respond');?> 
+				<i class="fa fa-pencil-square-o"></i> 
+				
+			</a>
+		</h3>
+	</div>
+
+	<div class="panel-body">
+		<?php
+		/** 
+		 * if comment open
+		 */
+		if($comments_open){
+			?>			
+			<ul id="comment-list-<?= $post->ID;?>" class="comment-list">
+				<li class="comment media comment-loading">
+					<div class="page-tip"><?= status_tip('loading',___('Loading, please wait...'));?></div>
+				</li>
+			</ul>
+			<?php
+		}
+		?>
+	</div><!-- /.panel-body -->
+	
+	<?php 
+	if($have_comments && $comments_open && theme_features::get_comment_pages_count($wp_query->comments) > 1){ 
+		?>
+		<div class="panel-footer">
+			<div id="comment-pagination-container"></div>
+		</div>
+	<?php } ?>
+</div><!-- /.comment-wrapper -->
+
+<?php theme_functions::theme_respond();?>
