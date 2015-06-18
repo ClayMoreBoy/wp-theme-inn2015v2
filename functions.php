@@ -286,27 +286,24 @@ class theme_functions{
 	 */
 	public static function archive_img_content(array $args = []){
 		$defaults = array(
-			'classes' => [],
+			'classes' => 'col-xs-6',
 			'lazyload' => true,
 		);
 		$args = array_merge($defaults,$args);
 
 		global $post;
-		$args['classes'][] = 'post-list post-img-list';
 		
 		$post_title = esc_html(get_the_title());
 
 		$excerpt = get_the_excerpt();
 		
-		if(!empty($excerpt))
-			$excerpt = esc_html($excerpt);
-			
+		$args['classes'] .= ' list-group-item-img';
 		$thumbnail_real_src = esc_url(theme_functions::get_thumbnail_src($post->ID));
 
 		$thumbnail_placeholder = esc_url(theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder));
 		?>
-		<li class="<?= implode(' ',$args['classes']);?>">
-			<a class="post-list-bg" href="<?= get_permalink();?>" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
+		<div class="<?= $args['classes'];?>">
+			<a href="<?= get_permalink();?>" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
 				<div class="thumbnail-container">
 					<img class="placeholder" alt="Placeholder" src="<?= $thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					<?php
@@ -315,15 +312,15 @@ class theme_functions{
 					 */
 					if($args['lazyload']){
 						?>
-						<img class="post-list-img" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
+						<img class="post-thumbnail" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php }else{ ?>
-						<img class="post-list-img" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
+						<img class="post-thumbnail" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php } ?>
 				</div>
-				<h3 class="post-list-title"><?= $post_title;?></h3>
+				<h3><?= $post_title;?></h3>
 					
 			</a>
-		</li>
+		</div>
 		<?php
 	}
 	/**
@@ -412,34 +409,24 @@ class theme_functions{
 		return $output;
 	}
 	public static function archive_tx_content($args = []){
+
+		$defaults = [
+			'rank_num' => false
+		];
+		$args = array_merge( $defaults, $args );
+		
 		global $post;
-		$defaults = array(
-			'classes'			=> [],
-			'meta_type'			=> 'views',
-		);
-		$args = array_merge($defaults,$args);
 		
-		$post_title = esc_html(get_the_title());
-		/** 
-		 * classes
-		 */
-		$args['classes'][] = 'post-list post-tx-list';
-		$args['classes'] = implode(' ',$args['classes']);
-		
-		$meta_type = self::get_meta_type($args['meta_type']);
-		
+		$post_title = get_the_title();
+
+		$post_title = !empty($post_title) ? esc_html($post_title) : esc_html(get_the_excerpt());
 		?>
-		<li class="<?= $args['classes'];?>">
-			<a href="<?= esc_url(get_permalink());?>" title="<?= $post_title;?>">
-				<?php
-				if(empty($meta_type)){
-					echo $post_title;
-				}else{
-					?>
-					<span class="post-list-meta" title="<?= $meta_type['tx'];?>">
-						<span class="icon-<?= $meta_type['icon'];?>"></span><span class="after-icon"><?= $meta_type['num'];?></span>
-					</span>
-					<span class="tx"><?= $post_title;?></span>
+		<li class="list-group-item">
+			<a href="<?= the_permalink();?>" title="<?= $post_title;?>">
+				<?= $post_title;?>
+				
+				<?php if( $args['rank_num'] !== 0){ ?>
+					<span class="num"><?= $args['rank_num'];?></span>
 				<?php } ?>
 			</a>
 		</li>
@@ -452,61 +439,7 @@ class theme_functions{
 		self::archive_tx_content($args);
 	}
 	public static function widget_rank_img_content($args = []){
-		global $post;
-		
-		$defaults = array(
-			'classes' => '',
-			'lazyload' => true,
-			'excerpt' => false,
-		);
-		$args = array_merge($defaults,$args);
-
-		$post_title = esc_html(get_the_title());
-
-		$excerpt = get_the_excerpt();
-		if(!empty($excerpt))
-			$excerpt = esc_html($excerpt);
-
-		$thumbnail_real_src = esc_url(theme_functions::get_thumbnail_src($post->ID));
-
-		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
-		?>
-		<li class="list-group-item <?= $args['classes'];?>">
-			<a class="post-list-bg media" href="<?= get_permalink();?>" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
-				<div class="media-left">
-					<img src="<?= $thumbnail_placeholder;?>" alt="<?= $post_title;?>" class="media-object placeholder">
-					<img class="post-list-img" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>"/>
-				</div>
-				<div class="media-body">
-					<h4 class="media-heading"><?= $post_title;?></h4>
-					<?php
-					/**
-					 * output excerpt
-					 */
-					if($args['excerpt'] === true){
-						echo $excerpt;
-					}
-					?>
-					<div class="extra">
-						<div class="metas row">
-							
-							<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
-								<div class="view meta col-xs-6">
-									<i class="fa fa-play-circle"></i>
-									<?= theme_post_views::get_views();?>
-								</div>
-							<?php } ?>
-
-							<div class="comments meta col-xs-6">
-								<i class="fa fa-comment"></i>
-								<?= (int)$post->comment_count;?>
-							</div>
-						</div><!-- /.metas -->
-					</div>					
-				</div>
-			</a>
-		</li>
-		<?php
+		self::archive_img_content();
 	}
 	public static function page_content($args = []){
 		global $post;

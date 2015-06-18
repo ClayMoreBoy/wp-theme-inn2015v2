@@ -31,43 +31,39 @@ class widget_rank extends WP_Widget{
 		if(isset($instance['category__in'][0])){ ?>
 			<a class="link" href="<?= get_category_link($instance['category__in'][0]);?>" title="<?= esc_attr(sprintf(___('Views more about %s'),$instance['title']));?>">
 				<i class="fa fa-bar-chart"></i> 
-				<?= esc_html($instance['title']);?>
+				<?= $instance['title'];?>
 			</a>
-			<a href="<?= get_category_link($instance['category__in'][0]);?>" title="<?= esc_attr(sprintf(___('Views more about %s'),$instance['title']));?>" class="more"><?= esc_html(___('More &raquo;'));?></a>
+			<a href="<?= get_category_link($instance['category__in'][0]);?>" title="<?= esc_attr(sprintf(___('Views more about %s'),$instance['title']));?>" class="more"><?= ___('More &raquo;');?></a>
 		<?php }else{ ?>
 			<i class="fa fa-bar-chart"></i> 
-			<?= esc_html($instance['title']);?>
+			<?= $instance['title'];?>
 		<?php } ?>
 		<?php
 		echo $args['after_title'];
 		
 		global $post;
-		$query = theme_functions::get_posts_query(array(
+		$query = theme_functions::get_posts_query([
 			'category__in' => (array)$instance['category__in'],
 			'posts_per_page' => (int)$instance['posts_per_page'],
 			'date' => $instance['date'],
 			'orderby' => $instance['orderby'],
-		));
-		$content_type_class = $instance['content_type'] === 'tx' ? ' post-tx-lists ' : ' post-mixed-lists ';
-		/** 
-		 * set container tag
-		 */
-		switch($instance['orderby']){
-			case 'latest':
-			case 'rand':
-			case 'random':
-			case 'recommended':
-			case 'sticky':
-				$container_tag = 'ul';
-				break;
-			default:
-				$container_tag = 'div';
+		]);
+
+		if($instance['content_type'] === 'img'){
+			$content_type_class = 'list-group-type-' . $instance['content_type'];
 		}
+		
+
 		if($query->have_posts()){
 			?>
-			<ul class="list-group <?= $content_type_class;?> widget-orderby-<?= $instance['orderby'];?>">
 			
-			<!-- <ul class="tabbody post-lists <?= $content_type_class;?> widget-orderby-<?= $instance['orderby'];?>"> -->
+			<?php if( $instance['content_type'] === 'img' ){ ?>
+				<div class="panel-body">
+					<div class="row list-group-type-img  widget-orderby-<?= $instance['orderby'];?>">
+			<?php }else{ ?>
+				<ul class="list-group list-group-type-tx widget-orderby-<?= $instance['orderby'];?>">
+			<?php } ?>
+			
 				<?php
 				foreach($query->posts as $post){
 					setup_postdata($post);
@@ -81,10 +77,18 @@ class widget_rank extends WP_Widget{
 				}
 				wp_reset_postdata();
 				?>
-			</ul>
+			
+			<?php if( $instance['content_type'] === 'img' ){ ?>
+					</div>
+				</div>
+			<?php }else{ ?>
+				</ul>
+			<?php } ?>
 		<?php }else{ ?>
-			<div class="page-tip not-found">
-				<?= status_tip('info',___('No data yet.'));?>
+			<div class="panel-body">
+				<div class="page-tip not-found">
+					<?= status_tip('info',___('No data yet.'));?>
+				</div>
 			</div>
 		<?php 
 		}
