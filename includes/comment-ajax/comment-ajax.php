@@ -333,11 +333,6 @@ class theme_comment_ajax{
 		die(theme_features::json_format($output));
 	}
 	public static function get_comments_list($post_id,$cpaged = 0){
-		static $caches = [];
-		$cache_id = md5(serialize(func_get_args()));
-		
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
 
 		global $wp_query,$post;
 
@@ -354,10 +349,9 @@ class theme_comment_ajax{
 			'post_id' => $post_id,
 		]);
 		if(!$comments){
-			$caches[$cache_id] = false;
 			return false;
 		}
-		$caches[$cache_id] = wp_list_comments(array(
+		$comment_list = wp_list_comments(array(
 			'type' => 'comment',
 			'callback'=>'theme_functions::theme_comment',
 			'reverse_top_level' => theme_features::get_option('comment_order') === 'asc' ? true : false,
@@ -365,8 +359,10 @@ class theme_comment_ajax{
 			'page' => $cpaged,
 			'echo' => false,
 		),$comments);
-		wp_reset_query();
-		return $caches[$cache_id];
+		//var_dump($comment_list);exit;
+		
+		//wp_reset_query();
+		return $comment_list;
 	}
 	private static function get_comments(array $args = []){
 		static $caches = [];

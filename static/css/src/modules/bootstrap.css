@@ -5382,11 +5382,6 @@ button {
   letter-spacing: .1px;
   text-rendering: optimizeLegibility;
 }
-a {
-  -webkit-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  transition: all 0.2s;
-}
 .table-hover > tbody > tr,
 .table-hover > tbody > tr > th,
 .table-hover > tbody > tr > td {

@@ -11,55 +11,68 @@
 </head>
 <body <?php body_class(); ?>>
 
-<div class="main-nav navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<a href="javascript:;" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".menu-mobile">
-	            <span class="sr-only"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	        </a>
+<div class="main-header">
+	<div class="main-nav navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
 
-	        <a href="<?= home_url();?>" class="navbar-brand">
-		        <i class="fa fa-home hidden-xs"></i> 
-				<?= get_bloginfo('name');?>			
-			</a>
-		</div>
-	
- 
-		<?php
-		/** 
-		 * menu menu-header
-		 */
-		theme_cache::wp_nav_menu([
-	        'theme_location'    => 'menu-header',
-	        'container'         => 'nav navbar-left navbar-collapse collapse',
-	        'container_class'   => 'menu-header',
-	        'menu_class'        => 'menu nav navbar-nav',
-	        'menu_id' 			=> 'menu-header',
-	        'fallback_cb'       => 'custom_navwalker::fallback',
-	        'walker'            => new custom_navwalker
-	   	]);
-	   	?>
-		<div class="tools">
+			<div class="navbar-header">
+				<a href="javascript:;" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".menu-mobile">
+		            <span class="sr-only"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		        </a>
+
+		        <a href="<?= home_url();?>" class="navbar-brand">
+			        <i class="fa fa-home hidden-xs"></i> 
+					<?= get_bloginfo('name');?>			
+				</a>
+			</div>
+		
+	 
 			<?php
 			/** 
-			 * menu menu-tools
+			 * menu menu-header
 			 */
 			theme_cache::wp_nav_menu([
-		        'theme_location'    => 'menu-tools',
-		        'container'         => 'nav navbar-collapse collapse',
-		        'container_class'   => 'menu-tools',
+		        'theme_location'    => 'menu-header',
+		        'container'         => 'nav navbar-left navbar-collapse collapse',
+		        'container_class'   => 'menu-header',
 		        'menu_class'        => 'menu nav navbar-nav',
-		        'menu_id' 			=> 'menu-tools',
+		        'menu_id' 			=> 'menu-header',
 		        'fallback_cb'       => 'custom_navwalker::fallback',
 		        'walker'            => new custom_navwalker
 		   	]);
-			?>
-			<a class="tool search" href="javascript:;" data-target=".navbar-collapse-form">
-				<i class="fa fa-search fa-fw"></i>
-			</a>
-		</div><!-- .tools -->
-	</div><!-- .container -->
-</div><!-- .top-bar -->
+		   	?>
+			<div class="tools">
+				<?php
+				/** 
+				 * menu menu-tools
+				 */
+				theme_cache::wp_nav_menu([
+			        'theme_location'    => 'menu-tools',
+			        'container'         => 'nav navbar-collapse collapse',
+			        'container_class'   => 'menu-tools',
+			        'menu_class'        => 'menu nav navbar-nav',
+			        'menu_id' 			=> 'menu-tools',
+			        'fallback_cb'       => 'custom_navwalker::fallback',
+			        'walker'            => new custom_navwalker
+			   	]);
+				?>
+				<a class="tool search" href="javascript:;" data-target=".navbar-collapse-form">
+					<i class="fa fa-search fa-fw"></i>
+				</a>
+			</div><!-- .tools -->
+		</div><!-- .container -->
+
+	</div><!-- .main-nav -->
+
+	<?php if(is_singular()){ ?>
+		<div class="container">
+			<h2 class="sub-title">
+				<?php the_title();?>
+			</h2>			
+		</div><!-- .container -->
+	<?php } ?>
+	
+</div><!-- .main-header -->

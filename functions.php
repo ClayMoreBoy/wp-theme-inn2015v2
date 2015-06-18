@@ -518,7 +518,7 @@ class theme_functions{
 
 		
 		$defaults = array(
-			'classes'			=> [],
+			'classes'			=> '',
 			'lazyload'			=> true,
 			
 		);
@@ -527,65 +527,41 @@ class theme_functions{
 		/** 
 		 * classes
 		 */
-		$args['classes'][] = 'singluar-post panel panel-default';
+		$args['classes'] .= ' singluar-post panel panel-default has-footer';
 
 		$post_title = esc_html(get_the_title());
 
-		$author_display_name = esc_html(get_the_author());
 
-		$author_url = esc_url(theme_cache::get_author_posts_url($post->post_author));
 		?>
-		<article id="post-<?php $post->ID;?>" <?php post_class($args['classes']);?>>
-			<div class="panel-heading">
-				<div class="media">
-					<div class="media-left">
-						<a class="post-meta post-author" href="<?= $author_url;?>" title="<?= sprintf(___('Views all post by %s'),$author_display_name);?>">
-							<img class="avatar" src="<?= esc_url(get_avatar_url($post->post_author));?>" alt="<?= ___('Author avatar');?>" width="50" height="50">
-						</a>
-					</div>
-					<div class="media-body">
-						<?php if(!empty($post_title)){ ?>
-							<h3 class="entry-title panel-title"><?= $post_title;?></h3>
-						<?php } ?>
-						<header class="post-header post-metas clearfix">
+		<article id="post-<?= $post->ID;?>" <?php post_class([$args['classes']]);?>>
+			<div class="panel-heading post-header post-metas">
 							
-							<!-- category -->
-							<?php
-							$cats = get_the_category_list('<i class="split"> / </i> ');
-							if(!empty($cats)){
-								?>
-								<span class="post-meta post-category" title="<?= ___('Category');?>">
-									<i class="fa fa-folder-open"></i>
-									<?= $cats;?>
-								</span>
-							<?php } ?>
-							
-							<!-- time -->
-							<time class="post-meta post-time" datetime="<?= get_the_time('Y-m-d H:i:s');?>" title="<?= get_the_time(___('M j, Y'));?>">
-								<i class="fa fa-clock-o"></i>
-								<?= friendly_date(get_the_time('U'));?>
-							</time>
-							<!-- author link -->
-							<a class="post-meta post-author" href="<?= $author_url;?>" title="<?= sprintf(___('Views all post by %s'),$author_display_name);?>">
-								<i class="fa fa-user"></i> 
-								<?= $author_display_name;?>
-							</a>
-							
-							<!-- views -->
-							<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
-								<span class="post-meta post-views" title="<?= ___('Views');?>">
-									<i class="fa fa-play-circle"></i>
-									<span class="number" id="post-views-number-<?= $post->ID;?>">-</span>
-								</span>
-							<?php } ?>
-
-						</header>
-					</div><!-- /.media-body -->
-				</div><!-- /.media -->
-			</div><!-- /.panel-heading -->
-
+				<!-- category -->
+				<?php
+				$cats = get_the_category_list(', ');
+				if(!empty($cats)){
+					?>
+					<span class="post-meta post-category" title="<?= ___('Category');?>">
+						<i class="fa fa-folder-open"></i>
+						<?= $cats;?>
+					</span>
+				<?php } ?>
+				
+				<!-- time -->
+				<time class="post-meta post-time" datetime="<?= get_the_time('Y-m-d H:i:s');?>" title="<?= get_the_time(___('M j, Y'));?>">
+					<i class="fa fa-clock-o"></i>
+					<?= friendly_date(get_the_time('U'));?>
+				</time>
+				
+				<!-- views -->
+				<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
+					<span class="post-meta post-views" title="<?= ___('Views');?>">
+						<i class="fa fa-play-circle"></i>
+						<span class="number" id="post-views-number-<?= $post->ID;?>">-</span>
+					</span>
+				<?php } ?>
+			</div>
 			<div class="panel-body">
-
 				
 				<!-- post-content -->
 				<div class="post-content content-reset">
@@ -1310,7 +1286,7 @@ class theme_functions{
 	 */
 	public static function theme_comment( $comment, $args, $depth ) {
 		global $post;
-		
+
 		$GLOBALS['comment'] = $comment;
 
 		switch ( $comment->comment_type ){
@@ -1456,9 +1432,9 @@ class theme_functions{
 			'post__not_in' => array($post->ID),
 		);
 		$args = array_merge($defaults,$args);
-		$content_args = array(
-			'classes' => array('col-xs-6 col-sm-4 col-md-2')
-		);
+		$content_args = [
+			'classes' => 'col-xs-6 col-sm-4 col-md-2'
+		];
 		
 		ob_start();
 		?>
@@ -1487,7 +1463,7 @@ class theme_functions{
 				$query = self::get_posts_query($same_tag_args,$same_tag_query);
 				if($query->have_posts()){
 					?>
-					<ul class="row post-img-lists">
+					<div class="row list-group-type-img">
 						<?php
 						foreach($query->posts as $post){
 							setup_postdata($post);
@@ -1495,7 +1471,7 @@ class theme_functions{
 						}
 						wp_reset_postdata();
 					?>
-					</ul>
+					</div>
 				<?php }else{ ?>
 					<div class="page-tip"><?= status_tip('info',___('No data.'));?></div>
 				<?php
@@ -1512,43 +1488,7 @@ class theme_functions{
 		echo $cache;
 		return $cache;
 	}
-	/** 
-	 * the_related_posts
-	 */
-	public static function the_related_posts(array $args_content = [],array  $args_query = []){
-		global $post;
-		
-		$defaults_query = [
-			'posts_per_page' => 10
-		];
-		$args_query = array_merge($defaults_query,$args_query);
-		
-		$defaults_content = [
-			'classes' => [],
-		];
-		$args_content = array_merge($defaults_content,$args_content);
-		
-		$posts = theme_related_post::get_posts($args_query);
-		if(!is_null_array($posts)){
-			?>
-			<ul class="related-posts-img post-img-lists">
-				<?php
-				foreach($posts as $post){
-					setup_postdata($post);
-						echo self::archive_img_content($args_content);
-				}
-				?>
-			</ul>
-			<?php
-			wp_reset_postdata();
-		}else{
-			?>
-			<div class="no-post page-tip"><?= status_tip('info',___('No data yet'));?></div>
-			<?php
-		}
-	}
-
-
+	
 
 	/**
 	 * get_page_pagenavi
@@ -1597,10 +1537,10 @@ class theme_functions{
 			return $cache;
 		}
 		global $post;
-		$query = self::get_posts_query(array(
+		$query = self::get_posts_query([
 			'posts_per_page' => 6,
 			'orderby' => 'recomm',
-		));
+		]);
 		ob_start();
 		if(have_posts()){
 			?>
@@ -1608,10 +1548,10 @@ class theme_functions{
 				<?php
 				foreach($query->posts as $post){
 					setup_postdata($post);
-					self::archive_img_content(array(
-						'classes' => array('col-sm-4'),
+					self::archive_img_content([
+						'classes' => 'col-sm-4',
 						'lazyload' => false,
-					));
+					]);
 				}
 				wp_reset_postdata();
 				?>
@@ -1703,10 +1643,10 @@ class theme_functions{
 			if($query->have_posts()){
 				foreach($query->posts as $post){
 					setup_postdata($post);
-					self::archive_img_content(array(
-						'classes' => array('col-xs-6 col-sm-3'),
+					self::archive_img_content([
+						'classes' => 'col-xs-6 col-sm-3',
 						'lazyload' => $i < 1 ? false : true,
-					));
+					]);
 				}
 				wp_reset_postdata();
 			}else{

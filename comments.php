@@ -7,15 +7,20 @@ global $wp_query;
 
 $have_comments = have_comments();
 $comments_open = comments_open();
+
+//wp_list_comments(array(
+//			'type' => 'comment',
+//		));
 ?>
 
 <div id="comments" class="comment-wrapper panel panel-default <?= $have_comments ? null : 'none';?>">
 	<div class="panel-heading">
 		<h3 class="have-comments-title panel-title">
-			<span id="comment-number-<?= $post->ID;?>" class="badge">-</span> 
+			<i class="fa fa-comments"></i> 
+			<span id="comment-number-<?= $post->ID;?>">-</span> 
 			<?= ___('Comments');?>
 
-			<a href="#respond" id="goto-comment" class="btn btn-success btn-xs">
+			<a href="#respond" id="goto-comment" >
 				<?= ___('Respond');?> 
 				<i class="fa fa-pencil-square-o"></i> 
 				
