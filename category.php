@@ -1,42 +1,30 @@
 <?php get_header();?>
-<div class="container">
-	<?= theme_functions::get_crumb();?>
+<div class="main-container container">
 	<div class="row">
-		<div id="main" class="col-md-9 col-sm-12">
-			<div class="panel panel-default mx-panel">
+		<div class="col-sm-12 col-md-9">
+			<div class="main panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">
-						<i class="fa fa-folder-open"></i> 
-						<a href="<?= get_category_link(theme_features::get_current_cat_id());?>"><?=  single_cat_title(null,false);?></a>
-					</h3>
+					<div class="panel-title">
+						<?= theme_functions::get_crumb();?>
+					</div>
 				</div>
-				<div class="panel-body">
-					<?php
-					if(have_posts()){
+				<?php if(have_posts()){ ?>
+					<ul class="archive-group list-group">
+						<?php
+						while(have_posts()){
+							the_post();
+							theme_functions::archive_content();
+						}
 						?>
-						<ul class="row mx-card-body post-img-lists">
-							<?php
-							$loop_i = 0;
-							foreach($wp_query->posts as $post){
-								setup_postdata($post);
-								theme_functions::archive_img_content(array(
-									'classes' => array('col-lg-3 col-md-4 col-xs-6'),
-									'lazyload' => $loop_i <= 8 ? false : true,
-								));
-								++$loop_i;
-							}
-							?>
-						</ul>
-					<?php }else{ ?>
-						<?= status_tip('info',___('No content yet.'));?>
-					<?php } ?>
-				</div>
-				<div class="panel-footer area-pagination">
-					<?php theme_functions::pagination();?>
-				</div>
+					</ul>
+					<?php
+				}else{
+					theme_functions::no_post();
+				}
+				?>
 			</div>
-		</div><!-- /#main -->
-		<?php get_sidebar() ;?>
-	</div><!-- /.row -->
-</div><!-- /.container -->
+		</div>
+		<?php get_sidebar();?>
+	</div><!-- .row -->
+</div><!-- .container -->
 <?php get_footer();?>

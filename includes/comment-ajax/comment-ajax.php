@@ -351,6 +351,11 @@ class theme_comment_ajax{
 		if(!$comments){
 			return false;
 		}
+		/**
+		 * set cpage
+		 */
+		$wp_query->query_vars['cpage'] = $cpaged;
+		
 		$comment_list = wp_list_comments(array(
 			'type' => 'comment',
 			'callback'=>'theme_functions::theme_comment',
@@ -479,6 +484,7 @@ class theme_comment_ajax{
 			$output[self::$iden] = [
 				'type' => 'get-comments',
 				'post-id' => $post->ID,
+				'cpage' => get_query_var('cpage'),
 			];
 		}
 		return $output;
@@ -502,8 +508,15 @@ class theme_comment_ajax{
 					$pages = theme_features::get_comment_pages_count(self::get_comments([
 						'post_id' => $post->ID,
 					]));
-					$cpage = theme_features::get_option('default_comments_page') == 'newest' ? $pages : 1;
-
+					/**
+					 * cpage
+					 */
+					if(isset($get['capge']) && is_numeric($get['capge'])){
+						$cpage = (int)$get['capge'];
+					}else{
+						$cpage = theme_features::get_option('default_comments_page') == 'newest' ? $pages : 1;
+					}
+					
 					$is_logged = is_user_logged_in();
 					if(!$is_logged){
 						$commenter = wp_get_current_commenter();

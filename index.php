@@ -20,7 +20,7 @@
 					</ul>
 					<?php
 				}else{
-					include __DIR__ . '/no-content.php';
+					theme_functions::no_post();
 				}
 				?>
 			</div>

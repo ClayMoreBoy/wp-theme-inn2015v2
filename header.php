@@ -59,11 +59,18 @@
 			        'walker'            => new custom_navwalker
 			   	]);
 				?>
-				<a class="tool search" href="javascript:;" data-target=".navbar-collapse-form">
+				<a class="tool search" href="javascript:;" data-toggle="collapse" data-target=".navbar-collapse-form">
 					<i class="fa fa-search fa-fw"></i>
 				</a>
 			</div><!-- .tools -->
+
 		</div><!-- .container -->
+		<div class="container">
+			<form class="navbar-form navbar-collapse-form collapse" role="search" action="<?= home_url('/'); ?>" method="get">
+				<input name="s" class="form-control" placeholder="<?= ___('Please input search keyword');?>" value="<?= esc_attr(get_search_query())?>" type="search">
+	        </form>		
+
+		</div>
 
 	</div><!-- .main-nav -->
 

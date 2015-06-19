@@ -61,10 +61,14 @@ a:active,
 .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus, 
 .dropdown-menu > li > a:focus, 
 .dropdown-menu > li > a:hover, 
-.navbar-default .navbar-nav .dropdown:hover > a{
+.navbar-default .navbar-nav .dropdown:hover > a,
+.panel-primary > .panel-heading{
 	background: #607D8B;
 }
-.sub-title{
+
+.sub-title,
+.comment-list #reply-title:before,
+.comment-list #reply-title:after{
 	background: #607D8B;
 }
 /**
@@ -72,4 +76,7 @@ a:active,
  */
 .widget-area .list-group-type-tx a{
 	color: #727272;
+}
+textarea:focus, textarea.form-control:focus, input.form-control:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, .form-control[type="text"]:focus, .form-control[type="password"]:focus, .form-control[type="email"]:focus, .form-control[type="tel"]:focus, .form-control[contenteditable]:focus{
+	box-shadow: 0px -2px 0px #607D8B inset;
 }

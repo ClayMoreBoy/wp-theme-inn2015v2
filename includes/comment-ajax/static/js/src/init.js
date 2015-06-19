@@ -38,8 +38,9 @@ define(function(require, exports, module){
 			
 			cache.$comment_list_container = I('comment-list-' + config.post_id);
 			cache.$comments = I('comments');
-			if(!cache.$comment_list_container)
-				return false;
+	//console.log(cache.$comment_list_container);
+	//		if(!cache.$comment_list_container)
+	//			return false;
 			
 			
 			window.addComment = addComment;
@@ -347,7 +348,6 @@ define(function(require, exports, module){
 	 * respond
 	 */
 	exports.respond = function(){
-	
 		var _cache = {},
 			_config = {
 				logged : js_request[config.iden].logged,

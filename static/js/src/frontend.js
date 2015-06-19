@@ -14,27 +14,89 @@ define(function(require, exports, module){
 		tools.ready(function(){
 			exports.hide_no_js();
 			exports.scroll_menu();
+			exports.search();
 		});
 	};
+	exports.search = function(){
+		var Q = function(s){
+				return document.querySelector(s);
+			},
+			$btn = Q('.main-nav a.search');
+			
+		if(!$btn)
+			return false;
+			
+		var $fm = Q($btn.getAttribute('data-target')),
+			$input = $fm.querySelector('input[type="search"]'),
+			submit_helper = function(){
+				if($input.value.trim() === '')
+					return false;
+			};
+			
+		$btn.addEventListener('click',function(){
+			setTimeout(function(){
+				$input.focus();
+			},100);
+		},false);
+
+		$fm.onsubmit = submit_helper;
+	}
 	exports.scroll_menu = function(){
 		var $menu = document.querySelector('.main-nav'),
 			y = 0,
 			fold = false,
-			st = false;
+			st = false,
+			uping = false;
 		if(!$menu)
 			return false;
-		
-		window.addEventListener('scroll', function (e) {
-			if( y <= this.pageYOffset ){
-				if( !fold ){
-					$menu.classList.add('fold');
-					fold = true;
-				}
+
+		function hide(){
+			if( !fold ){
+				$menu.classList.add('fold');
+				fold = true;
+			}
+		}
+		function show(){
+			if( fold ){
+				$menu.classList.remove('fold');
+				fold = false;
+			}
+		}
+		function dely_clearst(){
+			clearTimeout(st);
+		}
+		function delay_show(){
+			if(uping){
+				show();
 			}else{
-				if( fold ){
-					$menu.classList.remove('fold');
-					fold = false;
-				}
+				if(uping)
+					clearTimeout(st);
+					
+				st = setTimeout(function(){
+					if(!uping){
+						uping = true;
+					}
+				},500);
+			}
+			
+			
+		}
+		window.addEventListener('scroll', function () {
+			
+			if(this.pageYOffset === 0){
+				show();
+			/**
+			 * scroll down
+			 */
+			}else if( y <= this.pageYOffset ){
+				hide();
+				if(uping)
+					uping = false;
+			/**
+			 * scroll up
+			 */
+			}else{
+				delay_show();
 			}
 			y = this.pageYOffset;
 			

@@ -347,7 +347,7 @@ class theme_functions{
 
 		$thumbnail_placeholder = esc_url(theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder));
 		?>
-		<li class="<?= $args['classes'];?>">
+		<li <?php post_class([$args['classes']]);?>>
 			<a href="<?= get_permalink();?>" class="media" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
 				<div class="thumbnail-container media-left">
 					<img class="placeholder media-object" alt="Placeholder" src="<?= $thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
@@ -443,10 +443,12 @@ class theme_functions{
 	}
 	public static function page_content($args = []){
 		global $post;
+
 		wp_reset_postdata();
+
 		
 		$defaults = array(
-			'classes'			=> [],
+			'classes'			=> '',
 			'lazyload'			=> true,
 			
 		);
@@ -455,42 +457,26 @@ class theme_functions{
 		/** 
 		 * classes
 		 */
-		$args['classes'][] = 'singluar-post panel panel-default';
+		$args['classes'] .= ' singluar-post panel panel-default';
 
 		$post_title = esc_html(get_the_title());
+
+
 		?>
-		<article id="post-<?php $post->ID;?>" <?php post_class($args['classes']);?>>
+		<article id="post-<?= $post->ID;?>" <?php post_class([$args['classes']]);?>>
 			<div class="panel-heading">
-				<?php if(!empty($post_title)){ ?>
-					<h3 class="entry-title panel-title"><?= $post_title;?></h3>
-				<?php } ?>
-
+				<?= self::get_crumb();?>
 			</div>
-
 			<div class="panel-body">
-
 				
 				<!-- post-content -->
 				<div class="post-content content-reset">
 					<?php the_content();?>
 				</div>
-
-				<?php
-				/**
-				 * Hook fires after_singular_post_content
-				 */
-				do_action('after_singular_post_content');
-				?>
-				<?= theme_features::get_prev_next_pagination(array(
-					'numbers_class' => array('btn btn-primary')
-				));?>
-
-			</div>
-			
-			
+			</div><!-- .panel-body -->
 			<!-- post-footer -->
 			<footer class="post-footer post-metas panel-footer clearfix">
-		
+
 				<?php
 				/** 
 				 * post-share
@@ -527,7 +513,7 @@ class theme_functions{
 		/** 
 		 * classes
 		 */
-		$args['classes'] .= ' singluar-post panel panel-default has-footer';
+		$args['classes'] .= ' singluar-post panel panel-default';
 
 		$post_title = esc_html(get_the_title());
 
@@ -893,7 +879,7 @@ class theme_functions{
 					$links['singluar'] = '<a href="' . esc_html(get_category_link($cat->cat_ID)) . '" title="' . esc_attr(sprintf(___('View all posts in %s'),$cat->name)) . '">' . esc_html($cat->name) . '</a>';
 				}
     		}
-    		//$links['curr_text'] = esc_html(get_the_title());
+    		$links['curr_text'] = esc_html(get_the_title());
     	/* 404 */
     	}else if(is_404()){
     		// $nav_link = null;
@@ -1121,16 +1107,10 @@ class theme_functions{
 	}
 	
 	/** 
-	 * the_post_0
+	 * no_post
 	 */ 
-	public static function the_post_0(){
-		global $post;
-		?>
-		<div id="post-0"class="post no-results not-found mod">
-			<?= status_tip('info','large',___( 'Sorry, I was not able to find what you need, what about look at other content :)')); ?>
-		</div><!-- #post-0 -->
-
-	<?php
+	public static function no_post(){
+		echo status_tip('info',___( 'Sorry, I was not able to find what you need, what about look at other content :)'));
 	}
 	/** 
 	 * get_rank_data
@@ -1372,10 +1352,25 @@ class theme_functions{
 				<span class="comment-meta-data comment-reply reply">
 					<?php
 					if(!is_user_logged_in()){
-						static $reply_link;
-						if(!$reply_link)
-							$reply_link = '<a rel="nofollow" class="comment-reply-login quick-login-btn" href="' . wp_login_url(get_permalink($comment->comment_post_ID)) . '">' . ___('Reply') . '</a>';
-						echo $reply_link;
+						/**
+						 * if needs register to comment
+						 */
+						if(theme_features::get_option('comment_registration')){
+							static $reply_link;
+							if(!$reply_link)
+								$reply_link = '<a rel="nofollow" class="comment-reply-login quick-login-btn" href="' . wp_login_url(get_permalink($comment->comment_post_ID)) . '">' . ___('Reply') . '</a>';
+						}else{
+							$reply_link = get_comment_reply_link(
+								array_merge($args,[
+									'add_below'		=> 'comment-body', 
+									'depth' 		=> $depth,
+									'reply_text' 	=> ___('Reply'),
+									'max_depth' 	=> $args['max_depth'],
+								]),
+								$comment,
+								$comment->comment_post_ID
+							);
+						}
 					}else{
 						$reply_link = get_comment_reply_link(
 							array_merge($args,[
@@ -1387,8 +1382,8 @@ class theme_functions{
 							$comment,
 							$comment->comment_post_ID
 						);
-						echo preg_replace('/(href=)[^\s]+/','$1"javascript:;"',$reply_link);
 					}
+					echo preg_replace('/(href=)[^\s]+/','$1"javascript:;"',$reply_link);
 					?>
 				</span><!-- .reply -->
 			</h4>
@@ -1677,10 +1672,9 @@ class theme_functions{
 				<i class="fa fa-pencil-square-o"></i> 
 				<?= ___('Leave a comment');?>
 			</span>
-			<small id="cancel-comment-reply-link" class="none btn btn-xs">
-				<?= ___('Cancel reply');?> 
-				<i class="fa fa-times"></i>
-			</small>
+			<a href="javascript:;" id="cancel-comment-reply-link" class="none" title="<?= ___('Cancel reply');?>">
+				<i class="fa fa-times fa-fw"></i>
+			</a>
 		</h3>		
 	</div>
 	<div class="panel-body">
@@ -1710,7 +1704,40 @@ class theme_functions{
 				<img id="respond-avatar" src="<?= theme_features::get_theme_images_url('frontend/avatar.jpg');?>" alt="Avatar" class="media-object avatar" width="80" height="80">
 			</div>
 			<div class="media-body">
-				
+				<?php
+				/**
+				 * for visitor
+				 */
+				$req = theme_features::get_option( 'require_name_email' );
+				?>
+				<!-- author name -->
+				<div id="area-respond-visitor" class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<input type="text" 
+								class="form-control" 
+								name="author" 
+								id="comment-form-author" 
+								placeholder="<?= ___('Nickname');?><?= $req ? ' * ' : null;?>"
+								<?= $req ? ' required ' : null;?>
+								title="<?= ___('Whats your nickname?');?>"
+							>
+						</div>
+					</div>
+					<!-- author email -->
+					<div class="col-sm-6">
+						<div class="form-group">
+							<input type="email" 
+								class="form-control" 
+								name="email" 
+								id="comment-form-email" 
+								placeholder="<?= ___('Email');?><?= $req ? ' * ' : null;?>"
+								<?= $req ? ' required ' : null;?>
+								title="<?= ___('Whats your Email?');?>"
+							>
+						</div><!-- /.form-group -->
+					</div><!-- /.col-sm-6 -->
+				</div><!-- /.row -->				
 				<div class="form-group">
 					<div class="input-group">
 						<textarea 
@@ -1728,52 +1755,7 @@ class theme_functions{
 							</button>
 						</span>
 					</div>
-				</div>
-				<?php
-				/**
-				 * for visitor
-				 */
-				$req = theme_features::get_option( 'require_name_email' );
-				?>
-				<!-- author name -->
-				<div id="area-respond-visitor" class="row">
-					<div class="col-sm-6">
-						<div class="form-group">
-					
-							<div class="input-group">
-								<label for="comment-form-author" class="input-group-addon">
-									<i class="fa fa-user fa-fw"></i>
-								</label>
-								<input type="text" 
-									class="form-control" 
-									name="author" 
-									id="comment-form-author" 
-									placeholder="<?= ___('Nickname');?><?= $req ? ' * ' : null;?>"
-									<?= $req ? ' required ' : null;?>
-									title="<?= ___('Whats your nickname?');?>"
-								>
-							</div>
-						</div>
-					</div>
-					<!-- author email -->
-					<div class="col-sm-6">
-						<div class="form-group">
-							<div class="input-group">
-								<label for="comment-form-email" class="input-group-addon">
-									<i class="fa fa-at fa-fw"></i>
-								</label>
-								<input type="email" 
-									class="form-control" 
-									name="email" 
-									id="comment-form-email" 
-									placeholder="<?= ___('Email');?><?= $req ? ' * ' : null;?>"
-									<?= $req ? ' required ' : null;?>
-									title="<?= ___('Whats your Email?');?>"
-								>
-							</div>
-						</div><!-- /.form-group -->
-					</div><!-- /.col-sm-6 -->
-				</div><!-- /.row -->
+				</div><!-- .form-group -->
 			</div><!-- /.media-body -->
 		</form>
 	</div>
