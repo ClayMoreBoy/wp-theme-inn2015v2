@@ -18,6 +18,11 @@
 						}
 						?>
 					</ul>
+					<?php if($GLOBALS['wp_query']->max_num_pages > 1){ ?>
+						<div class="panel-footer">
+							<?= theme_functions::pagination();?>
+						</div>
+					<?php } ?>
 					<?php
 				}else{
 					theme_functions::no_post();

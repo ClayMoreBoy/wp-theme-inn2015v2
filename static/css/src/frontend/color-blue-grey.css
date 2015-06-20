@@ -30,7 +30,9 @@ a:active,
 .list-group-item-img a:active h3{
 	color: #448AFF;
 }
-
+.archive-group .sticky a:after{
+	border-color: #607D8B transparent transparent transparent;
+}
 /**
  * default-primary-text
  */

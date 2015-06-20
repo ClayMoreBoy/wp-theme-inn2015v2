@@ -107,42 +107,16 @@ class theme_functions{
 	public static function widget_init(){
 		$sidebar = array(
 			array(
-				'name' 			=> ___('Home widget area'),
-				'id'			=> 'widget-area-home',
-				'description' 	=> ___('Appears on home in the sidebar.')
+				'name' 			=> ___('Sidebar widget area'),
+				'id'			=> 'widget-area-sidebar',
+				'description' 	=> ___('Appears on every page in the sidebar.')
 			),
-			array(
-				'name' 			=> ___('Archive page widget area'),
-				'id'			=> 'widget-area-archive',
-				'description' 	=> ___('Appears on archive page in the sidebar.')
-			),
-
 			array(
 				'name' 			=> ___('Footer widget area'),
 				'id'			=> 'widget-area-footer',
 				'description' 	=> ___('Appears on all page in the footer.'),
 				'before_widget' => '<div class="col-xs-12 col-sm-6 col-md-3"><aside id="%1$s"><div class="panel panel-default widget %2$s">',
 				'after_widget'		=> '</div></aside></div>',
-			),
-			array(
-				'name' 			=> ___('Singular post widget area'),
-				'id'			=> 'widget-area-post',
-				'description' 	=> ___('Appears on post in the sidebar.')
-			),
-			array(
-				'name' 			=> ___('Singular page widget area'),
-				'id'			=> 'widget-area-page',
-				'description' 	=> ___('Appears on page in the sidebar.')
-			),
-			array(
-				'name' 			=> ___('Sign page widget area'),
-				'id'			=> 'widget-area-sign',
-				'description' 	=> ___('Appears on sign page in the sidebar.')
-			),
-			array(
-				'name' 			=> ___('404 page widget area'),
-				'id'			=> 'widget-area-404',
-				'description' 	=> ___('Appears on 404 no found page in the sidebar.')
 			)
 		);
 		foreach($sidebar as $v){
@@ -520,34 +494,41 @@ class theme_functions{
 
 		?>
 		<article id="post-<?= $post->ID;?>" <?php post_class([$args['classes']]);?>>
-			<div class="panel-heading post-header post-metas">
-							
-				<!-- category -->
-				<?php
-				$cats = get_the_category_list(', ');
-				if(!empty($cats)){
-					?>
-					<span class="post-meta post-category" title="<?= ___('Category');?>">
-						<i class="fa fa-folder-open"></i>
-						<?= $cats;?>
-					</span>
-				<?php } ?>
-				
-				<!-- time -->
-				<time class="post-meta post-time" datetime="<?= get_the_time('Y-m-d H:i:s');?>" title="<?= get_the_time(___('M j, Y'));?>">
-					<i class="fa fa-clock-o"></i>
-					<?= friendly_date(get_the_time('U'));?>
-				</time>
-				
-				<!-- views -->
-				<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
-					<span class="post-meta post-views" title="<?= ___('Views');?>">
-						<i class="fa fa-play-circle"></i>
-						<span class="number" id="post-views-number-<?= $post->ID;?>">-</span>
-					</span>
-				<?php } ?>
+			<div class="panel-heading">
+				<div class="panel-title">
+					<?= self::get_crumb();?>
+				</div>
 			</div>
 			<div class="panel-body">
+				<h2 class="post-title">
+					<?= $post_title;?>
+				</h2>
+				<div class="post-header post-metas">
+					<!-- category -->
+					<?php
+					$cats = get_the_category_list(', ');
+					if(!empty($cats)){
+						?>
+						<span class="post-meta post-category" title="<?= ___('Category');?>">
+							<i class="fa fa-folder-open"></i>
+							<?= $cats;?>
+						</span>
+					<?php } ?>
+					
+					<!-- time -->
+					<time class="post-meta post-time" datetime="<?= get_the_time('Y-m-d H:i:s');?>" title="<?= get_the_time(___('M j, Y'));?>">
+						<i class="fa fa-clock-o"></i>
+						<?= friendly_date(get_the_time('U'));?>
+					</time>
+					
+					<!-- views -->
+					<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
+						<span class="post-meta post-views" title="<?= ___('Views');?>">
+							<i class="fa fa-play-circle"></i>
+							<span class="number" id="post-views-number-<?= $post->ID;?>">-</span>
+						</span>
+					<?php } ?>
+				</div>
 				
 				<!-- post-content -->
 				<div class="post-content content-reset">
@@ -1430,7 +1411,7 @@ class theme_functions{
 		$content_args = [
 			'classes' => 'col-xs-6 col-sm-4 col-md-2'
 		];
-		
+		$not_found = false;
 		ob_start();
 		?>
 		
@@ -1467,11 +1448,9 @@ class theme_functions{
 						wp_reset_postdata();
 					?>
 					</div>
-				<?php }else{ ?>
-					<div class="page-tip"><?= status_tip('info',___('No data.'));?></div>
-				<?php
+				<?php }else{
+					$not_found = true;
 				}
-				//wp_reset_query();
 				?>
 			</div>
 
@@ -1480,6 +1459,9 @@ class theme_functions{
 		$cache = ob_get_contents();
 		ob_end_clean();
 		wp_cache_set($post->ID,$cache,$cache_group_id,3600);
+		if($not_found)
+			return false;
+			
 		echo $cache;
 		return $cache;
 	}
