@@ -33,7 +33,7 @@ class theme_functions{
 	public static function theme_meta_translate(){
 		return array(
 			'name' => ___('INN 2015 v2'),
-			'theme_url' => ___('http://inn-studio.com/mx'),
+			'theme_url' => ___('http://inn-studio.com/inn2015v2'),
 			'author_url' => ___('http://inn-studio.com'),
 			'author' => ___('INN STUDIO'),
 			'qq' => array(

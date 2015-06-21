@@ -116,12 +116,31 @@ class custom_navwalker extends Walker_Nav_Menu{
 		 * if there is a value in the attr_title property. If the attr_title
 		 * property is NOT null we apply it as the class name for the glyphicon.
 		 */
-		if (! empty($item->awesome))
-			$item_output .= '<a' . $attributes . '><i class="fa fa-fw fa-' . $item->awesome . '"></i>&nbsp;';
+		if ( !empty($item->awesome) )
+			$item_output .= '<a' . $attributes . '><i class="fa fa-fw fa-' . $item->awesome . '"></i>';
 		else
 			$item_output .= '<a' . $attributes . '>';
+
+		/**
+		 * hide title option
+		 */
+		$link_html = $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
+		
+		if(isset($item->hide_title) && $item->hide_title == 1){
+			$hide_title = true;
+			$link_html = '<span class="hide">' . $link_html . '</span>';
+		}else{
+			$hide_title = false;
+		}
+		//$item_output .= $link_html;
+
+		/**
+		 * add splace if has icon
+		 */
+		if( !$hide_title )
+			$item_output .= '&nbsp;';
 			
-		$item_output .= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
+		$item_output .= $link_html;
 		
 		$item_output .= ($args->has_children && 0 === $depth) ? ' <span class="caret"></span></a>' : '</a>';
 		
@@ -199,14 +218,27 @@ class custom_navwalker extends Walker_Nav_Menu{
 	}
 	public static function setup_nav_menu_item($menu_item){
 		$menu_item->awesome = get_post_meta($menu_item->ID,'_menu_item_awesome',true);
+		$menu_item->hide_title = get_post_meta($menu_item->ID,'_menu_item_hide_title',true);
 		return $menu_item;
 	}
-	public static function update_nav_menu_item($menu_id, $menu_item_db_id){
-		if(!isset($_REQUEST['menu-item-awesome']) || !is_array( $_REQUEST['menu-item-awesome']))
+	public static function icon_update_nav_menu_item($menu_id, $menu_item_db_id){
+		/**
+		 * icon
+		 */
+		if(!isset($_REQUEST['menu-item-awesome'][$menu_item_db_id]) || !is_string($_REQUEST['menu-item-awesome'][$menu_item_db_id]))
 			return false;
 			
-		$subtitle_value = $_REQUEST['menu-item-awesome'][$menu_item_db_id];
-		update_post_meta($menu_item_db_id,'_menu_item_awesome',$subtitle_value);
+		update_post_meta($menu_item_db_id,'_menu_item_awesome',$_REQUEST['menu-item-awesome'][$menu_item_db_id]);
+	}
+	public static function hide_title_update_nav_menu_item($menu_id, $menu_item_db_id){
+		/**
+		 * icon
+		 */
+		if( isset($_REQUEST['menu-item-hide-title'][$menu_item_db_id]) ){
+			update_post_meta($menu_item_db_id, '_menu_item_hide_title', 1);
+		}else{
+			delete_post_meta($menu_item_db_id, '_menu_item_hide_title');
+		}
 	}
 	public static function edit_nav_menu_walker(){
 		return 'Walker_Nav_Menu_Edit_Custom';
@@ -214,7 +246,8 @@ class custom_navwalker extends Walker_Nav_Menu{
 	public static function custom_nav_menu_hook(){
 		add_filter('wp_edit_nav_menu_walker',__CLASS__ . '::edit_nav_menu_walker');
 		add_filter('wp_setup_nav_menu_item' ,__CLASS__ . '::setup_nav_menu_item');
-		add_action('wp_update_nav_menu_item',__CLASS__ . '::update_nav_menu_item',10,2);
+		add_action('wp_update_nav_menu_item',__CLASS__ . '::icon_update_nav_menu_item',10,2);
+		add_action('wp_update_nav_menu_item',__CLASS__ . '::hide_title_update_nav_menu_item',10,2);
 	}
 }
 
@@ -395,6 +428,13 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 						<input type="text" id="edit-menu-item-classes-<?= $item_id; ?>" class="widefat code edit-menu-item-classes" name="menu-item-classes[<?= $item_id; ?>]" value="<?= esc_attr( implode(' ', $item->classes ) ); ?>" />
 					</label>
 				</p>
+				<!-- only show icon -->
+				<p class="description description-thin field-hide-title">
+					<label for="edit-menu-item-hide-title-<?= $item_id; ?>">
+						<input type="checkbox" id="edit-menu-item-hide-title-<?= $item_id; ?>" class="widefat edit-menu-item-hide-title" name="menu-item-hide-title[<?= $item_id; ?>]" value="1" <?= isset( $item->hide_title ) && $item->hide_title == 1 ? 'checked' : null; ?> /> <?php __e( 'Hide navigation label' ); ?>
+					</label>
+				</p><!-- /only show icon -->
+				
 				<p class="field-xfn description description-thin">
 					<label for="edit-menu-item-xfn-<?= $item_id; ?>">
 						<?php _e( 'Link Relationship (XFN)' ); ?><br />

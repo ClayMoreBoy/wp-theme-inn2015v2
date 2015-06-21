@@ -15,7 +15,7 @@
 	<div class="container">
 
 		<div class="navbar-header">
-			<a href="javascript:;" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".menu-mobile">
+			<a href="javascript:;" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".menu-header">
 	            <span class="sr-only"></span>
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
@@ -35,8 +35,8 @@
 		 */
 		theme_cache::wp_nav_menu([
 	        'theme_location'    => 'menu-header',
-	        'container'         => 'nav navbar-left navbar-collapse collapse',
-	        'container_class'   => 'menu-header',
+	        'container'         => 'nav',
+	        'container_class'   => 'menu-header navbar-collapse collapse',
 	        'menu_class'        => 'menu nav navbar-nav',
 	        'menu_id' 			=> 'menu-header',
 	        'fallback_cb'       => 'custom_navwalker::fallback',
@@ -50,7 +50,7 @@
 			 */
 			theme_cache::wp_nav_menu([
 		        'theme_location'    => 'menu-tools',
-		        'container'         => 'nav navbar-collapse collapse',
+		        'container'         => 'nav',
 		        'container_class'   => 'menu-tools',
 		        'menu_class'        => 'menu nav navbar-nav',
 		        'menu_id' 			=> 'menu-tools',

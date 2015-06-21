@@ -283,7 +283,7 @@ class theme_comment_ajax{
 				/**
 				 * comments page
 				 */
-				$cpage = isset($_GET['cpage']) && is_numeric($_GET['cpage']) ? $_GET['cpage'] : null;
+				$cpage = isset($_GET['cpage']) && is_numeric($_GET['cpage']) ? $_GET['cpage'] : 1;
 				
 				/**
 				 * post id
@@ -302,7 +302,7 @@ class theme_comment_ajax{
 				 */
 				$post = get_post($post_id);
 
-				if(!$post){
+				if(!$post || ($post->post_type !== 'post' && $post->post_type !== 'page')){
 					$output['status'] = 'error';
 					$output['code'] = 'invaild_post';
 					$output['msg'] = ___('Post is not exist.');
@@ -310,6 +310,7 @@ class theme_comment_ajax{
 				}
 				setup_postdata($post);
 				$comments_str = self::get_comments_list($post_id,$cpage);
+				//var_dump($comments_str);
 				
 				$output['status'] = 'success';
 				$output['msg'] = ___('Data sent.');

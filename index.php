@@ -12,9 +12,13 @@
 				<?php if(have_posts()){ ?>
 					<ul class="archive-group list-group">
 						<?php
+						$i = 0;
 						while(have_posts()){
 							the_post();
-							theme_functions::archive_content();
+							theme_functions::archive_content([
+								'lazyload' => $i <= 6 ? false : true,
+							]);
+							++$i;
 						}
 						?>
 					</ul>

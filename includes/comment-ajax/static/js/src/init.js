@@ -371,11 +371,12 @@ define(function(require, exports, module){
 			_cache.$area_visitor 	= I('area-respond-visitor');
 			_cache.$comment_parent 	= I('comment_parent');
 			_cache.$comment_ta 		= I('comment-form-comment');
-			_cache.$submit_btn		= _cache.$fm.querySelector('.submit');
 			
 			
 			if(!_cache.$respond || !_cache.$fm)
 				return false;
+				
+			_cache.$submit_btn		= _cache.$fm.querySelector('.submit');
 
 			/**
 			 * hide loading ready
