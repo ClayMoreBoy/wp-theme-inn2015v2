@@ -29,10 +29,10 @@ class theme_post_copyright{
 			<p class="description">
 				<?= ___('Posts copyright settings maybe protect your word. Here are some keywords that can be used:');?></p>
 			<p class="description">
-				<input type="text" class="small-text text-select" value="%post_title_text%" title="<?= ___('Post Title text');?>" readonly="true"/>
-				<input type="text" class="small-text text-select" value="%post_url%" title="<?= ___('Post URL');?>" readonly="true"/>
-				<input type="text" class="small-text text-select" value="%blog_name%" title="<?= ___('Blog name');?>" readonly="true"/>
-				<input type="text" class="small-text text-select" value="%blog_url%" title="<?= ___('Blog URL');?>" readonly="true"/>
+				<input type="text" class="small-text text-select" value="%post_title_text%" title="<?= ___('Post Title text');?>" readonly/>
+				<input type="text" class="small-text text-select" value="%post_url%" title="<?= ___('Post URL');?>" readonly/>
+				<input type="text" class="small-text text-select" value="%blog_name%" title="<?= ___('Blog name');?>" readonly/>
+				<input type="text" class="small-text text-select" value="%blog_url%" title="<?= ___('Blog URL');?>" readonly/>
 			</p>
 			<table class="form-table">
 				<tbody>

@@ -439,7 +439,9 @@ class theme_functions{
 		?>
 		<article id="post-<?= $post->ID;?>" <?php post_class([$args['classes']]);?>>
 			<div class="panel-heading">
-				<?= self::get_crumb();?>
+				<div class="panel-title">
+					<?= self::get_crumb();?>
+				</div>
 			</div>
 			<div class="panel-body">
 				
@@ -547,7 +549,7 @@ class theme_functions{
 				do_action('after_singular_post_content');
 				?>
 				
-				<?php //self::the_post_pagination();?>
+				<?php self::the_post_pagination();?>
 				
 
 
@@ -585,7 +587,19 @@ class theme_functions{
 			
 			<!-- post-footer -->
 			<footer class="post-footer post-metas panel-footer clearfix">
-				
+				<?php
+				/**
+				 * thumb up/down
+				 */
+				if(class_exists('theme_post_thumb') && theme_post_thumb::is_enabled()){
+					?>
+					<div class="post-thumb post-meta btn-group btn-group-xs">
+						<?php theme_post_thumb::display_frontend('up',$post->ID,'btn btn-success',___('Good'));?>
+						<?php theme_post_thumb::display_frontend('down',$post->ID,'btn btn-default');?>
+					</div>
+					<?php
+				}
+				?>
 				<?php
 				/** 
 				 * tags
@@ -1156,7 +1170,7 @@ class theme_functions{
 			 */
 			if($page < $numpages){
 				$next_page_number = $page + 1;
-				$output['next_page']['url'] = theme_features::get_link_page_url($next_page_number,$add_fragment);
+				$output['next_page']['url'] = theme_features::get_link_page_url($next_page_number,$args['add_fragment']);
 				$output['next_page']['number'] = $next_page_number;
 			}
 		}
@@ -1178,53 +1192,55 @@ class theme_functions{
 			
 		ob_start();
 		?>
-		<nav class="prev-next-pagination btn-group btn-group-justified">
-			<?php
-			$prev_next_pagination = self::smart_page_pagination();
-//var_dump($prev_next_pagination);
-			$prev_url = null;
-			$next_url = null;
+		<div class="prev-next-pagination">
+			<nav class="btn-group btn-group-justified">
+				<?php
+				$prev_next_pagination = self::smart_page_pagination();
 
-			/**
-			 * prev
-			 */
-			if(isset($prev_next_pagination['prev_page'])){
-				$prev_url = $prev_next_pagination['prev_page']['url'];
-				$prev_type = 'page';
-			}else{
-				$prev_url = get_permalink($prev_next_pagination['next_post']->ID);
-				$prev_type = 'post';
-			}
-			/**
-			 * next
-			 */
-			if(isset($prev_next_pagination['next_page'])){
-				$next_url = $prev_next_pagination['next_page']['url'];
-				$next_type = 'page';
-			}else{
-				$next_url = get_permalink($prev_next_pagination['prev_post']->ID);
-				$next_type = 'post';
-			}
-			if($prev_url){
-				$prev_btn = $prev_type === 'page' ? 'btn-success' : 'btn-primary';
-				$prev_tx =  $prev_type === 'page' ? ___('Preview page') : ___('Preview post');
+				$prev_url = null;
+				$next_url = null;
+
+				/**
+				 * prev
+				 */
+				if(isset($prev_next_pagination['prev_page'])){
+					$prev_url = $prev_next_pagination['prev_page']['url'];
+					$prev_type = 'page';
+				}else{
+					$prev_url = get_permalink($prev_next_pagination['next_post']->ID);
+					$prev_type = 'post';
+				}
+				/**
+				 * next
+				 */
+				if(isset($prev_next_pagination['next_page'])){
+					$next_url = $prev_next_pagination['next_page']['url'];
+					$next_type = 'page';
+				}else{
+					$next_url = get_permalink($prev_next_pagination['prev_post']->ID);
+					$next_type = 'post';
+				}
+				if($prev_url){
+					$prev_btn = $prev_type === 'page' ? 'btn-success' : 'btn-primary';
+					$prev_tx =  $prev_type === 'page' ? ___('Preview page') : ___('Preview post');
+					?>
+					<div class="btn-group btn-group-lg" role="group">
+						<a href="<?= esc_url($prev_url);?>" class="prev-page btn btn-default"><i class="fa fa-arrow-left"></i> <?= $prev_tx;?></a>
+					</div>
+					<?php
+				}
+				if($next_url){
+					$next_btn = $next_type === 'page' ? 'btn-success' : 'btn-primary';
+					$next_tx =  $next_type === 'page' ? ___('Next page') : ___('Next post');
+					?>
+					<div class="btn-group btn-group-lg" role="group">
+						<a href="<?= esc_url($next_url);?>" class="next-page btn btn-default"><?= $next_tx;?> <i class="fa fa-arrow-right"></i></a>
+					</div>
+					<?php
+				}
 				?>
-				<div class="btn-group btn-group-lg" role="group">
-					<a href="<?= esc_url($prev_url);?>" class="prev-page btn btn-default"><i class="fa fa-arrow-left"></i> <?= $prev_tx;?></a>
-				</div>
-				<?php
-			}
-			if($next_url){
-				$next_btn = $next_type === 'page' ? 'btn-success' : 'btn-primary';
-				$next_tx =  $next_type === 'page' ? ___('Next page') : ___('Next post');
-				?>
-				<div class="btn-group btn-group-lg" role="group">
-					<a href="<?= esc_url($next_url);?>" class="next-page btn btn-default"><?= $next_tx;?> <i class="fa fa-arrow-right"></i></a>
-				</div>
-				<?php
-			}
-			?>
-		</nav>
+			</nav>
+		</div>
 		<?php
 		$cache = html_compress(ob_get_contents());
 		ob_end_clean();

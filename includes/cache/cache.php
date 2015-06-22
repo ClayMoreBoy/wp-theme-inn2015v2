@@ -97,10 +97,10 @@ class theme_cache{
 		
 	}
 	private static function get_process_url($type){
-		return add_query_arg(array(
+		return esc_url(add_query_arg(array(
 			'action' => self::$iden,
 			'type' => $type
-		),theme_features::get_process_url());
+		),theme_features::get_process_url()));
 
 	}
 	/**

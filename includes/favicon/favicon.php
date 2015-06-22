@@ -168,7 +168,7 @@ class theme_custom_favicon{
 				<div id="<?= self::$iden;?>-area">
 					<input type="url" name="<?= self::$iden;?>[url]" id="<?= self::$iden;?>-url" class="code url" value="<?= esc_url($url);?>" placeholder="<?= esc_attr(___('Image URL (include http://)'));?>" readonly />
 					
-					<a href="javascript:void(0);" class="button-primary" id="<?= self::$iden;?>-upload"><?= ___('Upload image');?><input type="file" id="<?= self::$iden;?>-file"/></a>
+					<span class="button-primary" id="<?= self::$iden;?>-upload"><?= ___('Upload image');?><input type="file" id="<?= self::$iden;?>-file"/></span>
 				</div>
 				<div id="<?= self::$iden;?>-tip"></div>
 				<input type="hidden" name="<?= self::$iden;?>[attach-id]" value="<?= $attach_id;?>" id="<?= self::$iden;?>-attach-id">

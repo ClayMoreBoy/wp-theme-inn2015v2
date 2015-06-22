@@ -64,7 +64,13 @@ a:active,
 .dropdown-menu > li > a:focus, 
 .dropdown-menu > li > a:hover, 
 .navbar-default .navbar-nav .dropdown:hover > a,
-.panel-primary > .panel-heading{
+.panel-primary > .panel-heading,
+.content-reset h1,
+.content-reset h2,
+.content-reset h3,
+.content-reset h4,
+.content-reset h5,
+.content-reset h6{
 	background: #607D8B;
 }
 

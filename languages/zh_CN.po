@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-21 19:21+0800\n"
-"PO-Revision-Date: 2015-06-21 19:21+0800\n"
+"POT-Creation-Date: 2015-06-22 19:59+0800\n"
+"PO-Revision-Date: 2015-06-22 20:07+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -25,11 +25,12 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:40 core/core-options.php:173 functions.php:1664
-#: includes/_post-thumb/post-thumb.php:243
+#: comments.php:40 core/core-options.php:173 functions.php:1676
 #: includes/_quick-comment/quick-comment.php:341
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:470 includes/favicon/favicon.php:198
+#: includes/post-thumb/post-thumb.php:315
+#: includes/post-thumb/post-thumb.php:332
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
 
@@ -224,9 +225,7 @@ msgstr "底部 小工具区域"
 msgid "Appears on all page in the footer."
 msgstr "显示在每个页面的底部。"
 
-#: functions.php:362 includes/_post-thumb/post-thumb.php:55
-#: includes/_post-thumb/post-thumb.php:57
-#: includes/widget-rank/widget-rank.php:199
+#: functions.php:362 includes/widget-rank/widget-rank.php:199
 msgid "Thumb up"
 msgstr "顶/赞"
 
@@ -242,197 +241,201 @@ msgstr "查看数"
 msgid "Category"
 msgstr "分类"
 
-#: functions.php:610
+#: functions.php:595
+msgid "Good"
+msgstr "赞"
+
+#: functions.php:622
 msgid "comment"
 msgstr "评论"
 
-#: functions.php:610
+#: functions.php:622
 msgid "comments"
 msgstr "评论"
 
-#: functions.php:639
+#: functions.php:651
 msgid ", "
 msgstr "、"
 
-#: functions.php:648 functions.php:662
+#: functions.php:660 functions.php:674
 #, php-format
 msgid "Views all posts by %s tag"
 msgstr "查看 %s 标签下的所有文章"
 
-#: functions.php:740 functions.php:750
+#: functions.php:752 functions.php:762
 msgid "No more post found"
 msgstr "暂无更多文章"
 
-#: functions.php:742
+#: functions.php:754
 #, php-format
 msgid "Previous post: %s"
 msgstr "上一篇：%s"
 
-#: functions.php:743 functions.php:895
+#: functions.php:755 functions.php:907
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:752
+#: functions.php:764
 #, php-format
 msgid "Next post: %s"
 msgstr "下一篇：%s"
 
-#: functions.php:754 functions.php:896
+#: functions.php:766 functions.php:908
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:788 functions.php:790
+#: functions.php:800 functions.php:802
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:803
+#: functions.php:815
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:810
+#: functions.php:822
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:828
+#: functions.php:840
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:832
+#: functions.php:844
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:838
+#: functions.php:850
 msgid "Author posts"
 msgstr "作者文章"
 
-#: functions.php:842
+#: functions.php:854
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:860
+#: functions.php:872
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:867
+#: functions.php:879
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:911
+#: functions.php:923
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:940 functions.php:1488
+#: functions.php:952 functions.php:1500
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:949 functions.php:964 functions.php:972 functions.php:982
+#: functions.php:961 functions.php:976 functions.php:984 functions.php:994
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:1094
+#: functions.php:1106
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1101 includes/widget-adbox/widget-adbox.php:51
+#: functions.php:1113 includes/widget-adbox/widget-adbox.php:51
 msgid "All"
 msgstr "全部"
 
-#: functions.php:1102
+#: functions.php:1114
 msgid "Daily"
 msgstr "每日"
 
-#: functions.php:1103
+#: functions.php:1115
 msgid "Weekly"
 msgstr "每周"
 
-#: functions.php:1104
+#: functions.php:1116
 msgid "Monthly"
 msgstr "每月"
 
-#: functions.php:1210
+#: functions.php:1222
 msgid "Preview page"
 msgstr "上一页"
 
-#: functions.php:1210
+#: functions.php:1222
 msgid "Preview post"
 msgstr "上一篇"
 
-#: functions.php:1219 functions.php:1485
+#: functions.php:1231 functions.php:1497
 msgid "Next page"
 msgstr "下一页"
 
-#: functions.php:1219
+#: functions.php:1231
 msgid "Next post"
 msgstr "下一篇"
 
-#: functions.php:1315
+#: functions.php:1327
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1342 functions.php:1348 functions.php:1360
+#: functions.php:1354 functions.php:1360 functions.php:1372
 #: includes/_quick-comment/quick-comment.php:350
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1420 includes/related-post/related-post.php:54
+#: functions.php:1432 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1505
+#: functions.php:1517
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1570
+#: functions.php:1582
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1591
+#: functions.php:1603
 msgid "&raquo; more"
 msgstr "&raquo; 更多"
 
-#: functions.php:1655
+#: functions.php:1667
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1657
+#: functions.php:1669
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1670
+#: functions.php:1682
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1671
+#: functions.php:1683
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1703 includes/_quick-comment/quick-comment.php:347
+#: functions.php:1715 includes/_quick-comment/quick-comment.php:347
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1705
+#: functions.php:1717
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1716 includes/_quick-comment/quick-comment.php:348
+#: functions.php:1728 includes/_quick-comment/quick-comment.php:348
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1718
+#: functions.php:1730
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1730
+#: functions.php:1742
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1731
+#: functions.php:1743
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
@@ -463,19 +466,18 @@ msgid ""
 msgstr "如果您的服务器支持，当评论被回复时，它将会发送一封通知邮件给被回复人。"
 
 #: includes/_comment-notify/comment-notify.php:38
-#: includes/_post-thumb/post-thumb.php:51
-#: includes/link-manager/link-manager.php:35
+#: includes/link-manager/link-manager.php:30
 #: includes/post-copyright/post-copyright.php:40
-#: includes/post-share/post-share.php:96
+#: includes/post-share/post-share.php:96 includes/post-thumb/post-thumb.php:68
 msgid "Enable or not?"
 msgstr "启用"
 
 #: includes/_comment-notify/comment-notify.php:39
-#: includes/_post-thumb/post-thumb.php:52
 #: includes/comment-ajax/comment-ajax.php:98
-#: includes/link-manager/link-manager.php:36
+#: includes/link-manager/link-manager.php:34
 #: includes/post-copyright/post-copyright.php:41
-#: includes/post-share/post-share.php:97 includes/post-views/post-views.php:66
+#: includes/post-share/post-share.php:97 includes/post-thumb/post-thumb.php:72
+#: includes/post-views/post-views.php:66
 msgid "Enable"
 msgstr "启用"
 
@@ -523,58 +525,6 @@ msgstr "%s的回复：%s"
 #, php-format
 msgid "Views the comment: %s"
 msgstr "查看此条评论：%s"
-
-#: includes/_post-thumb/post-thumb.php:46
-msgid "Post Thumb Up or Down Settings"
-msgstr "文章顶踩设置"
-
-#: includes/_post-thumb/post-thumb.php:47
-msgid ""
-"Agree or not? Just thumb up or down! You can set some sentences to show "
-"randomly when votes success. Multiple sentences that please use New Line to "
-"split them."
-msgstr ""
-"喜欢与否？只需要顶踩一下！您能设置一些提示语，当投票成功时候能随机地显示。不"
-"同的语句请用“换行”分隔。"
-
-#: includes/_post-thumb/post-thumb.php:61
-#: includes/_post-thumb/post-thumb.php:63
-msgid "Thumb down"
-msgstr "踩/喷"
-
-#: includes/_post-thumb/post-thumb.php:74
-#: includes/_post-thumb/post-thumb.php:90
-#, php-format
-msgid "You thumbed up, I am agree it, too!%sYou are right, I think so."
-msgstr "您顶了我一下，我好舒服哦！%s嗯，您说的对，我也同意。"
-
-#: includes/_post-thumb/post-thumb.php:75
-#: includes/_post-thumb/post-thumb.php:91
-#, php-format
-msgid "You thumbed down, you are a honest guy!%sYou are right, I think so."
-msgstr "您踩了我一下，看来您是一个诚实的人！%s嗯，您说的对，我也同意。"
-
-#: includes/_post-thumb/post-thumb.php:125
-msgid "You have already voted."
-msgstr "您已经投过票了。"
-
-#: includes/_post-thumb/post-thumb.php:129
-msgid "Not enough parameter."
-msgstr "缺少参数"
-
-#: includes/_post-thumb/post-thumb.php:139
-msgid "I like it"
-msgstr "我喜欢"
-
-#: includes/_post-thumb/post-thumb.php:152
-msgid "I dislike it"
-msgstr "我不喜欢"
-
-#: includes/_post-thumb/post-thumb.php:244
-#: includes/_quick-comment/quick-comment.php:352
-#: includes/clean-up/clean-up.php:228 includes/favicon/favicon.php:199
-msgid "Server error or network is disconnected."
-msgstr "服务器错误或网络未连接。"
 
 #: includes/_quick-comment/quick-comment.php:22
 msgid "Referer error"
@@ -692,6 +642,11 @@ msgstr "3秒后关闭提示"
 #: includes/_quick-comment/quick-comment.php:351
 msgid "Error"
 msgstr "错误"
+
+#: includes/_quick-comment/quick-comment.php:352
+#: includes/clean-up/clean-up.php:228 includes/favicon/favicon.php:199
+msgid "Server error or network is disconnected."
+msgstr "服务器错误或网络未连接。"
 
 #: includes/cache/cache.php:112
 msgid "Theme cache"
@@ -909,6 +864,8 @@ msgid ""
 "You can change the default gravatar image using custom avatar url address. "
 "After save settings please click here to %s select the custom gravatar."
 msgstr ""
+"您可以使用自定义图片 URL 来更改 Gravatar 默认头像。保存设置后，请点击 %s 选择"
+"自定义 Gravatar 头像。"
 
 #: includes/default-gravatar/default-gravatar.php:44
 msgid "here"
@@ -1168,11 +1125,11 @@ msgstr "捐赠给 INN 工作室（%s）"
 msgid "Message for INN STUDIO:"
 msgstr "给 INN 工作室留言："
 
-#: includes/link-manager/link-manager.php:28
+#: includes/link-manager/link-manager.php:23
 msgid "Link manager"
 msgstr "链接管理器"
 
-#: includes/link-manager/link-manager.php:30
+#: includes/link-manager/link-manager.php:25
 msgid ""
 "Enables the Link manager that existed in WordPress until version 3.5. But in "
 "fact it is not recommend to enable, because you can use Menu instead of Link "
@@ -1371,6 +1328,84 @@ msgstr "贴吧"
 #: includes/post-share/post-share.php:132
 msgid "Wechat"
 msgstr "微信"
+
+#: includes/post-thumb/post-thumb.php:63
+msgid "Post Thumb Up or Down Settings"
+msgstr "文章顶踩设置"
+
+#: includes/post-thumb/post-thumb.php:64
+msgid ""
+"Agree or not? Just thumb up or down! You can set some sentences to show "
+"randomly when votes success. Multiple sentences that please use New Line to "
+"split them."
+msgstr ""
+"喜欢与否？只需要顶踩一下！您能设置一些提示语，当投票成功时候能随机地显示。不"
+"同的语句请用“换行”分隔。"
+
+#: includes/post-thumb/post-thumb.php:77 includes/post-thumb/post-thumb.php:79
+msgid "Thumb up text"
+msgstr "顶/赞文本"
+
+#: includes/post-thumb/post-thumb.php:83 includes/post-thumb/post-thumb.php:85
+msgid "Thumb down text"
+msgstr "踩/渣文本"
+
+#: includes/post-thumb/post-thumb.php:89
+msgid "Restore post thumb option?"
+msgstr "还原文章顶踩选项？"
+
+#: includes/post-thumb/post-thumb.php:93
+msgid "Restore post thumb option"
+msgstr "还原文章顶踩选项"
+
+#: includes/post-thumb/post-thumb.php:98
+msgid "Convert to new version data"
+msgstr "转换为新版本数据"
+
+#: includes/post-thumb/post-thumb.php:102
+msgid "Start convert"
+msgstr "开始转换"
+
+#: includes/post-thumb/post-thumb.php:115
+msgid ""
+"You thumbed up, I am agree it, too!\n"
+"You are right, I think so."
+msgstr ""
+"您顶了我一下，我好舒服哦！\n"
+"嗯，您说的对，我也同意。"
+
+#: includes/post-thumb/post-thumb.php:116
+msgid ""
+"You thumbed down, you are a honest guy!\n"
+"You are right, I think so."
+msgstr ""
+"您踩了我一下，我好舒服哦！\n"
+"嗯，您说的对，我也同意。"
+
+#: includes/post-thumb/post-thumb.php:153
+msgid "Sorry, the post ID is invaild."
+msgstr "抱歉，文章 ID 无效。"
+
+#: includes/post-thumb/post-thumb.php:165
+msgid "Sorry, the post does not exists."
+msgstr "抱歉，文章不存在。"
+
+#: includes/post-thumb/post-thumb.php:175
+msgid "You voted the post, thank you."
+msgstr "您已投过票了，感谢参与！"
+
+#: includes/post-thumb/post-thumb.php:196
+msgid "Sorry, your permission is invaild."
+msgstr "抱歉，您的权限无效。"
+
+#: includes/post-thumb/post-thumb.php:202
+msgid "Data has been converted."
+msgstr "数据已成功转换。"
+
+#: includes/post-thumb/post-thumb.php:316
+#: includes/post-thumb/post-thumb.php:333
+msgid "Sorry, server error please try again later."
+msgstr "抱歉，服务器错误请稍后重试。"
 
 #: includes/post-views/post-views.php:62
 msgid "Post views settings"
@@ -1987,6 +2022,27 @@ msgstr "最新日志"
 msgid "Please set some widgets in sidebar."
 msgstr "请设置一些小工具在侧栏。"
 
+#~ msgid "Thumb down"
+#~ msgstr "踩/喷"
+
+#~ msgid "You thumbed up, I am agree it, too!%sYou are right, I think so."
+#~ msgstr "您顶了我一下，我好舒服哦！%s嗯，您说的对，我也同意。"
+
+#~ msgid "You thumbed down, you are a honest guy!%sYou are right, I think so."
+#~ msgstr "您踩了我一下，看来您是一个诚实的人！%s嗯，您说的对，我也同意。"
+
+#~ msgid "You have already voted."
+#~ msgstr "您已经投过票了。"
+
+#~ msgid "Not enough parameter."
+#~ msgstr "缺少参数"
+
+#~ msgid "I like it"
+#~ msgstr "我喜欢"
+
+#~ msgid "I dislike it"
+#~ msgstr "我不喜欢"
+
 #~ msgid "Open sign settings"
 #~ msgstr "第三方登录设置"
 
@@ -2321,9 +2377,6 @@ msgstr "请设置一些小工具在侧栏。"
 
 #~ msgid "Small size"
 #~ msgstr "小尺寸"
-
-#~ msgid "Sorry, server error please try again later."
-#~ msgstr "抱歉，服务器错误请稍后重试。"
 
 #~ msgid "My dashboard"
 #~ msgstr "我的仪表盘"
@@ -3664,9 +3717,6 @@ msgstr "请设置一些小工具在侧栏。"
 
 #~ msgid "Good! I like it."
 #~ msgstr "赞！我喜欢"
-
-#~ msgid "Good"
-#~ msgstr "赞"
 
 #~ msgid "Bad idea!"
 #~ msgstr "坏主意！"

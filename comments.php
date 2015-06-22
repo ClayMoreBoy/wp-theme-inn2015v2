@@ -1,12 +1,14 @@
 <?php
 if(post_password_required()) 
 	return;
-
-global $wp_query;
-
-
-$have_comments = have_comments();
+	
 $comments_open = comments_open();
+
+if(!$comments_open)
+	return;
+	
+$have_comments = have_comments();
+global $wp_query;
 
 //wp_list_comments(array(
 //			'type' => 'comment',
