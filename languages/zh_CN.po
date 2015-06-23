@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-22 19:59+0800\n"
-"PO-Revision-Date: 2015-06-22 20:07+0800\n"
+"POT-Creation-Date: 2015-06-23 11:58+0800\n"
+"PO-Revision-Date: 2015-06-23 11:59+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -17,15 +17,15 @@ msgstr ""
 "X-Generator: Poedit 1.8.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: comments.php:21
+#: comments.php:23
 msgid "Comments"
 msgstr "评论"
 
-#: comments.php:24
+#: comments.php:26
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:40 core/core-options.php:173 functions.php:1676
+#: comments.php:42 core/core-options.php:173 functions.php:1680
 #: includes/_quick-comment/quick-comment.php:341
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:470 includes/favicon/favicon.php:198
@@ -100,7 +100,7 @@ msgstr "%d天前"
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:737 functions.php:519
+#: core/core-functions.php:737 functions.php:521
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
@@ -233,209 +233,209 @@ msgstr "顶/赞"
 msgid "Comment count"
 msgstr "评论统计"
 
-#: functions.php:377 functions.php:526 includes/post-views/post-views.php:188
+#: functions.php:377 functions.php:528 includes/post-views/post-views.php:188
 msgid "Views"
 msgstr "查看数"
 
-#: functions.php:512
+#: functions.php:514
 msgid "Category"
 msgstr "分类"
 
-#: functions.php:595
+#: functions.php:597
 msgid "Good"
 msgstr "赞"
 
-#: functions.php:622
+#: functions.php:624
 msgid "comment"
 msgstr "评论"
 
-#: functions.php:622
+#: functions.php:624
 msgid "comments"
 msgstr "评论"
 
-#: functions.php:651
+#: functions.php:653
 msgid ", "
 msgstr "、"
 
-#: functions.php:660 functions.php:674
+#: functions.php:662 functions.php:676
 #, php-format
 msgid "Views all posts by %s tag"
 msgstr "查看 %s 标签下的所有文章"
 
-#: functions.php:752 functions.php:762
+#: functions.php:754 functions.php:764
 msgid "No more post found"
 msgstr "暂无更多文章"
 
-#: functions.php:754
+#: functions.php:756
 #, php-format
 msgid "Previous post: %s"
 msgstr "上一篇：%s"
 
-#: functions.php:755 functions.php:907
+#: functions.php:757 functions.php:909
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:764
+#: functions.php:766
 #, php-format
 msgid "Next post: %s"
 msgstr "下一篇：%s"
 
-#: functions.php:766 functions.php:908
+#: functions.php:768 functions.php:910
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:800 functions.php:802
+#: functions.php:802 functions.php:804
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:815
+#: functions.php:817
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:822
+#: functions.php:824
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:840
+#: functions.php:842
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:844
+#: functions.php:846
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:850
+#: functions.php:852
 msgid "Author posts"
 msgstr "作者文章"
 
-#: functions.php:854
+#: functions.php:856
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:872
+#: functions.php:874
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:879
+#: functions.php:881
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:923
+#: functions.php:925
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:952 functions.php:1500
+#: functions.php:954 functions.php:1504
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:961 functions.php:976 functions.php:984 functions.php:994
+#: functions.php:963 functions.php:978 functions.php:986 functions.php:996
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:1106
+#: functions.php:1108
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1113 includes/widget-adbox/widget-adbox.php:51
+#: functions.php:1115 includes/widget-adbox/widget-adbox.php:51
 msgid "All"
 msgstr "全部"
 
-#: functions.php:1114
+#: functions.php:1116
 msgid "Daily"
 msgstr "每日"
 
-#: functions.php:1115
+#: functions.php:1117
 msgid "Weekly"
 msgstr "每周"
 
-#: functions.php:1116
+#: functions.php:1118
 msgid "Monthly"
 msgstr "每月"
 
-#: functions.php:1222
+#: functions.php:1225
 msgid "Preview page"
 msgstr "上一页"
 
-#: functions.php:1222
+#: functions.php:1225
 msgid "Preview post"
 msgstr "上一篇"
 
-#: functions.php:1231 functions.php:1497
+#: functions.php:1234 functions.php:1501
 msgid "Next page"
 msgstr "下一页"
 
-#: functions.php:1231
+#: functions.php:1234
 msgid "Next post"
 msgstr "下一篇"
 
-#: functions.php:1327
+#: functions.php:1331
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1354 functions.php:1360 functions.php:1372
+#: functions.php:1358 functions.php:1364 functions.php:1376
 #: includes/_quick-comment/quick-comment.php:350
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1432 includes/related-post/related-post.php:54
+#: functions.php:1436 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1517
+#: functions.php:1521
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1582
+#: functions.php:1586
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1603
+#: functions.php:1607
 msgid "&raquo; more"
 msgstr "&raquo; 更多"
 
-#: functions.php:1667
+#: functions.php:1671
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1669
+#: functions.php:1673
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1682
+#: functions.php:1686
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1683
+#: functions.php:1687
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1715 includes/_quick-comment/quick-comment.php:347
+#: functions.php:1719 includes/_quick-comment/quick-comment.php:347
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1717
+#: functions.php:1721
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1728 includes/_quick-comment/quick-comment.php:348
+#: functions.php:1732 includes/_quick-comment/quick-comment.php:348
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1730
+#: functions.php:1734
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1742
+#: functions.php:1746
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1743
+#: functions.php:1747
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
@@ -1406,6 +1406,14 @@ msgstr "数据已成功转换。"
 #: includes/post-thumb/post-thumb.php:333
 msgid "Sorry, server error please try again later."
 msgstr "抱歉，服务器错误请稍后重试。"
+
+#: includes/post-toc/post-toc.php:39
+msgid "Table of content"
+msgstr "目录大纲"
+
+#: includes/post-toc/post-toc.php:40
+msgid "[TOC]"
+msgstr "[目录]"
 
 #: includes/post-views/post-views.php:62
 msgid "Post views settings"

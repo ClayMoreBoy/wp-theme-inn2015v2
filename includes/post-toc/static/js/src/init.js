@@ -25,13 +25,13 @@ define(function(require, exports, module){
 	}
 	exports.toc = function($container){
 		var $hs = $container.querySelectorAll('h1,h2,h3,h4,h5,h6');
-		if(!$hs[0])
+		if(!$hs[1])
 			return false;
 
 		var toc_prefix = 'post-toc-',
 			$toc_container = document.createElement('div'),
 			$toc_title = document.createElement('div'),
-			$toc_body = document.createElement('ul');
+			$toc_body = document.createElement('ol');
 			
 		/**
 		 * create toc container
@@ -75,7 +75,7 @@ define(function(require, exports, module){
 			var $li = document.createElement('li'),
 				$link_to = document.createElement('a');
 			$link_to.setAttribute('href','#' + $h.id);
-			console.log($h.textContent);
+
 			/** set text */
 			if( $h.textContent != 'undefined '){
 				$link_to.innerHTML = $h.textContent;

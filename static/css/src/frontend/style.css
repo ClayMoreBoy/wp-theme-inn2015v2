@@ -794,7 +794,51 @@ img{
 .prev-next-pagination{
 	margin: 20px;
 }
-
+/**
+ * #post-toc
+ */
+#post-toc{
+	background: rgb(248,248,248);
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: 2px;
+}
+	#post-toc a{
+		display: block;
+	}
+	#post-toc ol{
+		margin: 0;
+		padding: 0 20px 20px 40px;
+	}
+		#post-toc.fold ol{
+			display: none;
+		}
+	#post-toc .toc-title{
+		font-weight: bold;
+		box-shadow: inset 0 10px 10px rgba(0,0,0,.03);
+		position: relative;
+		cursor: pointer;
+		padding: 10px 20px;
+	}
+		#post-toc .toc-title:hover{
+			text-decoration: underline;
+		}
+		#post-toc .toc-title i{
+			position: absolute;
+			right: 10px;
+			top: 15px;
+		}
+	#post-toc.fold .toc-title{
+		box-shadow: none;
+		padding-right: 30px;
+	}
+	a.back-to-toc{
+		color: #fff;
+		float: right;
+		font-weight: normal;
+	}
+		a.back-to-toc:hover{
+			color: #fff;
+		}
 /**
  * .post-img-list
  */
@@ -1633,6 +1677,10 @@ label.error{
 	.container-fluid > .navbar-collapse, .container-fluid > .navbar-header, .container > .navbar-collapse, .container > .navbar-header {
 		margin-left: 0;
 		margin-right: 0;
+	}
+	#post-toc{
+		float: right;
+		margin: 0 0 20px 20px;
 	}
 }
 /**
