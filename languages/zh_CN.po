@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-23 11:58+0800\n"
-"PO-Revision-Date: 2015-06-23 11:59+0800\n"
+"POT-Creation-Date: 2015-06-23 12:33+0800\n"
+"PO-Revision-Date: 2015-06-23 12:33+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -455,77 +455,6 @@ msgstr "颜文字表情（一行一个）"
 msgid "Face"
 msgstr "表情"
 
-#: includes/_comment-notify/comment-notify.php:32
-msgid "Comment reply notifier"
-msgstr "评论回复通知"
-
-#: includes/_comment-notify/comment-notify.php:34
-msgid ""
-"It will send a mail to notify the being reply comment author when comment "
-"has been reply, if your server supports."
-msgstr "如果您的服务器支持，当评论被回复时，它将会发送一封通知邮件给被回复人。"
-
-#: includes/_comment-notify/comment-notify.php:38
-#: includes/link-manager/link-manager.php:30
-#: includes/post-copyright/post-copyright.php:40
-#: includes/post-share/post-share.php:96 includes/post-thumb/post-thumb.php:68
-msgid "Enable or not?"
-msgstr "启用"
-
-#: includes/_comment-notify/comment-notify.php:39
-#: includes/comment-ajax/comment-ajax.php:98
-#: includes/link-manager/link-manager.php:34
-#: includes/post-copyright/post-copyright.php:41
-#: includes/post-share/post-share.php:97 includes/post-thumb/post-thumb.php:72
-#: includes/post-views/post-views.php:66
-msgid "Enable"
-msgstr "启用"
-
-#: includes/_comment-notify/comment-notify.php:68
-#, php-format
-msgid "[%s] Your comment has been approved in \"%s\"."
-msgstr "[%s] 您的评论通过审核于《%s》。"
-
-#: includes/_comment-notify/comment-notify.php:71
-#, php-format
-msgid "Your comment has been approved in \"%s\"."
-msgstr "您的评论已通过审核与《%s》。"
-
-#: includes/_comment-notify/comment-notify.php:72
-#, php-format
-msgid "Comment content: %s"
-msgstr "评论内容：%s"
-
-#: includes/_comment-notify/comment-notify.php:73
-#, php-format
-msgid "Article URL: %s"
-msgstr "文章 URL：%s"
-
-#: includes/_comment-notify/comment-notify.php:74
-#, php-format
-msgid "Comment URL: %s"
-msgstr "评论 URL：%s"
-
-#: includes/_comment-notify/comment-notify.php:111
-#, php-format
-msgid "[%s] Your comment has a reply in \"%s\"."
-msgstr "[%s] 您的评论有回复于《%s》。"
-
-#: includes/_comment-notify/comment-notify.php:114
-#, php-format
-msgid "Your comment: %s"
-msgstr "您的评论：%s"
-
-#: includes/_comment-notify/comment-notify.php:115
-#, php-format
-msgid "%s's reply: %s"
-msgstr "%s的回复：%s"
-
-#: includes/_comment-notify/comment-notify.php:116
-#, php-format
-msgid "Views the comment: %s"
-msgstr "查看此条评论：%s"
-
 #: includes/_quick-comment/quick-comment.php:22
 msgid "Referer error"
 msgstr "来路错误"
@@ -808,6 +737,15 @@ msgstr "提交评论无需刷新页面。推荐使以改善用户体验。"
 msgid "Enable comment AJAX"
 msgstr "启用 AJAX 评论"
 
+#: includes/comment-ajax/comment-ajax.php:98
+#: includes/comment-notify/comment-notify.php:53
+#: includes/link-manager/link-manager.php:34
+#: includes/post-copyright/post-copyright.php:41
+#: includes/post-share/post-share.php:97 includes/post-thumb/post-thumb.php:72
+#: includes/post-views/post-views.php:66
+msgid "Enable"
+msgstr "启用"
+
 #: includes/comment-ajax/comment-ajax.php:189
 msgid "Error: please fill your name."
 msgstr "错误：请填写你的名字。"
@@ -841,6 +779,68 @@ msgid ""
 "Sorry, some server error occurred, the operation can not be completed, "
 "please try again later."
 msgstr "抱歉，服务器发生了一些错误，该操作无法完成，请稍后重试。"
+
+#: includes/comment-notify/comment-notify.php:43
+msgid "Comment reply notifier"
+msgstr "评论回复通知"
+
+#: includes/comment-notify/comment-notify.php:45
+msgid ""
+"It will send a mail to notify the being reply comment author when comment "
+"has been reply, if your server supports."
+msgstr "如果您的服务器支持，当评论被回复时，它将会发送一封通知邮件给被回复人。"
+
+#: includes/comment-notify/comment-notify.php:49
+#: includes/link-manager/link-manager.php:30
+#: includes/post-copyright/post-copyright.php:40
+#: includes/post-share/post-share.php:96 includes/post-thumb/post-thumb.php:68
+msgid "Enable or not?"
+msgstr "启用"
+
+#: includes/comment-notify/comment-notify.php:83
+#, php-format
+msgid "[%s] Your comment has been approved in \"%s\"."
+msgstr "[%s] 您的评论通过审核于《%s》。"
+
+#: includes/comment-notify/comment-notify.php:89
+#, php-format
+msgid "Your comment has been approved in \"%s\"."
+msgstr "您的评论已通过审核与《%s》。"
+
+#: includes/comment-notify/comment-notify.php:96
+#, php-format
+msgid "Comment content: %s"
+msgstr "评论内容：%s"
+
+#: includes/comment-notify/comment-notify.php:103
+#, php-format
+msgid "Article URL: %s"
+msgstr "文章 URL：%s"
+
+#: includes/comment-notify/comment-notify.php:110
+#, php-format
+msgid "Comment URL: %s"
+msgstr "评论 URL：%s"
+
+#: includes/comment-notify/comment-notify.php:156
+#, php-format
+msgid "[%s] Your comment has a reply in \"%s\"."
+msgstr "[%s] 您的评论有回复于《%s》。"
+
+#: includes/comment-notify/comment-notify.php:161
+#, php-format
+msgid "Your comment: %s"
+msgstr "您的评论：%s"
+
+#: includes/comment-notify/comment-notify.php:168
+#, php-format
+msgid "%s's reply: %s"
+msgstr "%s的回复：%s"
+
+#: includes/comment-notify/comment-notify.php:176
+#, php-format
+msgid "Views the comment: %s"
+msgstr "查看此条评论：%s"
 
 #: includes/custom-navwalker/custom-navwalker.php:420
 msgid "Awesome icon"

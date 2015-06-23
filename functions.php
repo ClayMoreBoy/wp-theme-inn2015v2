@@ -1242,7 +1242,7 @@ class theme_functions{
 			</nav>
 		</div>
 		<?php
-		$cache = html_compress(ob_get_contents());
+		$cache = html_minify(ob_get_contents());
 		ob_end_clean();
 
 		wp_cache_set($cache_id,$cache,$cache_group,3600);
@@ -1263,51 +1263,50 @@ class theme_functions{
 	 */
 	public static function theme_comment( $comment, $args, $depth ) {
 		global $post;
-
+		
 		$GLOBALS['comment'] = $comment;
 
-		switch ( $comment->comment_type ){
-			default :
-				$classes = ['media'];
-				
-				if(!empty( $args['has_children'])) 
-					$classes[] = 'parent';
-					
-				if($comment->comment_approved == '0') 
-					$classes[] = 'moderation';
+		$classes = ['media'];
+		
+		if(!empty( $args['has_children'])) 
+			$classes[] = 'parent';
+			
+		if($comment->comment_approved == '0') 
+			$classes[] = 'moderation';
 
-				/**
-				 * post author checker
-				 */
-				if($comment->user_id == $post->post_author){
-					$is_post_author = true;
-					$classes[] = 'is-post-author';
-				}else{
-					$is_post_author = false;
-				}
+		/**
+		 * post author checker
+		 */
+		
+		if($comment->user_id == $post->post_author){
+			$is_post_author = true;
+			$classes[] = 'is-post-author';
+		}else{
+			$is_post_author = false;
+		}
 
-				/**
-				 * check is my comment
-				 */
-				if($comment->user_id != 0){
-					static $get_current_user_id = null;
-					if($get_current_user_id === null)
-						$get_current_user_id = get_current_user_id();
+		/**
+		 * check is my comment
+		 */
+		if($comment->user_id != 0){
+			static $get_current_user_id = null;
+			if($get_current_user_id === null)
+				$get_current_user_id = get_current_user_id();
 
-					if($get_current_user_id == $comment->user_id)
-						$classes[] = 'is-me';
-				}
+			if($get_current_user_id == $comment->user_id)
+				$classes[] = 'is-me';
+		}
 
-				/**
-				 * author url
-				 */
-				$author_url = get_comment_author_url();
-				if(!empty($author_url) && stripos($author_url,home_url()) === false){
-					$author_nofollow = ' rel="external nofollow" ';
-				}else{
-					$author_nofollow = null;
-				}
-				?>
+		/**
+		 * author url
+		 */
+		$author_url = get_comment_author_url();
+		if(!empty($author_url) && stripos($author_url,home_url()) === false){
+			$author_nofollow = ' rel="external nofollow" ';
+		}else{
+			$author_nofollow = null;
+		}
+		?>
 <li <?php comment_class($classes);?> id="comment-<?= $comment->comment_ID;?>">
 	<div id="comment-body-<?= $comment->comment_ID; ?>" class="comment-body">
 	
@@ -1387,8 +1386,7 @@ class theme_functions{
 			
 		</div><!-- /.media-body -->
 	</div><!-- /.comment-body -->
-		<?php
-		}
+	<?php
 	}
 	public static function filter_get_comment_text($comment_content,$comment){
 		/**
@@ -1653,7 +1651,7 @@ class theme_functions{
 			++$i;
 		} /** end foreach */
 
-		$cache = html_compress(ob_get_contents());
+		$cache = html_minify(ob_get_contents());
 		ob_end_clean();
 		
 		theme_custom_homebox::set_cache($cache);

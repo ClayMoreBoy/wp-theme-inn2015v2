@@ -401,7 +401,7 @@ class theme_cache{
 		if(empty($cache)){
 			ob_start();
 			dynamic_sidebar($id);
-			$cache = html_compress(ob_get_contents());
+			$cache = html_minify(ob_get_contents());
 			ob_end_clean();
 			$caches[$cache_group_id][$cache_id] = $cache;
 			self::set(self::$cache_key,$caches,null,$expire);
@@ -427,7 +427,7 @@ class theme_cache{
 		if(empty($cache)){
 			ob_start();
 			wp_nav_menu($args);
-			$cache = html_compress(ob_get_contents());
+			$cache = html_minify(ob_get_contents());
 			ob_end_clean();
 			$caches[$cache_group_id][$cache_id] = $cache;
 			self::set(self::$cache_key,$caches,null,$expire);

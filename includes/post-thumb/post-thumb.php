@@ -2,7 +2,7 @@
 /*
 Feature Name:	Post Thumb Up/Down
 Feature URI:	http://www.inn-studio.com
-Version:		1.1.4
+Version:		2.0.0
 Description:	Agree or not? Just use the Thumb Up or Down to do it.
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -121,7 +121,7 @@ class theme_post_thumb{
 			if(!isset($_POST[self::$iden]['restore']))
 				$opts[self::$iden] = $_POST[self::$iden];
 		}
-		return $ops;
+		return $opts;
 	}
 	public static function get_options($key = null){
 		static $caches = null;

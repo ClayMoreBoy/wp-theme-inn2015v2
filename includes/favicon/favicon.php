@@ -71,7 +71,7 @@ class theme_custom_favicon{
 				<?php
 			}
 		}
-		$content = html_compress(ob_get_contents());
+		$content = html_minify(ob_get_contents());
 		ob_end_clean();
 		$options[self::$iden]['icons'] = $content;
 
