@@ -1,4 +1,4 @@
-<footer id="footer" class="">
+<footer id="footer">
 	<div class="container">
 		<?php if(!wp_is_mobile()){ ?>
 			<div class="widget-area row hiddex-xs">
@@ -23,5 +23,6 @@
 		</p>
 	</div>
 </footer>
+<a href="#" class="back-to-top" title="<?= ___('Back to top');?>"><i class="fa fa-space-shuttle fa-fw fa-circle"></i></a>
 	<?php wp_footer();?>
 </body></html>
