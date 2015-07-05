@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-23 12:33+0800\n"
-"PO-Revision-Date: 2015-06-23 12:33+0800\n"
+"POT-Creation-Date: 2015-07-05 17:03+0800\n"
+"PO-Revision-Date: 2015-07-05 17:05+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -17,19 +17,18 @@ msgstr ""
 "X-Generator: Poedit 1.8.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: comments.php:23
+#: comments.php:14
 msgid "Comments"
 msgstr "评论"
 
-#: comments.php:26
+#: comments.php:17
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:42 core/core-options.php:173 functions.php:1680
-#: includes/_quick-comment/quick-comment.php:341
+#: comments.php:27 core/core-options.php:173 functions.php:1678
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:470 includes/favicon/favicon.php:198
-#: includes/post-thumb/post-thumb.php:315
+#: includes/mailer/mailer.php:217 includes/post-thumb/post-thumb.php:315
 #: includes/post-thumb/post-thumb.php:332
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
@@ -76,31 +75,31 @@ msgstr "暂无分类目录，请去添加一些分类。"
 msgid "Select page"
 msgstr "选择页面"
 
-#: core/core-functions.php:707
+#: core/core-functions.php:699
 msgid "Just"
 msgstr "刚刚"
 
-#: core/core-functions.php:713
+#: core/core-functions.php:705
 #, php-format
 msgid "%dmin ago"
 msgstr "%d分钟前"
 
-#: core/core-functions.php:719
+#: core/core-functions.php:711
 #, php-format
 msgid "%dh ago"
 msgstr "%d小时前"
 
-#: core/core-functions.php:725
+#: core/core-functions.php:717
 #, php-format
 msgid "%dd ago"
 msgstr "%d天前"
 
-#: core/core-functions.php:731
+#: core/core-functions.php:723
 #, php-format
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:737 functions.php:521
+#: core/core-functions.php:729 functions.php:521
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
@@ -167,35 +166,30 @@ msgstr "主题设置"
 msgid "Please set some widgets in footer."
 msgstr "请放一些小工具到底部栏目"
 
-#: footer.php:19
+#: footer.php:20
 #, php-format
-msgid "&copy; %s %s."
-msgstr "&copy; 版权所有 %s %s"
+msgid "&copy; %1$s %2$s. Theme %3$s."
+msgstr "版权所有 &copy; %1$s %2$s。主题%3$s。"
 
-#: footer.php:21
-#, php-format
-msgid "Theme %s by %s."
-msgstr "Theme %s by %s."
-
-#: footer.php:21
-msgid "Top WordPress developer"
-msgstr "WordPress 顶尖开发者"
-
-#: footer.php:21 functions.php:38
-msgid "INN STUDIO"
-msgstr "INN STUDIO"
+#: footer.php:28
+msgid "Back to top"
+msgstr "返回顶部"
 
 #: functions.php:35 functions.php:49
 msgid "INN 2015 v2"
-msgstr ""
+msgstr "INN2015 v2"
 
 #: functions.php:36
 msgid "http://inn-studio.com/inn2015v2"
-msgstr ""
+msgstr "http://inn-studio.com/inn2015v2"
 
 #: functions.php:37
 msgid "http://inn-studio.com"
 msgstr "http://inn-studio.com/"
+
+#: functions.php:38
+msgid "INN STUDIO"
+msgstr "INN STUDIO"
 
 #: functions.php:48
 msgid "Professional edition"
@@ -233,7 +227,7 @@ msgstr "顶/赞"
 msgid "Comment count"
 msgstr "评论统计"
 
-#: functions.php:377 functions.php:528 includes/post-views/post-views.php:188
+#: functions.php:377 functions.php:528 includes/post-views/post-views.php:190
 msgid "Views"
 msgstr "查看数"
 
@@ -326,7 +320,7 @@ msgstr "暂无资料"
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:954 functions.php:1504
+#: functions.php:954 functions.php:1502
 msgid "Previous page"
 msgstr "上一页"
 
@@ -365,7 +359,7 @@ msgstr "上一页"
 msgid "Preview post"
 msgstr "上一篇"
 
-#: functions.php:1234 functions.php:1501
+#: functions.php:1234 functions.php:1499
 msgid "Next page"
 msgstr "下一页"
 
@@ -373,69 +367,68 @@ msgstr "下一页"
 msgid "Next post"
 msgstr "下一篇"
 
-#: functions.php:1331
+#: functions.php:1330
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1358 functions.php:1364 functions.php:1376
-#: includes/_quick-comment/quick-comment.php:350
+#: functions.php:1357 functions.php:1363 functions.php:1375
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1436 includes/related-post/related-post.php:54
+#: functions.php:1434 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1521
+#: functions.php:1519
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1586
+#: functions.php:1584
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1607
+#: functions.php:1605
 msgid "&raquo; more"
 msgstr "&raquo; 更多"
 
-#: functions.php:1671
+#: functions.php:1669
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1673
+#: functions.php:1671
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1686
+#: functions.php:1684
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1687
+#: functions.php:1685
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1719 includes/_quick-comment/quick-comment.php:347
+#: functions.php:1717
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1721
+#: functions.php:1719
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1732 includes/_quick-comment/quick-comment.php:348
+#: functions.php:1730
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1734
+#: functions.php:1732
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1746
+#: functions.php:1744
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1747
+#: functions.php:1745
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
@@ -454,128 +447,6 @@ msgstr "颜文字表情（一行一个）"
 #: includes/_comment-face/comment-face.php:81
 msgid "Face"
 msgstr "表情"
-
-#: includes/_quick-comment/quick-comment.php:22
-msgid "Referer error"
-msgstr "来路错误"
-
-#: includes/_quick-comment/quick-comment.php:35
-#: includes/_quick-comment/quick-comment.php:81
-msgid "Invail post id."
-msgstr "无效的文章 ID。"
-
-#: includes/_quick-comment/quick-comment.php:44
-msgid "This post comment has closed."
-msgstr "这篇文章的评论已关闭。"
-
-#: includes/_quick-comment/quick-comment.php:89
-msgid "Invail comment content"
-msgstr "无效的评论内容。"
-
-#: includes/_quick-comment/quick-comment.php:108
-msgid "Anonymous"
-msgstr "匿名"
-
-#: includes/_quick-comment/quick-comment.php:119
-msgid "Invail email address."
-msgstr "无效的电子邮箱地址。"
-
-#: includes/_quick-comment/quick-comment.php:150
-msgid "System can not create comment."
-msgstr "系统无法创建评论。"
-
-#: includes/_quick-comment/quick-comment.php:171
-msgid "No comment yet."
-msgstr "暂无评论"
-
-#: includes/_quick-comment/quick-comment.php:183
-msgid "Invail type"
-msgstr "无效的类型。"
-
-#: includes/_quick-comment/quick-comment.php:224
-#: includes/comment-ajax/comment-ajax.php:111
-msgid "Blocked comment from frontend."
-msgstr "已禁止前台评论"
-
-#: includes/_quick-comment/quick-comment.php:246
-#: includes/comment-ajax/comment-ajax.php:178
-msgid "Sorry, you must be logged in to post a comment."
-msgstr "抱歉，您必须登陆后才能发表评论。"
-
-#: includes/_quick-comment/quick-comment.php:256
-#: includes/comment-ajax/comment-ajax.php:395
-msgid "Sorry, the post does not exist."
-msgstr "抱歉，文章不存在。"
-
-#: includes/_quick-comment/quick-comment.php:271
-#: includes/comment-ajax/comment-ajax.php:410
-msgid "Sorry, comments are closed for this item."
-msgstr "抱歉，该文章的评论已被关闭。"
-
-#: includes/_quick-comment/quick-comment.php:280
-#: includes/comment-ajax/comment-ajax.php:419
-msgid "Sorry, can not comment on trash post."
-msgstr "抱歉，您必须登陆后才能发表评论。"
-
-#: includes/_quick-comment/quick-comment.php:289
-#: includes/comment-ajax/comment-ajax.php:428
-msgid "Sorry, can not comment draft post."
-msgstr "抱歉，您必须登陆后才能发表评论。"
-
-#: includes/_quick-comment/quick-comment.php:298
-#: includes/comment-ajax/comment-ajax.php:437
-msgid "Sorry, the post needs password to comment."
-msgstr "抱歉，您必须登陆后才能发表评论。"
-
-#: includes/_quick-comment/quick-comment.php:309
-#, php-format
-msgid "Total %d comments"
-msgstr "共 %d 条评论"
-
-#: includes/_quick-comment/quick-comment.php:311
-#: includes/_quick-comment/quick-comment.php:323
-msgid "Join the comments"
-msgstr "加入讨论"
-
-#: includes/_quick-comment/quick-comment.php:316
-msgid "Loading comment list, please wait..."
-msgstr "评论列表加载中，请稍候…"
-
-#: includes/_quick-comment/quick-comment.php:342
-#: includes/comment-ajax/comment-ajax.php:270
-#: includes/comment-ajax/comment-ajax.php:471
-msgid "Commented successfully, thank you!"
-msgstr "发表评论成功，感谢您的参与！"
-
-#: includes/_quick-comment/quick-comment.php:343
-#: includes/widget-author/widget-author.php:119
-msgid "Message"
-msgstr "提示"
-
-#: includes/_quick-comment/quick-comment.php:344
-msgid "No comment yet, you are first commenter."
-msgstr "暂无评论，果断抢沙发。"
-
-#: includes/_quick-comment/quick-comment.php:345
-msgid "Comment"
-msgstr "评论"
-
-#: includes/_quick-comment/quick-comment.php:346
-msgid "Post comment"
-msgstr "发表评论"
-
-#: includes/_quick-comment/quick-comment.php:349
-msgid "Closing tip after 3s"
-msgstr "3秒后关闭提示"
-
-#: includes/_quick-comment/quick-comment.php:351
-msgid "Error"
-msgstr "错误"
-
-#: includes/_quick-comment/quick-comment.php:352
-#: includes/clean-up/clean-up.php:228 includes/favicon/favicon.php:199
-msgid "Server error or network is disconnected."
-msgstr "服务器错误或网络未连接。"
 
 #: includes/cache/cache.php:112
 msgid "Theme cache"
@@ -723,6 +594,11 @@ msgstr "无参数"
 msgid "Database updated in %s s."
 msgstr "数据库已在 %s 秒内更新。"
 
+#: includes/clean-up/clean-up.php:228 includes/favicon/favicon.php:199
+#: includes/mailer/mailer.php:218
+msgid "Server error or network is disconnected."
+msgstr "服务器错误或网络未连接。"
+
 #: includes/comment-ajax/comment-ajax.php:90
 msgid "Comment AJAX settings"
 msgstr "AJAX 评论设置"
@@ -739,12 +615,20 @@ msgstr "启用 AJAX 评论"
 
 #: includes/comment-ajax/comment-ajax.php:98
 #: includes/comment-notify/comment-notify.php:53
-#: includes/link-manager/link-manager.php:34
-#: includes/post-copyright/post-copyright.php:41
-#: includes/post-share/post-share.php:97 includes/post-thumb/post-thumb.php:72
-#: includes/post-views/post-views.php:66
+#: includes/link-manager/link-manager.php:34 includes/mailer/mailer.php:106
+#: includes/post-copyright/post-copyright.php:43
+#: includes/post-share/post-share.php:98 includes/post-thumb/post-thumb.php:72
+#: includes/post-views/post-views.php:64
 msgid "Enable"
 msgstr "启用"
+
+#: includes/comment-ajax/comment-ajax.php:111
+msgid "Blocked comment from frontend."
+msgstr "已禁止前台评论"
+
+#: includes/comment-ajax/comment-ajax.php:178
+msgid "Sorry, you must be logged in to post a comment."
+msgstr "抱歉，您必须登陆后才能发表评论。"
 
 #: includes/comment-ajax/comment-ajax.php:189
 msgid "Error: please fill your name."
@@ -758,6 +642,11 @@ msgstr "错误：请输入一个合法的邮箱地址。"
 msgid "Error: please type a comment."
 msgstr "错误：请输入评论内容。"
 
+#: includes/comment-ajax/comment-ajax.php:270
+#: includes/comment-ajax/comment-ajax.php:471
+msgid "Commented successfully, thank you!"
+msgstr "发表评论成功，感谢您的参与！"
+
 #: includes/comment-ajax/comment-ajax.php:295
 msgid "Post ID is invaild."
 msgstr "无效的文章 ID 参数。"
@@ -769,6 +658,26 @@ msgstr "文章不存在。"
 #: includes/comment-ajax/comment-ajax.php:316
 msgid "Data sent."
 msgstr "数据传送完毕。"
+
+#: includes/comment-ajax/comment-ajax.php:395
+msgid "Sorry, the post does not exist."
+msgstr "抱歉，文章不存在。"
+
+#: includes/comment-ajax/comment-ajax.php:410
+msgid "Sorry, comments are closed for this item."
+msgstr "抱歉，该文章的评论已被关闭。"
+
+#: includes/comment-ajax/comment-ajax.php:419
+msgid "Sorry, can not comment on trash post."
+msgstr "抱歉，您必须登陆后才能发表评论。"
+
+#: includes/comment-ajax/comment-ajax.php:428
+msgid "Sorry, can not comment draft post."
+msgstr "抱歉，您必须登陆后才能发表评论。"
+
+#: includes/comment-ajax/comment-ajax.php:437
+msgid "Sorry, the post needs password to comment."
+msgstr "抱歉，您必须登陆后才能发表评论。"
 
 #: includes/comment-ajax/comment-ajax.php:475
 msgid "{n} page"
@@ -792,8 +701,8 @@ msgstr "如果您的服务器支持，当评论被回复时，它将会发送一
 
 #: includes/comment-notify/comment-notify.php:49
 #: includes/link-manager/link-manager.php:30
-#: includes/post-copyright/post-copyright.php:40
-#: includes/post-share/post-share.php:96 includes/post-thumb/post-thumb.php:68
+#: includes/post-copyright/post-copyright.php:39
+#: includes/post-share/post-share.php:97 includes/post-thumb/post-thumb.php:68
 msgid "Enable or not?"
 msgstr "启用"
 
@@ -850,15 +759,15 @@ msgstr "Awesome 图标"
 msgid "Hide navigation label"
 msgstr "隐藏导航标签"
 
-#: includes/default-gravatar/default-gravatar.php:27
+#: includes/default-gravatar/default-gravatar.php:26
 msgid "Custom default gravatar"
 msgstr "自定义默认头像"
 
-#: includes/default-gravatar/default-gravatar.php:43
+#: includes/default-gravatar/default-gravatar.php:49
 msgid "Custom default gravatar settings"
 msgstr "自定义默认头像设置"
 
-#: includes/default-gravatar/default-gravatar.php:44
+#: includes/default-gravatar/default-gravatar.php:50
 #, php-format
 msgid ""
 "You can change the default gravatar image using custom avatar url address. "
@@ -867,11 +776,11 @@ msgstr ""
 "您可以使用自定义图片 URL 来更改 Gravatar 默认头像。保存设置后，请点击 %s 选择"
 "自定义 Gravatar 头像。"
 
-#: includes/default-gravatar/default-gravatar.php:44
+#: includes/default-gravatar/default-gravatar.php:50
 msgid "here"
 msgstr "这里"
 
-#: includes/default-gravatar/default-gravatar.php:48
+#: includes/default-gravatar/default-gravatar.php:54
 msgid "Custom avatar URL"
 msgstr "自定义头像地址 URL"
 
@@ -893,7 +802,7 @@ msgstr "开发者模式"
 #: includes/dev-mode/dev-mode.php:77 includes/dev-mode/dev-mode.php:89
 #: includes/dev-mode/dev-mode.php:100
 #: includes/gravatar-fix/gravatar-fix.php:40
-#: includes/post-views/post-views.php:70
+#: includes/post-views/post-views.php:68
 #: includes/recomm-post/recomm-post.php:120
 #: includes/recomm-post/recomm-post.php:124
 msgid "Enabled"
@@ -1138,6 +1047,143 @@ msgstr ""
 "使存在于 WordPress 3.5 版本前的链接管理器。但实际上并不建议使用它，因为你可以"
 "用“菜单”来代替“链路管理器”。"
 
+#: includes/mailer/mailer.php:51
+msgid "Form mail"
+msgstr "发送人邮箱"
+
+#: includes/mailer/mailer.php:53 includes/mailer/mailer.php:79
+msgid "E.g., Jack@gmail.com"
+msgstr "例如：Jack@gmail.com"
+
+#: includes/mailer/mailer.php:54
+msgid ""
+"You can specify the email address that emails should be sent from. If you "
+"leave this blank, the default email will be used."
+msgstr "你可以指定电子邮件地址作为发件人地址。留空则使用默认电子邮件地址。"
+
+#: includes/mailer/mailer.php:57
+msgid "From Name"
+msgstr "发件人姓名"
+
+#: includes/mailer/mailer.php:58
+msgid "E.g., Jack"
+msgstr "例如：杰克"
+
+#: includes/mailer/mailer.php:59
+msgid ""
+"You can specify the name that emails should be sent from. If you leave this "
+"blank, the emails will be sent from your blog name."
+msgstr "您可以指定发件人的姓名。如果留空，发件人则为你的博客名称。"
+
+#: includes/mailer/mailer.php:62
+msgid "SMTP host"
+msgstr "SMTP 主机"
+
+#: includes/mailer/mailer.php:63
+msgid "E.g., smtp.gmail.com"
+msgstr "例如：smtp.gmail.com"
+
+#: includes/mailer/mailer.php:64
+msgid "Send all emails via this SMTP server."
+msgstr "发送的全部邮件都通过 SMTP 服务器"
+
+#: includes/mailer/mailer.php:67
+msgid "SMTP port"
+msgstr "SMTP 端口"
+
+#: includes/mailer/mailer.php:69
+msgid "E.g., 25"
+msgstr "例如：25"
+
+#: includes/mailer/mailer.php:70
+msgid "TCP port to connect to."
+msgstr "TCP 端口连接到。"
+
+#: includes/mailer/mailer.php:73
+msgid "SMTP secure type"
+msgstr "SMTP 安全类型"
+
+#: includes/mailer/mailer.php:74
+msgid "E.g., tls"
+msgstr "例如：tls"
+
+#: includes/mailer/mailer.php:75
+msgid "Enable TLS encryption, `ssl` also accepted"
+msgstr "启用 TLS 加密，`ssl` 也可以接受。"
+
+#: includes/mailer/mailer.php:78
+msgid "Username"
+msgstr "用户名"
+
+#: includes/mailer/mailer.php:80
+msgid "SMTP username."
+msgstr "SMTP 用户名"
+
+#: includes/mailer/mailer.php:83
+msgid "Password"
+msgstr "密码"
+
+#: includes/mailer/mailer.php:85
+msgid "Your mail password"
+msgstr "您的邮箱密码"
+
+#: includes/mailer/mailer.php:86
+msgid "SMTP password."
+msgstr "SMTP 密码"
+
+#: includes/mailer/mailer.php:97
+msgid "SMTP mail settings"
+msgstr "SMTP 邮件设置"
+
+#: includes/mailer/mailer.php:98
+msgid "Send mail using smtp server instead of the default mode."
+msgstr "使用 SMTP 服务器发送邮件来代替默认模式。"
+
+#: includes/mailer/mailer.php:102
+msgid "Enable?"
+msgstr "启用？"
+
+#: includes/mailer/mailer.php:120
+msgid "Test"
+msgstr "测试"
+
+#: includes/mailer/mailer.php:124
+msgid "Type your test mail"
+msgstr "输入您的测试邮箱"
+
+#: includes/mailer/mailer.php:125
+msgid "Send a test mail"
+msgstr "发送一封测试邮件"
+
+#: includes/mailer/mailer.php:154 includes/post-thumb/post-thumb.php:196
+msgid "Sorry, your permission is invaild."
+msgstr "抱歉，您的权限无效。"
+
+#: includes/mailer/mailer.php:163
+msgid "Sorry, test mail is invaild."
+msgstr "抱歉，测试邮箱无效。"
+
+#: includes/mailer/mailer.php:171
+msgid "This is a test email."
+msgstr "这是一封测试邮件。"
+
+#: includes/mailer/mailer.php:172
+msgid "This is a test email generated by your blog."
+msgstr "这是一封来自您的博客的测试邮件。"
+
+#: includes/mailer/mailer.php:181
+#, php-format
+msgid "Error message: %s"
+msgstr "错误信息：%s"
+
+#: includes/mailer/mailer.php:186
+msgid "The email has been sent, please check."
+msgstr "邮件已发送，请验收。"
+
+#: includes/mailer/mailer.php:193
+msgid "Sorry, param is invaild."
+msgstr "抱歉，无效的参数。"
+
 #: includes/maintenance-mode/maintenance-mode.php:49
 #: includes/maintenance-mode/maintenance-mode.php:79
 msgid "Maintenance Mode"
@@ -1209,58 +1255,58 @@ msgstr "开始重建"
 msgid "Save your settings before rebuild"
 msgstr "在重建前请保存您的设置"
 
-#: includes/post-copyright/post-copyright.php:28
+#: includes/post-copyright/post-copyright.php:27
 msgid "Post copyright settings"
 msgstr "文章版权设置"
 
-#: includes/post-copyright/post-copyright.php:30
+#: includes/post-copyright/post-copyright.php:29
 msgid ""
 "Posts copyright settings maybe protect your word. Here are some keywords "
 "that can be used:"
 msgstr "分享您的文章到每个地方。以下有一些关键词供您使用："
 
-#: includes/post-copyright/post-copyright.php:32
-#: includes/post-share/post-share.php:85
+#: includes/post-copyright/post-copyright.php:31
+#: includes/post-share/post-share.php:86
 msgid "Post Title text"
 msgstr "文章标题文字"
 
-#: includes/post-copyright/post-copyright.php:33
-#: includes/post-share/post-share.php:86
+#: includes/post-copyright/post-copyright.php:32
+#: includes/post-share/post-share.php:87
 msgid "Post URL"
 msgstr "文章地址"
 
-#: includes/post-copyright/post-copyright.php:34
-#: includes/post-share/post-share.php:87
+#: includes/post-copyright/post-copyright.php:33
+#: includes/post-share/post-share.php:88
 msgid "Blog name"
 msgstr "博客名称"
 
-#: includes/post-copyright/post-copyright.php:35
-#: includes/post-share/post-share.php:88
+#: includes/post-copyright/post-copyright.php:34
+#: includes/post-share/post-share.php:89
 msgid "Blog URL"
 msgstr "博客地址"
 
-#: includes/post-copyright/post-copyright.php:44
+#: includes/post-copyright/post-copyright.php:48
 msgid "HTML code:"
 msgstr "HTML 代码："
 
-#: includes/post-copyright/post-copyright.php:50
-#: includes/post-share/post-share.php:105
+#: includes/post-copyright/post-copyright.php:54
+#: includes/post-share/post-share.php:106
 msgid "Restore"
 msgstr "还原"
 
-#: includes/post-copyright/post-copyright.php:54
+#: includes/post-copyright/post-copyright.php:58
 msgid "Restore the post copyright settings"
 msgstr "还原文章分享设置"
 
-#: includes/post-copyright/post-copyright.php:80
+#: includes/post-copyright/post-copyright.php:93
 msgid "Permanent URL: "
 msgstr "永久地址："
 
-#: includes/post-copyright/post-copyright.php:83
+#: includes/post-copyright/post-copyright.php:96
 msgid "Welcome to reprint: "
 msgstr "欢迎转载："
 
-#: includes/post-copyright/post-copyright.php:83
+#: includes/post-copyright/post-copyright.php:96
 msgid ""
 "Addition to indicate the original, the article of <a href=\"%blog_url%\">"
 "%blog_name%</a> comes from internet. If infringement, please contact me to "
@@ -1269,63 +1315,63 @@ msgstr ""
 "除非注明，<a href=\"%blog_url%\">%blog_name%</a> 的文章均来自网络。如有侵权，"
 "请及时告知删除。"
 
-#: includes/post-share/post-share.php:80
+#: includes/post-share/post-share.php:81
 msgid "Posts share settings"
 msgstr "文章分享设置"
 
-#: includes/post-share/post-share.php:82
+#: includes/post-share/post-share.php:83
 msgid "Share your post to everywhere. Here are some keywords that can be used:"
 msgstr "分享您的文章到每个地方。以下有一些关键词供您使用："
 
-#: includes/post-share/post-share.php:89
+#: includes/post-share/post-share.php:90
 msgid "The first picture of the post."
 msgstr "文章的第一幅图"
 
-#: includes/post-share/post-share.php:90
+#: includes/post-share/post-share.php:91
 msgid "The excerpt of post."
 msgstr "文章摘要"
 
-#: includes/post-share/post-share.php:91
+#: includes/post-share/post-share.php:92
 msgid "The content of post."
 msgstr "文章内容"
 
-#: includes/post-share/post-share.php:100
+#: includes/post-share/post-share.php:101
 msgid "HTML codes"
 msgstr "HTML 代码"
 
-#: includes/post-share/post-share.php:109
+#: includes/post-share/post-share.php:110
 msgid "Restore the post share settings"
 msgstr "还原文章分享设置"
 
-#: includes/post-share/post-share.php:124
+#: includes/post-share/post-share.php:125
 msgid "-- from %blog_name%"
 msgstr "—— 来自 %blog_name%"
 
-#: includes/post-share/post-share.php:128
+#: includes/post-share/post-share.php:129
 msgid "Share to: "
 msgstr "转贴到："
 
-#: includes/post-share/post-share.php:129
 #: includes/post-share/post-share.php:130
 #: includes/post-share/post-share.php:131
 #: includes/post-share/post-share.php:132
+#: includes/post-share/post-share.php:133
 #, php-format
 msgid "Share to %s"
 msgstr "分享到%s"
 
-#: includes/post-share/post-share.php:129
+#: includes/post-share/post-share.php:130
 msgid "Sina Weibo"
 msgstr "渣浪微博"
 
-#: includes/post-share/post-share.php:130
+#: includes/post-share/post-share.php:131
 msgid "QQ zone"
 msgstr "QQ空间"
 
-#: includes/post-share/post-share.php:131
+#: includes/post-share/post-share.php:132
 msgid "Tieba"
 msgstr "贴吧"
 
-#: includes/post-share/post-share.php:132
+#: includes/post-share/post-share.php:133
 msgid "Wechat"
 msgstr "微信"
 
@@ -1394,10 +1440,6 @@ msgstr "抱歉，文章不存在。"
 msgid "You voted the post, thank you."
 msgstr "您已投过票了，感谢参与！"
 
-#: includes/post-thumb/post-thumb.php:196
-msgid "Sorry, your permission is invaild."
-msgstr "抱歉，您的权限无效。"
-
 #: includes/post-thumb/post-thumb.php:202
 msgid "Data has been converted."
 msgstr "数据已成功转换。"
@@ -1415,15 +1457,15 @@ msgstr "目录大纲"
 msgid "[TOC]"
 msgstr "[目录]"
 
-#: includes/post-views/post-views.php:62
+#: includes/post-views/post-views.php:60
 msgid "Post views settings"
 msgstr "文章查看数设置"
 
-#: includes/post-views/post-views.php:76
+#: includes/post-views/post-views.php:74
 msgid "Max cache storage times"
 msgstr "最大缓存次数"
 
-#: includes/post-views/post-views.php:79
+#: includes/post-views/post-views.php:77
 msgid ""
 "Using cache to improve performance. When the views more than max storage "
 "times, views will be save to database."
@@ -1845,14 +1887,18 @@ msgstr "已关注"
 msgid "Follow"
 msgstr "关注"
 
+#: includes/widget-author/widget-author.php:119
+msgid "Message"
+msgstr "提示"
+
 #: includes/widget-author/widget-author.php:129
 msgid "Member information"
 msgstr "会员资料"
 
 #: includes/widget-author/widget-author.php:133
 #: includes/widget-author/widget-author.php:140
-#: includes/widget-comments/widget-comments.php:110
-#: includes/widget-comments/widget-comments.php:117
+#: includes/widget-comments/widget-comments.php:111
+#: includes/widget-comments/widget-comments.php:118
 #: includes/widget-rank/widget-rank.php:112
 #: includes/widget-rank/widget-rank.php:119
 #: includes/widget-tags/widget-tags.php:132
@@ -1919,11 +1965,11 @@ msgstr "显示最新的评论"
 msgid "Latest comments"
 msgstr "最新评论"
 
-#: includes/widget-comments/widget-comments.php:100
+#: includes/widget-comments/widget-comments.php:101
 msgid "No any comment yet."
 msgstr "暂无任何评论。"
 
-#: includes/widget-comments/widget-comments.php:121
+#: includes/widget-comments/widget-comments.php:122
 msgid "Number"
 msgstr "数量"
 
@@ -2029,6 +2075,66 @@ msgstr "最新日志"
 #: sidebar.php:12
 msgid "Please set some widgets in sidebar."
 msgstr "请设置一些小工具在侧栏。"
+
+#~ msgid "&copy; %s %s."
+#~ msgstr "&copy; 版权所有 %s %s"
+
+#~ msgid "Theme %s by %s."
+#~ msgstr "Theme %s by %s."
+
+#~ msgid "Top WordPress developer"
+#~ msgstr "WordPress 顶尖开发者"
+
+#~ msgid "Referer error"
+#~ msgstr "来路错误"
+
+#~ msgid "Invail post id."
+#~ msgstr "无效的文章 ID。"
+
+#~ msgid "This post comment has closed."
+#~ msgstr "这篇文章的评论已关闭。"
+
+#~ msgid "Invail comment content"
+#~ msgstr "无效的评论内容。"
+
+#~ msgid "Anonymous"
+#~ msgstr "匿名"
+
+#~ msgid "Invail email address."
+#~ msgstr "无效的电子邮箱地址。"
+
+#~ msgid "System can not create comment."
+#~ msgstr "系统无法创建评论。"
+
+#~ msgid "No comment yet."
+#~ msgstr "暂无评论"
+
+#~ msgid "Invail type"
+#~ msgstr "无效的类型。"
+
+#~ msgid "Total %d comments"
+#~ msgstr "共 %d 条评论"
+
+#~ msgid "Join the comments"
+#~ msgstr "加入讨论"
+
+#~ msgid "Loading comment list, please wait..."
+#~ msgstr "评论列表加载中，请稍候…"
+
+#~ msgid "No comment yet, you are first commenter."
+#~ msgstr "暂无评论，果断抢沙发。"
+
+#~ msgid "Comment"
+#~ msgstr "评论"
+
+#~ msgid "Post comment"
+#~ msgstr "发表评论"
+
+#~ msgid "Closing tip after 3s"
+#~ msgstr "3秒后关闭提示"
+
+#~ msgid "Error"
+#~ msgstr "错误"
 
 #~ msgid "Thumb down"
 #~ msgstr "踩/喷"
@@ -3073,9 +3179,6 @@ msgstr "请设置一些小工具在侧栏。"
 #~ msgid ""
 #~ "Sorry, email already exists, please change another one and try again."
 #~ msgstr "抱歉，邮箱已经存在，请输入另一个再尝试。"
-
-#~ msgid "Password"
-#~ msgstr "密码"
 
 #~ msgid "Re-type password"
 #~ msgstr "重复密码"
