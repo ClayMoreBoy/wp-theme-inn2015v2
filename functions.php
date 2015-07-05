@@ -1184,12 +1184,11 @@ class theme_functions{
 		$cache_id = $post->ID . $page;
 		$cache_group = 'post-pagi';
 
-		$cache = wp_cache_get($cache_id,$cache_group);
+		$cache = theme_cache::get($cache_id,$cache_group);
 		if(!empty($cache)){
 			echo $cache;
 			return;
 		}
-			
 		ob_start();
 		?>
 		<div class="prev-next-pagination">
@@ -1207,8 +1206,10 @@ class theme_functions{
 					$prev_url = $prev_next_pagination['prev_page']['url'];
 					$prev_type = 'page';
 				}else{
-					$prev_url = get_permalink($prev_next_pagination['next_post']->ID);
-					$prev_type = 'post';
+					if(isset($prev_next_pagination['next_post'])){
+						$prev_url = get_permalink($prev_next_pagination['next_post']->ID);
+						$prev_type = 'post';
+					}
 				}
 				/**
 				 * next
@@ -1217,8 +1218,10 @@ class theme_functions{
 					$next_url = $prev_next_pagination['next_page']['url'];
 					$next_type = 'page';
 				}else{
-					$next_url = get_permalink($prev_next_pagination['prev_post']->ID);
-					$next_type = 'post';
+					if(isset($prev_next_pagination['prev_post'])){
+						$next_url = get_permalink($prev_next_pagination['prev_post']->ID);
+						$next_type = 'post';
+					}
 				}
 				if($prev_url){
 					$prev_btn = $prev_type === 'page' ? 'btn-success' : 'btn-primary';
@@ -1245,7 +1248,7 @@ class theme_functions{
 		$cache = html_minify(ob_get_contents());
 		ob_end_clean();
 
-		wp_cache_set($cache_id,$cache,$cache_group,3600);
+		theme_cache::set($cache_id,$cache,$cache_group,3600);
 		echo $cache;
 	}
 	/**
@@ -1345,43 +1348,45 @@ class theme_functions{
 				<time class="comment-meta-data time" datetime="<?= get_comment_time('c');?>">
 					<a href="<?= esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?= friendly_date(get_comment_time('U')); ?></a>
 				</time>
-				<span class="comment-meta-data comment-reply reply">
-					<?php
-					if(!is_user_logged_in()){
-						/**
-						 * if needs register to comment
-						 */
-						if(theme_features::get_option('comment_registration')){
-							static $reply_link;
-							if(!$reply_link)
-								$reply_link = '<a rel="nofollow" class="comment-reply-login quick-login-btn" href="' . wp_login_url(get_permalink($comment->comment_post_ID)) . '">' . ___('Reply') . '</a>';
-						}else{
-							$reply_link = get_comment_reply_link(
-								array_merge($args,[
-									'add_below'		=> 'comment-body', 
-									'depth' 		=> $depth,
-									'reply_text' 	=> ___('Reply'),
-									'max_depth' 	=> $args['max_depth'],
-								]),
-								$comment,
-								$comment->comment_post_ID
-							);
-						}
+				<?php
+				if(!theme_cache::is_user_logged_in()){
+					/**
+					 * if needs register to comment
+					 */
+					if(theme_features::get_option('comment_registration')){
+						static $reply_link;
+						if(!$reply_link)
+							$reply_link = '<a rel="nofollow" class="comment-reply-login quick-login-btn" href="' . wp_login_url(get_permalink($comment->comment_post_ID)) . '">' . ___('Reply') . '</a>';
 					}else{
 						$reply_link = get_comment_reply_link(
-							array_merge($args,[
+							[
 								'add_below'		=> 'comment-body', 
 								'depth' 		=> $depth,
-								'reply_text' 	=> ___('Reply'),
 								'max_depth' 	=> $args['max_depth'],
-							]),
+							],
 							$comment,
-							$comment->comment_post_ID
+							$post->ID
 						);
 					}
-					echo preg_replace('/(href=)[^\s]+/','$1"javascript:;"',$reply_link);
+				}else{
+					$reply_link = get_comment_reply_link(
+						[
+							'add_below'		=> 'comment-body', 
+							'depth' 		=> $depth,
+							'max_depth' 	=> $args['max_depth'],
+						],
+						$comment,
+						$post->ID
+					);
+				}
+
+				$reply_link = preg_replace('/(href=)[^\s]+/','$1"javascript:;"',$reply_link);
+				if(!empty($reply_link)){
 					?>
-				</span><!-- .reply -->
+					<span class="comment-meta-data comment-reply reply">
+						<?= $reply_link;?>
+					</span><!-- .reply -->
+				<?php } ?>
 			</h4>
 			
 		</div><!-- /.media-body -->
