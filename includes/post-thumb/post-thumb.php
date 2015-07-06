@@ -279,7 +279,10 @@ class theme_post_thumb{
 		return isset($_COOKIE[self::$iden]) ? json_decode($_COOKIE[self::$iden],true) : [];
 	}
 	private static function is_voted($post_id){
-		return in_array($post_id,self::get_voted());
+		$voted_ids = self::get_voted();
+		if(!empty($voted_ids) && !in_array($post_id,$voted_ids))	
+			return true;
+		return false;
 	}
 	private static function set_voted($post_id){
 		$voted_ids = self::get_voted();
