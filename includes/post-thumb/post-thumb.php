@@ -280,7 +280,7 @@ class theme_post_thumb{
 	}
 	private static function is_voted($post_id){
 		$voted_ids = self::get_voted();
-		if(!empty($voted_ids) && !in_array($post_id,$voted_ids))	
+		if(!empty($voted_ids) && in_array($post_id,$voted_ids))	
 			return true;
 		return false;
 	}
