@@ -190,6 +190,9 @@ body{
 	.navbar-inverse .navbar-toggle:focus{
 		background: rgba(0,0,0,.2);
 	}
+input::-moz-placeholder{
+	color: rgba(255,255,255,.5) !important;
+}
 a{
 	text-decoration: none;
 	/*color:#333;*/
@@ -717,12 +720,12 @@ img{
 		max-width:100%;
 	}
 	.content-reset a{
-		color:#428bca;
+
 	}
 	.content-reset a:hover,
 	.content-reset a:active,
 	.content-reset a:focus{
-		color:#d9534f;
+
 		text-decoration:underline;
 	}
 	.content-reset .more-link{
@@ -1202,7 +1205,6 @@ label.error{
 		}
 			.comment-list .comment-meta-data a:hover,
 			.comment-list .comment-meta-data a:active{
-				color:#428BCA;
 				text-decoration: underline;
 			}
 	.comment-list .author{

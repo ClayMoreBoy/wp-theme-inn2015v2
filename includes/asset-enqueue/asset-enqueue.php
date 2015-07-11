@@ -100,10 +100,6 @@ class theme_asset_enqueue{
 				'deps' => ['bootstrap','awesome'],
 				'url' =>  theme_features::get_theme_css('frontend/style',false,false),
 			],
-			'color-blue-grey' => [
-				'deps' => ['bootstrap','frontend'],
-				'url' =>  theme_features::get_theme_css('frontend/color-blue-grey',false,false),
-			],
 			'bootstrap' => [
 				'deps' => [],
 				//'url' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css',

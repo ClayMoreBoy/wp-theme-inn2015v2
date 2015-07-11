@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-05 17:03+0800\n"
-"PO-Revision-Date: 2015-07-05 17:05+0800\n"
+"POT-Creation-Date: 2015-07-11 20:37+0800\n"
+"PO-Revision-Date: 2015-07-11 20:39+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -25,11 +25,11 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:27 core/core-options.php:173 functions.php:1678
+#: comments.php:27 core/core-options.php:173 functions.php:1683
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:470 includes/favicon/favicon.php:198
-#: includes/mailer/mailer.php:217 includes/post-thumb/post-thumb.php:315
-#: includes/post-thumb/post-thumb.php:332
+#: includes/mailer/mailer.php:217 includes/post-thumb/post-thumb.php:318
+#: includes/post-thumb/post-thumb.php:335
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
 
@@ -320,7 +320,7 @@ msgstr "暂无资料"
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:954 functions.php:1502
+#: functions.php:954 functions.php:1507
 msgid "Previous page"
 msgstr "上一页"
 
@@ -351,88 +351,88 @@ msgstr "每周"
 msgid "Monthly"
 msgstr "每月"
 
-#: functions.php:1225
+#: functions.php:1228
 msgid "Preview page"
 msgstr "上一页"
 
-#: functions.php:1225
+#: functions.php:1228
 msgid "Preview post"
 msgstr "上一篇"
 
-#: functions.php:1234 functions.php:1499
+#: functions.php:1237 functions.php:1504
 msgid "Next page"
 msgstr "下一页"
 
-#: functions.php:1234
+#: functions.php:1237
 msgid "Next post"
 msgstr "下一篇"
 
-#: functions.php:1330
+#: functions.php:1333
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1357 functions.php:1363 functions.php:1375
+#: functions.php:1359
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1434 includes/related-post/related-post.php:54
+#: functions.php:1439 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1519
+#: functions.php:1524
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1584
+#: functions.php:1589
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1605
+#: functions.php:1610
 msgid "&raquo; more"
 msgstr "&raquo; 更多"
 
-#: functions.php:1669
+#: functions.php:1674
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1671
+#: functions.php:1676
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1684
+#: functions.php:1689
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1685
+#: functions.php:1690
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1717
+#: functions.php:1722
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1719
+#: functions.php:1724
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1730
+#: functions.php:1735
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1732
+#: functions.php:1737
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1744
+#: functions.php:1749
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1745
+#: functions.php:1750
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: header.php:69
+#: header.php:68
 msgid "Please input search keyword"
 msgstr "请输入搜索关键词"
 
@@ -750,6 +750,42 @@ msgstr "%s的回复：%s"
 #, php-format
 msgid "Views the comment: %s"
 msgstr "查看此条评论：%s"
+
+#: includes/custom-colorful/custom-colorful.php:32
+msgid "Default"
+msgstr "默认"
+
+#: includes/custom-colorful/custom-colorful.php:36
+msgid "Sun rise"
+msgstr "日出"
+
+#: includes/custom-colorful/custom-colorful.php:40
+msgid "Coffee"
+msgstr "咖啡"
+
+#: includes/custom-colorful/custom-colorful.php:44
+msgid "Palette"
+msgstr "星辰"
+
+#: includes/custom-colorful/custom-colorful.php:87
+msgid "Theme colorful settings"
+msgstr "主题配色设置"
+
+#: includes/custom-colorful/custom-colorful.php:88
+msgid ""
+"The theme has some color schemes, you can choose a color scheme you like. "
+"Also ,you can try to choose random scheme."
+msgstr ""
+"该主题有一些配色方案，你可以选择你喜欢的颜色。此外，您也可以选择每日随机色彩"
+"方案。"
+
+#: includes/custom-colorful/custom-colorful.php:92
+msgid "Schemes"
+msgstr "配色方案"
+
+#: includes/custom-colorful/custom-colorful.php:114
+msgid "Random daily"
+msgstr "每日随机"
 
 #: includes/custom-navwalker/custom-navwalker.php:420
 msgid "Awesome icon"
@@ -1444,8 +1480,8 @@ msgstr "您已投过票了，感谢参与！"
 msgid "Data has been converted."
 msgstr "数据已成功转换。"
 
-#: includes/post-thumb/post-thumb.php:316
-#: includes/post-thumb/post-thumb.php:333
+#: includes/post-thumb/post-thumb.php:319
+#: includes/post-thumb/post-thumb.php:336
 msgid "Sorry, server error please try again later."
 msgstr "抱歉，服务器错误请稍后重试。"
 

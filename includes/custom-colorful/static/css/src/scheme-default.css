@@ -6,7 +6,7 @@
 .default-primary-color { background: #607D8B; }
 .light-primary-color   { background: #CFD8DC; }
 .text-primary-color    { color: #FFFFFF; }
-.accent-color          { background: #448AFF; }
+.accent-color          { background: #00BCD4; }
 .primary-text-color    { color: #212121; }
 .secondary-text-color  { color: #727272; }
 .divider-color         { border-color: #B6B6B6; }
@@ -28,7 +28,7 @@ a:active,
 .archive-group a:active .media-heading,
 .list-group-item-img a:hover h3,
 .list-group-item-img a:active h3{
-	color: #448AFF;
+	color: #00BCD4;
 }
 .archive-group .sticky a:after{
 	border-color: #607D8B transparent transparent transparent;
