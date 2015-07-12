@@ -15,8 +15,9 @@ class theme_custom_colorful{
 		add_filter('theme_options_save', __CLASS__ . '::options_save');
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
 
-		//add_action('customize_register', __CLASS__ . '::customize');
-		add_action( 'wp_enqueue_scripts', __CLASS__ . '::frontend_css' );
+		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
+		add_action('customize_register', __CLASS__ . '::customize_register');
+		add_action('customize_controls_enqueue_scripts', __CLASS__ . '::customizer_live_preview');
 		
 		if(!theme_options::is_options_page())
 			return false;
@@ -43,6 +44,10 @@ class theme_custom_colorful{
 					'id' => 'palette',
 					'text' => ___('Palette'),
 					'colors' => ['#413256','#523f6d','#a3b745'],
+				],[
+					'id' => 'random',
+					'text' => ___('Random daily'),
+					'colors' => ['#000','#fff','#000'],
 				]
 			];
 		}
@@ -50,15 +55,50 @@ class theme_custom_colorful{
 			return isset($caches[$key]) ? $caches[$key] : false;
 		return $caches;
 	}
+	public static function customize_register($wp_customize){
+		$opt_prefix = theme_options::$iden . '[' . self::$iden . ']';
+		$choices = [];
+		foreach(self::get_schemes() as $v){
+			$choices[ $v['id']] = $v['text'];
+		}
+		$wp_customize->add_section(self::$iden,[
+			'title' 		=> ___('Theme colorful settings'),
+			'description' 	=> ___('The theme has some color schemes, you can choose a color scheme you like. Also ,you can try to choose random scheme.'),
+			'priority' 		=> 20,
+		]);
+		$wp_customize->add_setting($opt_prefix . '[scheme]', [
+			'default'        => 'default',
+			'capability'     => 'edit_theme_options',
+			'type'           => 'theme_mod',
+			'transport'      => 'postMessage',
+		]);
+		$wp_customize->add_control(self::$iden . '-scheme', [
+			'label'      => ___('Color Scheme'),
+			'section'    => self::$iden,
+			'settings'   => $opt_prefix . '[scheme]',
+			'type'       => 'radio',
+			'choices'    => $choices,
+		]);
+	}
+	public static function customizer_live_preview(){
+		wp_enqueue_script( 
+			self::$iden,
+			theme_features::get_theme_includes_js(__DIR__,'customizer-live-preview'),
+			['customize-preview'],
+			theme_file_timestamp::get_timestamp(),
+			true
+		);
+	}
 	public static function is_random(){
 		return self::get_options('scheme') === 'random';
 	}
 	public static function get_and_set_random_scheme(){
 		$cookie_id = self::$iden . current_time('d');
 		$rand = isset($_COOKIE[$cookie_id]) ? (int)$_COOKIE[$cookie_id] : false;
-		if($rand === false || $rand < 0 || $rand > count(self::get_schemes())){
+		$len = count(self::get_schemes()) - 1;
+		if($rand === false || $rand < 0 || $rand > $len){
 			$rand = rand(0,$len - 1);
-			setcookie($cookie_id,$rand,3600*24);
+			setcookie($cookie_id,$rand,time() + 3600*24);
 		}
 		return $rand;
 	}
@@ -78,10 +118,13 @@ class theme_custom_colorful{
 		return $opts;
 	}
 	public static function options_default(array $opts = []){
-		$opts[self::$iden]['scheme'] = 'blue-grey';
+		$opts[self::$iden]['scheme'] = 'default';
 		return $opts;
 	}
 	public static function display_backend(){
+		$current_scheme = self::get_options('scheme');
+		if(empty($current_scheme))
+			$current_scheme = 'default';
 		?>
 		<fieldset>
 			<legend><?= ___('Theme colorful settings');?></legend>
@@ -93,7 +136,7 @@ class theme_custom_colorful{
 					<td>
 						<div id="<?= self::$iden;?>">
 							<?php foreach(self::get_schemes() as $scheme){
-								$checked = self::get_options('scheme') === $scheme['id'] ? 'checked' : null;
+								$checked = $current_scheme === $scheme['id'] ? 'checked' : null;
 								?>
 								<div class="<?= self::$iden;?>-item">
 									<input type="radio" name="<?= self::$iden;?>[scheme]" id="<?= self::$iden,'-',$scheme['id'];?>" value="<?= $scheme['id'];?>" <?= $checked;?>>
@@ -105,15 +148,6 @@ class theme_custom_colorful{
 									</label>
 								</div>
 							<?php } ?>
-							<div class="<?= self::$iden;?>-item">
-								<input type="radio" name="<?= self::$iden;?>[scheme]" id="<?= self::$iden;?>-random" value="random" <?= self::get_options('scheme') === 'random' ? 'checked' : null;?>>
-								<label for="<?= self::$iden;?>-random">
-									<?php foreach(self::get_schemes(1)['colors'] as $color){ 
-										?><i></i><?php 
-									} ?>
-									<span><?= ___('Random daily');?></span>
-								</label>
-							</div>
 						</div>
 					</td>
 				</tr>

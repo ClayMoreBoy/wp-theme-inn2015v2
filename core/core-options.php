@@ -226,7 +226,7 @@ class theme_options{
 				<p>
 					<input type="hidden" name="<?= self::$iden;?>[nonce]" value="<?= wp_create_nonce(self::$iden);?>">
 					
-					<button type="submit" class="button button-primary button-large"><i class="fa fa-check"></i> <?= ___('Save all settings');?></button>
+					<button id="submit" type="submit" class="button button-primary button-large"><i class="fa fa-check"></i> <span class="tx"><?= ___('Save all settings');?></span></button>
 					
 					<label for="options-restore" class="label-options-restore" title="<?= ___('Something error with theme? Try to restore. Be careful, theme options will be cleared up!');?>">
 						<input id="options-restore" name="<?= self::$iden;?>[restore]" type="checkbox" value="1"/>

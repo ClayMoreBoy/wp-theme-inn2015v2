@@ -105,8 +105,10 @@ class widget_rank extends WP_Widget{
 			'posts_per_page' => 6,
 			'category__in' => [],
 			'content_type' => 'tx',
+			'date' => 'all',
 			'orderby' => 'latest',
 		],$instance);
+		
 		?>
 		<p>
 			<label for="<?= esc_attr(self::get_field_id('title'));?>"><?= ___('Title (optional)');?></label>

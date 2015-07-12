@@ -5,7 +5,7 @@
 			<?php theme_functions::page_content();?>
 			<?php comments_template();?>
 		</div>
-		<?php get_sidebar();?>
+		<?php include __DIR__ . '/sidebar.php';?>
 	</div><!-- .row -->
 </div><!-- .container -->
 <?php get_footer();?>

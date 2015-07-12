@@ -6,7 +6,7 @@
 			<?php theme_functions::the_related_posts_plus();?>
 			<?php comments_template();?>
 		</div>
-		<?php get_sidebar();?>
+		<?php include __DIR__ . '/sidebar.php';?>
 	</div><!-- .row -->
 </div><!-- .container -->
 <?php get_footer();?>

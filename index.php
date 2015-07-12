@@ -34,7 +34,7 @@
 				?>
 			</div>
 		</div>
-		<?php get_sidebar();?>
+		<?php include __DIR__ . '/sidebar.php';?>
 	</div><!-- .row -->
 </div><!-- .container -->
 <?php get_footer();?>

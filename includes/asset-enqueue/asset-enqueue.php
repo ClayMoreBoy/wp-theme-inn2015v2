@@ -42,11 +42,6 @@ class theme_asset_enqueue{
 			
 			
 		];
-		/**
-		 * first deregister
-		 */
-		self::frontend_deregister_js();
-		self::frontend_register_js();
 		
 		foreach($js as $k => $v){
 			wp_enqueue_script(
@@ -59,34 +54,6 @@ class theme_asset_enqueue{
 			);
 		}
 		
-	}
-	public static function frontend_register_js(){
-		$js = [
-			'jquery-core' => [
-				//'url' => 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js',
-				'url' => 'http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js',
-				'version' => null,
-			],
-		];
-		foreach($js as $k => $v){
-			wp_register_script(
-				$k,
-				$v['url'],
-				isset($v['deps']) ? $v['deps'] : [],
-				self::get_version($v),
-				true
-			);
-		}
-		
-	}
-	public static function frontend_deregister_js(){
-		$js = [
-			//'jquery',
-			'jquery-core'
-		];
-		foreach($js as $v){
-			wp_deregister_script( $v );
-		}
 	}
 	private static function get_version($v){
 		return array_key_exists('version', $v) ? $v['version'] : theme_file_timestamp::get_timestamp();
