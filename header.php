@@ -1,11 +1,11 @@
 <!DOCTYPE html><html <?php language_attributes(); ?>><head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>" />
+	<meta charset="<?= theme_cache::get_bloginfo( 'charset' ); ?>" />
 	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta http-equiv="Cache-Control" content="no-transform" /><![endif]-->
 	<meta name="renderer" content="webkit" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<meta name="author" content="INN STUDIO" />
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
-	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+	<link rel="pingback" href="<?= theme_cache::get_bloginfo('pingback_url'); ?>" />
 	<?php wp_head();?>
 </head>
 <body <?php body_class(); ?>>
@@ -21,9 +21,9 @@
 	            <span class="icon-bar"></span>
 	        </a>
 
-	        <a href="<?= home_url();?>" class="navbar-brand">
+	        <a href="<?= theme_cache::home_url();?>" class="navbar-brand">
 		        <i class="fa fa-home hidden-xs"></i> 
-				<?= get_bloginfo('name');?>			
+				<?= theme_cache::get_bloginfo('name');?>			
 			</a>
 		</div>
 	
@@ -64,7 +64,7 @@
 
 	</div><!-- .container -->
 	<div class="container">
-		<form class="navbar-form navbar-collapse-form collapse" role="search" action="<?= home_url('/'); ?>" method="get">
+		<form class="navbar-form navbar-collapse-form collapse" role="search" action="<?= theme_cache::home_url('/'); ?>" method="get">
 			<input name="s" class="form-control" placeholder="<?= ___('Please input search keyword');?>" value="<?= esc_attr(get_search_query())?>" type="search">
         </form>		
 

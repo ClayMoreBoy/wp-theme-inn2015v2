@@ -24,22 +24,9 @@ class theme_asset_enqueue{
 		$js = [
 			'frontend-seajs' => [
 				'deps' => [],
-				//'url' => 'https://cdnjs.cloudflare.com/ajax/libs/seajs/3.0.1/sea.js',
-				//'url' => 'https://cdnjs.cloudflare.com/ajax/libs/seajs/2.3.0/sea.js',
 				'url' => theme_features::get_theme_js('seajs/sea'),
 				'version' => null,
 			],
-			//'jquery-core' => [
-			//	'deps' => [],
-			//	'url' => 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js',
-			//	'version' => null,
-			//],
-			//'bootstrap' => [
-			//	'deps' => ['jquery'],
-			//	'url' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js',
-			//	'version' => null,
-			//],
-			
 			
 		];
 		
@@ -55,6 +42,7 @@ class theme_asset_enqueue{
 		}
 		
 	}
+
 	private static function get_version($v){
 		return array_key_exists('version', $v) ? $v['version'] : theme_file_timestamp::get_timestamp();
 	}

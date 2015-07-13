@@ -143,7 +143,7 @@ class theme_functions{
 		$current_tab = !empty($current_tab) ? $current_tab : 'lastest';
 		$typies = self::get_tab_type();
 		if(is_home()){
-			$current_url = home_url();
+			$current_url = theme_cache::home_url();
 		}else if(is_category()){
 			$cat_id = theme_features::get_current_cat_id();
 			$current_url = get_category_link($cat_id);
@@ -799,7 +799,7 @@ class theme_functions{
     	if(is_home())
     		return null;
 		
-		$links['home'] = '<a href="' . home_url() . '" class="home" title="' . ___('Back to Homepage') . '">
+		$links['home'] = '<a href="' . theme_cache::home_url() . '" class="home" title="' . ___('Back to Homepage') . '">
 			<i class="fa fa-home fa-fw"></i>
 			<span class="hide">' . ___('Back to Homepage') . '</span>
 		</a>';
@@ -1291,20 +1291,15 @@ class theme_functions{
 		/**
 		 * check is my comment
 		 */
-		if($comment->user_id != 0){
-			static $get_current_user_id = null;
-			if($get_current_user_id === null)
-				$get_current_user_id = get_current_user_id();
-
-			if($get_current_user_id == $comment->user_id)
-				$classes[] = 'is-me';
+		if($comment->user_id != 0 && theme_cache::get_current_user_id() == $comment->user_id){
+			$classes[] = 'is-me';
 		}
 
 		/**
 		 * author url
 		 */
 		$author_url = get_comment_author_url();
-		if(!empty($author_url) && stripos($author_url,home_url()) === false){
+		if(!empty($author_url) && stripos($author_url,theme_cache::home_url()) === false){
 			$author_nofollow = ' rel="external nofollow" ';
 		}else{
 			$author_nofollow = null;
