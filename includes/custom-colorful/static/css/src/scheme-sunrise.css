@@ -1,5 +1,9 @@
 
-	#wpadminbar{
+	#wpadminbar,
+	.main-nav a:hover, 
+	.main-nav a:active, 
+	.main-nav a:focus,
+	.menu-header li:hover > a{
 		background: #741F1C;
 	}
 /*.dark-primary-color    { background: #b43c38; }*/
@@ -9,7 +13,8 @@
 		color: #b43c38
 	}
 	.navbar-inverse,
-	.main-header,
+	.main-nav,
+	.menu-header .sub-menu,
 	#footer,
 	.dropdown-menu > .active > a, 
 	.dropdown-menu > .active > a:hover, 

@@ -1697,7 +1697,7 @@ class theme_functions{
 			<input type="hidden" name="comment_parent" id="comment_parent" value="0">
 			
 			<div class="media-left media-top hidden-xs">
-				<img id="respond-avatar" src="<?= theme_features::get_theme_images_url('frontend/avatar.jpg');?>" alt="Avatar" class="media-object avatar" width="80" height="80">
+				<img id="respond-avatar" src="<?= theme_features::get_theme_images_url(self::$avatar_placeholder);?>" alt="Avatar" class="media-object avatar" width="80" height="80">
 			</div>
 			<div class="media-body">
 				<?php
@@ -1734,22 +1734,38 @@ class theme_functions{
 						</div><!-- /.form-group -->
 					</div><!-- /.col-sm-6 -->
 				</div><!-- /.row -->				
-				<div class="form-group">
-					<div class="input-group">
-						<textarea 
-							name="comment" 
-							id="comment-form-comment" 
-							class="form-control" 
-							rows="2" 
-							placeholder="<?= ___('Hi, have something to say?');?>"
-							title="<?= ___('Nothing to say?');?>"
-							required 
-						></textarea>
-						<span class="input-group-btn">
-							<button type="submit" class="submit btn btn-success" >
-								<i class="fa fa-check fa-fw"></i>
-							</button>
-						</span>
+				<div class="form-group btn-group-textarea">
+					<textarea 
+						name="comment" 
+						id="comment-form-comment" 
+						class="form-control" 
+						rows="2" 
+						placeholder="<?= ___('Hi, have something to say?');?>" 
+						title="<?= ___('Nothing to say?');?>" 
+						required 
+					></textarea>
+					<?php
+					/**
+					 * theme comment emotion pop btn
+					 */
+					if(class_exists('theme_comment_emotion') && (theme_comment_emotion::is_enabled('kaomoji') || theme_comment_emotion::is_enabled('img'))){
+						theme_comment_emotion::display_frontend('pop');
+					}
+					?>
+					<div class="btn-group btn-group-submit">
+						<?php
+						/**
+						 * theme comment emotion
+						 */
+						if(class_exists('theme_comment_emotion') && (theme_comment_emotion::is_enabled('kaomoji') || theme_comment_emotion::is_enabled('img'))){
+							theme_comment_emotion::display_frontend('pop-btn');
+						}
+						?>
+						<button type="submit" class="submit btn btn-success" >
+							<i class="fa fa-check"></i> 
+							<?= ___('Post comment');?>
+						</button>
+						
 					</div>
 				</div><!-- .form-group -->
 			</div><!-- /.media-body -->

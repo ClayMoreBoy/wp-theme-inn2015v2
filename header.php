@@ -10,23 +10,15 @@
 </head>
 <body <?php body_class(); ?>>
 
-<div class="main-nav navbar navbar-inverse navbar-fixed-top">
+<div class="main-nav ">
 	<div class="container">
-
-		<div class="navbar-header">
-			<a href="javascript:;" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".menu-header">
-	            <span class="sr-only"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	        </a>
-
-	        <a href="<?= theme_cache::home_url();?>" class="navbar-brand">
-		        <i class="fa fa-home hidden-xs"></i> 
-				<?= theme_cache::get_bloginfo('name');?>			
-			</a>
-		</div>
-	
+		<a href="javascript:;" class="navicon toggle visible-xs-block fa fa-navicon fa-2x fa-fw" data-target=".menu-header" data-icon-active="fa-times" data-icon-original="fa-navicon"></a>
+		
+		<h1>
+			<a href="<?= theme_cache::home_url();?>">
+			<i class="fa fa-home fa-fw hidden-xs"></i>
+			<?= theme_cache::get_bloginfo('name');?></a>
+		</h1>
  
 		<?php
 		/** 
@@ -35,8 +27,8 @@
 		theme_cache::wp_nav_menu([
 	        'theme_location'    => 'menu-header',
 	        'container'         => 'nav',
-	        'container_class'   => 'menu-header navbar-collapse collapse',
-	        'menu_class'        => 'menu nav navbar-nav',
+	        'container_class'   => 'menu-header',
+	        'menu_class'        => 'menu',
 	        'menu_id' 			=> 'menu-header',
 	        'fallback_cb'       => 'custom_navwalker::fallback',
 	        'walker'            => new custom_navwalker
@@ -51,21 +43,21 @@
 		        'theme_location'    => 'menu-tools',
 		        'container'         => 'nav',
 		        'container_class'   => 'menu-tools',
-		        'menu_class'        => 'menu nav navbar-nav',
+		        'menu_class'        => 'menu',
 		        'menu_id' 			=> 'menu-tools',
 		        'fallback_cb'       => 'custom_navwalker::fallback',
 		        'walker'            => new custom_navwalker
 		   	]);
 			?>
-			<a class="tool search" href="javascript:;" data-toggle="collapse" data-target=".navbar-collapse-form">
+			<a class="tool search" href="javascript:;" data-target="#fm-search" data-focus-target="#fm-search-s">
 				<i class="fa fa-search fa-fw"></i>
 			</a>
 		</div><!-- .tools -->
 
 	</div><!-- .container -->
 	<div class="container">
-		<form class="navbar-form navbar-collapse-form collapse" role="search" action="<?= theme_cache::home_url('/'); ?>" method="get">
-			<input name="s" class="form-control" placeholder="<?= ___('Please input search keyword');?>" value="<?= esc_attr(get_search_query())?>" type="search">
+		<form id="fm-search" action="<?= theme_cache::home_url('/'); ?>">
+			<input id="fm-search-s" name="s" class="form-control" placeholder="<?= ___('Please input search keyword');?>" value="<?= esc_attr(get_search_query())?>" type="search" required>
         </form>		
 
 	</div>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-11 20:37+0800\n"
-"PO-Revision-Date: 2015-07-11 20:39+0800\n"
+"POT-Creation-Date: 2015-07-21 18:05+0800\n"
+"PO-Revision-Date: 2015-07-21 18:06+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -17,17 +17,17 @@ msgstr ""
 "X-Generator: Poedit 1.8.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: comments.php:14
+#: comments.php:12
 msgid "Comments"
 msgstr "评论"
 
-#: comments.php:17
+#: comments.php:15
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:27 core/core-options.php:173 functions.php:1683
+#: comments.php:25 core/core-options.php:173 functions.php:1678
 #: includes/clean-up/clean-up.php:227
-#: includes/comment-ajax/comment-ajax.php:470 includes/favicon/favicon.php:198
+#: includes/comment-ajax/comment-ajax.php:472 includes/favicon/favicon.php:198
 #: includes/mailer/mailer.php:217 includes/post-thumb/post-thumb.php:318
 #: includes/post-thumb/post-thumb.php:335
 msgid "Loading, please wait..."
@@ -320,7 +320,7 @@ msgstr "暂无资料"
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:954 functions.php:1507
+#: functions.php:954 functions.php:1502
 msgid "Previous page"
 msgstr "上一页"
 
@@ -359,7 +359,7 @@ msgstr "上一页"
 msgid "Preview post"
 msgstr "上一篇"
 
-#: functions.php:1237 functions.php:1504
+#: functions.php:1237 functions.php:1499
 msgid "Next page"
 msgstr "下一页"
 
@@ -367,86 +367,78 @@ msgstr "下一页"
 msgid "Next post"
 msgstr "下一篇"
 
-#: functions.php:1333
+#: functions.php:1328
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1359
+#: functions.php:1354
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1439 includes/related-post/related-post.php:54
+#: functions.php:1434 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1524
+#: functions.php:1519
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1589
+#: functions.php:1584
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1610
+#: functions.php:1605
 msgid "&raquo; more"
 msgstr "&raquo; 更多"
 
-#: functions.php:1674
+#: functions.php:1669
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1676
+#: functions.php:1671
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1689
+#: functions.php:1684
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1690
+#: functions.php:1685
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1722
+#: functions.php:1717
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1724
+#: functions.php:1719
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1735
+#: functions.php:1730
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1737
+#: functions.php:1732
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1749
+#: functions.php:1743
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1750
+#: functions.php:1744
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: header.php:68
+#: functions.php:1766
+msgid "Post comment"
+msgstr "发表评论"
+
+#: header.php:60
 msgid "Please input search keyword"
 msgstr "请输入搜索关键词"
-
-#: includes/_comment-face/comment-face.php:57
-msgid "Face settings"
-msgstr "表情设置"
-
-#: includes/_comment-face/comment-face.php:61
-msgid "Theme comment face emoticons (one per line)"
-msgstr "颜文字表情（一行一个）"
-
-#: includes/_comment-face/comment-face.php:81
-msgid "Face"
-msgstr "表情"
 
 #: includes/cache/cache.php:112
 msgid "Theme cache"
@@ -614,6 +606,8 @@ msgid "Enable comment AJAX"
 msgstr "启用 AJAX 评论"
 
 #: includes/comment-ajax/comment-ajax.php:98
+#: includes/comment-emotion/comment-emotion.php:117
+#: includes/comment-emotion/comment-emotion.php:132
 #: includes/comment-notify/comment-notify.php:53
 #: includes/link-manager/link-manager.php:34 includes/mailer/mailer.php:106
 #: includes/post-copyright/post-copyright.php:43
@@ -626,68 +620,102 @@ msgstr "启用"
 msgid "Blocked comment from frontend."
 msgstr "已禁止前台评论"
 
-#: includes/comment-ajax/comment-ajax.php:178
+#: includes/comment-ajax/comment-ajax.php:180
 msgid "Sorry, you must be logged in to post a comment."
 msgstr "抱歉，您必须登陆后才能发表评论。"
 
-#: includes/comment-ajax/comment-ajax.php:189
+#: includes/comment-ajax/comment-ajax.php:191
 msgid "Error: please fill your name."
 msgstr "错误：请填写你的名字。"
 
-#: includes/comment-ajax/comment-ajax.php:194
+#: includes/comment-ajax/comment-ajax.php:196
 msgid "Error: please enter a valid email address."
 msgstr "错误：请输入一个合法的邮箱地址。"
 
-#: includes/comment-ajax/comment-ajax.php:204
+#: includes/comment-ajax/comment-ajax.php:206
 msgid "Error: please type a comment."
 msgstr "错误：请输入评论内容。"
 
-#: includes/comment-ajax/comment-ajax.php:270
-#: includes/comment-ajax/comment-ajax.php:471
+#: includes/comment-ajax/comment-ajax.php:272
+#: includes/comment-ajax/comment-ajax.php:473
 msgid "Commented successfully, thank you!"
 msgstr "发表评论成功，感谢您的参与！"
 
-#: includes/comment-ajax/comment-ajax.php:295
+#: includes/comment-ajax/comment-ajax.php:297
 msgid "Post ID is invaild."
 msgstr "无效的文章 ID 参数。"
 
-#: includes/comment-ajax/comment-ajax.php:308
+#: includes/comment-ajax/comment-ajax.php:310
 msgid "Post is not exist."
 msgstr "文章不存在。"
 
-#: includes/comment-ajax/comment-ajax.php:316
+#: includes/comment-ajax/comment-ajax.php:318
 msgid "Data sent."
 msgstr "数据传送完毕。"
 
-#: includes/comment-ajax/comment-ajax.php:395
+#: includes/comment-ajax/comment-ajax.php:397
 msgid "Sorry, the post does not exist."
 msgstr "抱歉，文章不存在。"
 
-#: includes/comment-ajax/comment-ajax.php:410
+#: includes/comment-ajax/comment-ajax.php:412
 msgid "Sorry, comments are closed for this item."
 msgstr "抱歉，该文章的评论已被关闭。"
 
-#: includes/comment-ajax/comment-ajax.php:419
+#: includes/comment-ajax/comment-ajax.php:421
 msgid "Sorry, can not comment on trash post."
 msgstr "抱歉，您必须登陆后才能发表评论。"
 
-#: includes/comment-ajax/comment-ajax.php:428
+#: includes/comment-ajax/comment-ajax.php:430
 msgid "Sorry, can not comment draft post."
 msgstr "抱歉，您必须登陆后才能发表评论。"
 
-#: includes/comment-ajax/comment-ajax.php:437
+#: includes/comment-ajax/comment-ajax.php:439
 msgid "Sorry, the post needs password to comment."
 msgstr "抱歉，您必须登陆后才能发表评论。"
 
-#: includes/comment-ajax/comment-ajax.php:475
+#: includes/comment-ajax/comment-ajax.php:477
 msgid "{n} page"
 msgstr "第 {n} 页"
 
-#: includes/comment-ajax/comment-ajax.php:477
+#: includes/comment-ajax/comment-ajax.php:479
 msgid ""
 "Sorry, some server error occurred, the operation can not be completed, "
 "please try again later."
 msgstr "抱歉，服务器发生了一些错误，该操作无法完成，请稍后重试。"
+
+#: includes/comment-emotion/comment-emotion.php:107
+msgid "Comment emoticon settings"
+msgstr "评论表情设置"
+
+#: includes/comment-emotion/comment-emotion.php:108
+msgid "Comment can use Kaomoji or image emotions if enable."
+msgstr "如果启用的话，评论可以使用 颜文字或图片表情。"
+
+#: includes/comment-emotion/comment-emotion.php:112
+msgid "Kaomoji emoticon"
+msgstr "颜文字表情"
+
+#: includes/comment-emotion/comment-emotion.php:123
+#: includes/comment-emotion/comment-emotion.php:138
+msgid "One per line."
+msgstr "每行一个"
+
+#: includes/comment-emotion/comment-emotion.php:127
+#: includes/comment-emotion/comment-emotion.php:163
+msgid "Image emoticon"
+msgstr "图片表情"
+
+#: includes/comment-emotion/comment-emotion.php:136
+msgid "E.g. img01 = http://exmaple.com/img01.jpg"
+msgstr "例如 吃惊 = http://exmaple.com/img01.jpg"
+
+#: includes/comment-emotion/comment-emotion.php:160
+msgid "Kaomoji"
+msgstr "颜文字"
+
+#: includes/comment-emotion/comment-emotion.php:200
+msgid "Emotion"
+msgstr "表情"
 
 #: includes/comment-notify/comment-notify.php:43
 msgid "Comment reply notifier"
@@ -751,27 +779,33 @@ msgstr "%s的回复：%s"
 msgid "Views the comment: %s"
 msgstr "查看此条评论：%s"
 
-#: includes/custom-colorful/custom-colorful.php:32
+#: includes/custom-colorful/custom-colorful.php:33
 msgid "Default"
 msgstr "默认"
 
-#: includes/custom-colorful/custom-colorful.php:36
+#: includes/custom-colorful/custom-colorful.php:37
 msgid "Sun rise"
 msgstr "日出"
 
-#: includes/custom-colorful/custom-colorful.php:40
+#: includes/custom-colorful/custom-colorful.php:41
 msgid "Coffee"
 msgstr "咖啡"
 
-#: includes/custom-colorful/custom-colorful.php:44
+#: includes/custom-colorful/custom-colorful.php:45
 msgid "Palette"
 msgstr "星辰"
 
-#: includes/custom-colorful/custom-colorful.php:87
+#: includes/custom-colorful/custom-colorful.php:49
+msgid "Random daily"
+msgstr "每日随机"
+
+#: includes/custom-colorful/custom-colorful.php:65
+#: includes/custom-colorful/custom-colorful.php:130
 msgid "Theme colorful settings"
 msgstr "主题配色设置"
 
-#: includes/custom-colorful/custom-colorful.php:88
+#: includes/custom-colorful/custom-colorful.php:66
+#: includes/custom-colorful/custom-colorful.php:131
 msgid ""
 "The theme has some color schemes, you can choose a color scheme you like. "
 "Also ,you can try to choose random scheme."
@@ -779,19 +813,19 @@ msgstr ""
 "该主题有一些配色方案，你可以选择你喜欢的颜色。此外，您也可以选择每日随机色彩"
 "方案。"
 
-#: includes/custom-colorful/custom-colorful.php:92
+#: includes/custom-colorful/custom-colorful.php:76
+msgid "Color Scheme"
+msgstr "配色方案"
+
+#: includes/custom-colorful/custom-colorful.php:135
 msgid "Schemes"
 msgstr "配色方案"
 
-#: includes/custom-colorful/custom-colorful.php:114
-msgid "Random daily"
-msgstr "每日随机"
-
-#: includes/custom-navwalker/custom-navwalker.php:420
+#: includes/custom-navwalker/custom-navwalker.php:383
 msgid "Awesome icon"
 msgstr "Awesome 图标"
 
-#: includes/custom-navwalker/custom-navwalker.php:434
+#: includes/custom-navwalker/custom-navwalker.php:397
 msgid "Hide navigation label"
 msgstr "隐藏导航标签"
 
@@ -839,8 +873,8 @@ msgstr "开发者模式"
 #: includes/dev-mode/dev-mode.php:100
 #: includes/gravatar-fix/gravatar-fix.php:40
 #: includes/post-views/post-views.php:68
-#: includes/recomm-post/recomm-post.php:120
-#: includes/recomm-post/recomm-post.php:124
+#: includes/recomm-post/recomm-post.php:118
+#: includes/recomm-post/recomm-post.php:122
 msgid "Enabled"
 msgstr "启用"
 
@@ -1513,28 +1547,28 @@ msgstr ""
 msgid "Recommended post"
 msgstr "推荐文章"
 
-#: includes/recomm-post/recomm-post.php:59
+#: includes/recomm-post/recomm-post.php:57
 msgid "Set as recommended post"
 msgstr "作为推荐文章"
 
-#: includes/recomm-post/recomm-post.php:115
+#: includes/recomm-post/recomm-post.php:113
 msgid "Recommended posts"
 msgstr "推荐文章"
 
-#: includes/recomm-post/recomm-post.php:116
+#: includes/recomm-post/recomm-post.php:114
 msgid "Recommended posts will display on home page if enabled."
 msgstr "如果启用，将会在首页显示推荐文章。"
 
-#: includes/recomm-post/recomm-post.php:129
+#: includes/recomm-post/recomm-post.php:127
 msgid "Marked posts"
 msgstr "已标记的文章"
 
-#: includes/recomm-post/recomm-post.php:146
+#: includes/recomm-post/recomm-post.php:144
 msgid "Open in open window"
 msgstr "在新窗口中打开"
 
-#: includes/recomm-post/recomm-post.php:152
-#: includes/recomm-post/recomm-post.php:155
+#: includes/recomm-post/recomm-post.php:150
+#: includes/recomm-post/recomm-post.php:153
 msgid "No any post yet"
 msgstr "暂无任何资料"
 
@@ -1933,8 +1967,8 @@ msgstr "会员资料"
 
 #: includes/widget-author/widget-author.php:133
 #: includes/widget-author/widget-author.php:140
-#: includes/widget-comments/widget-comments.php:111
-#: includes/widget-comments/widget-comments.php:118
+#: includes/widget-comments/widget-comments.php:112
+#: includes/widget-comments/widget-comments.php:119
 #: includes/widget-rank/widget-rank.php:112
 #: includes/widget-rank/widget-rank.php:119
 #: includes/widget-tags/widget-tags.php:132
@@ -2001,11 +2035,15 @@ msgstr "显示最新的评论"
 msgid "Latest comments"
 msgstr "最新评论"
 
-#: includes/widget-comments/widget-comments.php:101
+#: includes/widget-comments/widget-comments.php:78
+msgid "Image"
+msgstr "图片"
+
+#: includes/widget-comments/widget-comments.php:102
 msgid "No any comment yet."
 msgstr "暂无任何评论。"
 
-#: includes/widget-comments/widget-comments.php:122
+#: includes/widget-comments/widget-comments.php:123
 msgid "Number"
 msgstr "数量"
 
@@ -2112,6 +2150,15 @@ msgstr "最新日志"
 msgid "Please set some widgets in sidebar."
 msgstr "请设置一些小工具在侧栏。"
 
+#~ msgid "Face settings"
+#~ msgstr "表情设置"
+
+#~ msgid "Theme comment face emoticons (one per line)"
+#~ msgstr "颜文字表情（一行一个）"
+
+#~ msgid "Face"
+#~ msgstr "表情"
+
 #~ msgid "&copy; %s %s."
 #~ msgstr "&copy; 版权所有 %s %s"
 
@@ -2162,9 +2209,6 @@ msgstr "请设置一些小工具在侧栏。"
 
 #~ msgid "Comment"
 #~ msgstr "评论"
-
-#~ msgid "Post comment"
-#~ msgstr "发表评论"
 
 #~ msgid "Closing tip after 3s"
 #~ msgstr "3秒后关闭提示"
