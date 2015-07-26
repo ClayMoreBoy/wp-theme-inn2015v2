@@ -549,11 +549,6 @@ class theme_functions{
 				do_action('after_singular_post_content');
 				?>
 				
-				<?php self::the_post_pagination();?>
-				
-
-
-
 				<div class="row">
 					<div class="col-xs-12 col-lg-5">
 						<?php
@@ -893,7 +888,7 @@ class theme_functions{
 	 * get_post_pagination
 	 * show pagination in archive or searching page
 	 * 
-	 * @param string The class of molude
+	 * @param string $class Class name
 	 * @return string
 	 * @version 1.0.1
 	 * 
