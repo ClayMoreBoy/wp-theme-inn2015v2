@@ -1103,19 +1103,6 @@ class theme_functions{
 		echo status_tip('info',___( 'Sorry, I was not able to find what you need, what about look at other content :)'));
 	}
 	/** 
-	 * get_rank_data
-	 */
-	public static function get_rank_data($id = null){
-		$content = array(
-			'all' 			=> ___('All'),
-			'daily' 		=> ___('Daily'),
-			'weekly' 		=> ___('Weekly'),
-			'monthly' 		=> ___('Monthly'),
-		);
-		if($id) return isset($content[$id]) ? $content[$id] : false;
-		return $content;
-	}
-	/** 
 	 * smart_page_pagination
 	 */
 	public static function smart_page_pagination($args = []){
