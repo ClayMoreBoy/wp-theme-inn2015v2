@@ -354,7 +354,7 @@ class RegenerateThumbnails {
 		header( 'Content-type: application/json' );
 
 		$id = (int) $_REQUEST['id'];
-		$image = get_post( $id );
+		$image = theme_cache::get_post( $id );
 
 		if ( ! $image || 'attachment' != $image->post_type || 'image/' != substr( $image->post_mime_type, 0, 6 ) )
 			die( json_encode( array( 'error' => sprintf( ___( 'Failed resize: %s is an invalid image ID.'), esc_html( $_REQUEST['id'] ) ) ) ) );

@@ -14,13 +14,6 @@ class theme_post_lightbox{
 		add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
 		add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
 	}
-	private static function is_singular(){
-		static $cache = null;
-		if($cache === null)
-			$cache = is_singular();
-
-		return $cache;
-	}
 	//public static function frontend_enqueue_css(){
 	//	wp_enqueue_style(
 	//		self::$iden,
@@ -30,14 +23,14 @@ class theme_post_lightbox{
 	//	);
 	//}
 	public static function frontend_seajs_alias(array $alias = []){
-		if(self::is_singular()){
+		if(theme_cache::is_singular()){
 			$alias['lightbox'] = theme_features::get_theme_includes_js(__DIR__,'lightbox');
 			$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);
 		}
 		return $alias;
 	}
 	public static function frontend_seajs_use(){
-		if(!self::is_singular())
+		if(!theme_cache::is_singular())
 			return false;
 			?>
 		seajs.use('<?= self::$iden;?>',function(m){

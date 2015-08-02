@@ -2,7 +2,7 @@
 /*
 Feature Name:	Post Thumb Up/Down
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.0
+Version:		2.0.1
 Description:	Agree or not? Just use the Thumb Up or Down to do it.
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -156,7 +156,7 @@ class theme_post_thumb{
 			/**
 			 * check post exists
 			 */
-			$post = get_post($post_id);
+			$post = theme_cache::get_post($post_id);
 			if(!$post || ($post->post_type !== 'post' && $post->post_type !== 'page')){
 				die(theme_features::json_format([
 					'status' => 'error',
@@ -226,7 +226,7 @@ class theme_post_thumb{
 		$old_meta_up = 'post_thumb_count_up';
 		$old_meta_down = 'post_thumb_count_down';
 
-		set_time_limit(3600);
+		set_time_limit(0);
 		/**
 		 * UP
 		 */
@@ -234,8 +234,8 @@ class theme_post_thumb{
 			'meta_key' => $old_meta_up
 		]);
 		if($query->have_posts()){
-			while($query->have_posts()){
-				$query->the_post();
+			foreach($query->posts as $post){
+				setup_postdata($post);
 				
 				$old_count = (int)get_post_meta($post->ID,$old_meta_up,true);
 				
@@ -255,8 +255,8 @@ class theme_post_thumb{
 			'meta_key' => $old_meta_down
 		]);
 		if($query->have_posts()){
-			while($query->have_posts()){
-				$query->the_post();
+			foreach($query->posts as $post){
+				setup_postdata($post);
 				
 				$old_count = (int)get_post_meta($post->ID,$old_meta_down,true);
 				
@@ -292,15 +292,8 @@ class theme_post_thumb{
 	public static function get_voted_class($post_id,$class = 'voted'){
 		return self::is_voted($post_id) ? $class : null;
 	}
-	private static function is_singular(){
-		static $cache = null;
-		if($cache === null)
-			$cache = is_singular();
-
-		return $cache;
-	}
 	public static function frontend_seajs_alias(array $alias = []){
-		if(!self::is_enabled() || !self::is_singular())
+		if(!self::is_enabled() || !theme_cache::is_singular())
 			return $alias;
 			
 		$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);
@@ -308,7 +301,7 @@ class theme_post_thumb{
 		return $alias;
 	}
 	public static function frontend_seajs_use(){
-		if(!self::is_enabled() || !self::is_singular())
+		if(!self::is_enabled() || !theme_cache::is_singular())
 			return false;
 		?>
 		seajs.use('<?= self::$iden;?>',function(m){

@@ -2,7 +2,7 @@
 /*
 Feature Name:	Comment AJAX
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.8
+Version:		2.0.9
 Description:	Use AJAX when browse/add/reply comment. (Recommended enable)
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -42,7 +42,7 @@ class theme_comment_ajax{
 	}
 
 	public static function thread_comments_js(){
-		if (is_singular() && comments_open() && (get_option('thread_comments') == 1) && !self::is_enabled()){
+		if (theme_cache::is_singular() && comments_open() && (theme_cache::get_option('thread_comments') == 1) && !self::is_enabled()){
 			wp_enqueue_script('comment-reply');
 		}
 	}
@@ -175,7 +175,7 @@ class theme_comment_ajax{
 			 * If not login, just visitor
 			 */
 			}else{
-				if((int)get_option('comment_registration') === 1){
+				if((int)theme_cache::get_option('comment_registration') === 1){
 					$output['status'] = 'error';
 					$output['msg'] = ___('Sorry, you must be logged in to post a comment.');
 					die(theme_features::json_format($output));
@@ -184,7 +184,7 @@ class theme_comment_ajax{
 			/**
 			 * Check required 
 			 */
-			if(get_option('require_name_email')&& !$user->exists()){
+			if(theme_cache::get_option('require_name_email')&& !$user->exists()){
 				if(empty($comment_author)){
 					$output['status'] = 'error';
 					$output['code'] = 'invaild_name';
@@ -230,7 +230,7 @@ class theme_comment_ajax{
 			 */
 			$comment = get_comment($comment_id);
 			
-			$post = get_post($comment_post_ID);
+			$post = theme_cache::get_post($comment_post_ID);
 			/** 
 			 * hook
 			 */
@@ -302,7 +302,7 @@ class theme_comment_ajax{
 				/**
 				 * check post exists
 				 */
-				$post = get_post($post_id);
+				$post = theme_cache::get_post($post_id);
 
 				if(!$post || ($post->post_type !== 'post' && $post->post_type !== 'page')){
 					$output['status'] = 'error';
@@ -386,7 +386,7 @@ class theme_comment_ajax{
 	public static function pre_comment_on_post($comment_post_ID){
 		
 		$comment_post_ID = isset($_POST['comment_post_ID']) ? (int) $_POST['comment_post_ID'] : 0;
-		$post = get_post($comment_post_ID);
+		$post = theme_cache::get_post($comment_post_ID);
 		/**
 		 * check comment_status
 		 */
@@ -440,22 +440,22 @@ class theme_comment_ajax{
 			die(theme_features::json_format($output));
 		}
 	}
-	private static function is_singular(){
-		static $cache = null;
-		if($cache === null)
-			$cache = is_singular();
-
-		return $cache;
-	}
 	public static function frontend_seajs_alias(array $alias = []){
-		if(self::is_enabled() && self::is_singular()){
+		if(self::can_comment()){
 			$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);
 		}
 		return $alias;
 	}
+	private static function can_comment(){
+		static $cache = null;
+		if($cache === null)
+			$cache = self::is_enabled() && theme_cache::is_singular() && !post_password_required() && comments_open();
+		return $cache;
+	}
 	public static function frontend_seajs_use(){
-		if(!self::is_enabled() || !self::is_singular())
+		if(!self::can_comment())
 			return false;
+			
 		global $post;
 			?>
 		seajs.use('<?= self::$iden;?>',function(m){
@@ -482,7 +482,7 @@ class theme_comment_ajax{
 		<?php
 	}
 	public static function js_cache_request(array $output = []){
-		if(is_singular()){
+		if(self::can_comment()){
 			global $post;
 			$output[self::$iden] = [
 				'type' => 'get-comments',
@@ -507,7 +507,7 @@ class theme_comment_ajax{
 					if(!$post_id){
 						return $output;
 					}
-					$post = get_post($post_id);
+					$post = theme_cache::get_post($post_id);
 					$pages = theme_features::get_comment_pages_count(self::get_comments([
 						'post_id' => $post->ID,
 					]));
@@ -517,15 +517,16 @@ class theme_comment_ajax{
 					if(isset($get['capge']) && is_numeric($get['capge'])){
 						$cpage = (int)$get['capge'];
 					}else{
-						$cpage = theme_features::get_option('default_comments_page') == 'newest' ? $pages : 1;
+						$cpage = theme_cache::get_option('default_comments_page') == 'newest' ? $pages : 1;
 					}
-					
+
 					if(!theme_cache::is_user_logged_in()){
 						$commenter = wp_get_current_commenter();
 						
 						$user_name = $commenter['comment_author'];
 						$user_url = $commenter['comment_author_url'];
 						$avatar_url = get_avatar_url($commenter['comment_author_email']);
+						$user_email = $commenter['comment_author_email'];
 					}else{
 						global $current_user;
 						get_currentuserinfo();
@@ -539,11 +540,13 @@ class theme_comment_ajax{
 						'pages' => $pages,
 						'cpage' => $cpage,
 						'logged' => theme_cache::is_user_logged_in(),
-						'registration' => theme_features::get_option('comment_registration'),
+						'registration' => theme_cache::get_option('comment_registration'),
 						'user-name' => esc_html($user_name),
 						'user-url' => esc_url($user_url),
 						'avatar-url' => $avatar_url,
 					];
+					if(isset($user_email))
+						$output[self::$iden]['user-email'] = $user_email;
 					break;
 			}
 		}

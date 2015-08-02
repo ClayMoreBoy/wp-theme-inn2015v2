@@ -132,50 +132,13 @@ class theme_functions{
 		}
 	}
 
-	/**
-	 * Output orderby nav in Neck position
-	 *
-	 * @return 
-	 * @version 1.0.0
-	 */
-	public static function the_order_nav($args = null){
-		$current_tab = get_query_var('tab');
-		$current_tab = !empty($current_tab) ? $current_tab : 'lastest';
-		$typies = self::get_tab_type();
-		if(is_home()){
-			$current_url = theme_cache::home_url();
-		}else if(is_category()){
-			$cat_id = theme_features::get_current_cat_id();
-			$current_url = get_category_link($cat_id);
-		}else if(is_tag()){
-			$tag_id = theme_features::get_current_tag_id();
-			$current_url = get_tag_link($tag_id);
-		}else{
-			$current_url = get_current_url();
-		}
-		?>
-		<nav class="page-nav">
-			<?php
-			foreach($typies as $k => $v){
-				$current_class = $current_tab === $k ? 'current' : null;
-				$url = add_query_arg('tab',$k,$current_url);
-				?>
-				<a href="<?= esc_url($url);?>" class="item <?= $current_class;?>">
-					<span class="icon-<?= $v['icon'];?>"></span><span class="after-icon"><?= esc_html($v['text']);?></span>
-				</a>
-				<?php
-			}
-			?>
-		</nav>
-		<?php
-	}
 	
 	public static function get_posts_query($args,array $query_args = []){
 		global $paged;
 		$defaults = array(
 			'orderby' => 'views',
 			'order' => 'desc',
-			'posts_per_page' => get_option('posts_per_page'),
+			'posts_per_page' => theme_cache::get_option('posts_per_page'),
 			'paged' => 1,
 			'category__in' => [],
 			'date' => 'all',
@@ -267,7 +230,7 @@ class theme_functions{
 
 		global $post;
 		
-		$post_title = esc_html(get_the_title());
+		$post_title = theme_cache::get_the_title($post->ID);
 
 		$excerpt = get_the_excerpt();
 		
@@ -313,7 +276,7 @@ class theme_functions{
 		global $post;
 		$args['classes'] .= ' list-group-item';
 		
-		$post_title = esc_html(get_the_title());
+		$post_title = theme_cache::get_the_title($post->ID);
 
 		$excerpt = esc_html(get_the_excerpt());
 		
@@ -391,12 +354,12 @@ class theme_functions{
 		
 		global $post;
 		
-		$post_title = get_the_title();
+		$post_title = theme_cache::get_the_title($post->ID);
 
-		$post_title = !empty($post_title) ? esc_html($post_title) : esc_html(get_the_excerpt());
+		$post_title = !empty($post_title) ? $post_title : esc_html(get_the_excerpt());
 		?>
 		<li class="list-group-item">
-			<a href="<?= the_permalink();?>" title="<?= $post_title;?>">
+			<a href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title;?>">
 				<?= $post_title;?>
 				
 				<?php if( $args['rank_num'] !== 0){ ?>
@@ -418,9 +381,6 @@ class theme_functions{
 	public static function page_content($args = []){
 		global $post;
 
-		wp_reset_postdata();
-
-		
 		$defaults = array(
 			'classes'			=> '',
 			'lazyload'			=> true,
@@ -433,7 +393,7 @@ class theme_functions{
 		 */
 		$args['classes'] .= ' singluar-post panel panel-default';
 
-		$post_title = esc_html(get_the_title());
+		$post_title = theme_cache::get_the_title($post->ID);
 
 
 		?>
@@ -476,9 +436,6 @@ class theme_functions{
 	public static function singular_content(array $args = []){
 		global $post;
 
-		wp_reset_postdata();
-
-		
 		$defaults = array(
 			'classes'			=> '',
 			'lazyload'			=> true,
@@ -491,7 +448,7 @@ class theme_functions{
 		 */
 		$args['classes'] .= ' singluar-post panel panel-default';
 
-		$post_title = esc_html(get_the_title());
+		$post_title = theme_cache::get_the_title($post->ID);
 
 
 		?>
@@ -666,10 +623,11 @@ class theme_functions{
 					// ++$i;
 					// continue;
 				// }
+				$tag_name = esc_html($tag->name);
 				ob_start();
 				?>
-				<a href="<?= get_tag_link($tag->term_id);?>" class="tag" title="<?= sprintf(___('Views all posts by %s tag'),esc_attr($tag->name));?>">
-					<?= esc_html($tag->name);?>
+				<a href="<?= get_tag_link($tag->term_id);?>" class="tag" title="<?= sprintf(___('Views all posts by %s tag'),$tag_name);?>">
+					<?= $tag_name;?>
 				</a>
 				<?php
 				$tags_str[] = ob_get_contents();
@@ -777,7 +735,7 @@ class theme_functions{
      * 
      * 
      * @return string The html code
-     * @version 2.0.6
+     * @version 2.0.7
      * 
      */
     public static function get_crumb(array $args = []){
@@ -785,13 +743,11 @@ class theme_functions{
 			'header' => null,
 			'footer' => null,
 		);
-		$r = array_merge($defaults,$args);
-		extract($r,EXTR_SKIP);
-		
+		$args = array_merge($defaults,$args);
 		
 		$links = [];
 		
-    	if(is_home())
+    	if(theme_cache::is_home())
     		return null;
 		
 		$links['home'] = '<a href="' . theme_cache::home_url() . '" class="home" title="' . ___('Back to Homepage') . '">
@@ -802,7 +758,7 @@ class theme_functions{
 		$split = '<span class="split"><i class="fa fa-angle-right"></i></span>';
 		
     	/* category */
-    	if(is_category()){
+    	if(theme_cache::is_category()){
 			$cat_curr = theme_features::get_current_cat_id();
 			if($cat_curr > 1){
 				$links_cat = get_category_parents($cat_curr,true,'%split%');
@@ -812,49 +768,49 @@ class theme_functions{
 				$links['curr_text'] = ___('Category Browser');
 			}
     	/* tag */
-    	}else if(is_tag()){
+    	}else if(theme_cache::is_tag()){
     		$tag_id = theme_features::get_current_tag_id();
 			$tag_obj = get_tag($tag_id);
     		$links['tag'] = '<a href="'. esc_url(get_tag_link($tag_id)).'">' . esc_html(theme_features::get_current_tag_name()).'</a>';
     		$links['curr_text'] = ___('Tags Browser');
     		/* date */
-    	}else if(is_date()){
+    	}else if(theme_cache::is_date()){
     		global $wp_query;
     		$day = $wp_query->query_vars['day'];
     		$month = $wp_query->query_vars['monthnum'];
     		$year = $wp_query->query_vars['year'];
     		/* day */
-    		if(is_day()){
+    		if(theme_cache::is_day()){
     			$date_link = get_day_link(null,null,$day);
     		/* month */
-    		}else if(is_month()){
+    		}else if(theme_cache::is_month()){
     			$date_link = get_month_link($year,$month);
     		/* year */
-    		}else if(is_year()){
+    		}else if(theme_cache::is_year()){
     			$date_link = get_year_link($year);
     		}
-    		$links['date'] = '<a href="'.$date_link.'">' . esc_html(wp_title('',false)).'</a>';
+    		$links['date'] = '<a href="'.$date_link.'">' . theme_cache::wp_title('',false).'</a>';
     		$links['curr_text'] = ___('Date Browser');
     	/* search*/
-    	}else if(is_search()){
+    	}else if(theme_cache::is_search()){
     		// $nav_link = null;
     		$links['curr_text'] = sprintf(___('Search Result: %s'),esc_html(get_search_query()));
 		/* author */
-		}else if(is_author()){
+		}else if(theme_cache::is_author()){
 			global $author;
 			$user = get_user_by('id',$author);
-			$links['author'] = '<a href="'.theme_cache::get_author_posts_url($author).'">'.esc_html($user->display_name).'</a>';
+			$links['author'] = '<a href="'.theme_cache::get_author_posts_url($author).'">' . theme_cache::get_the_author_meta('display_name',$user->ID) . '</a>';
 			$links['curr_text'] = ___('Author posts');
     	/* archive */
-    	}else if(is_archive()){
-    		$links['archive'] = '<a href="'.get_current_url().'">'.wp_title('',false).'</a>';
+    	}else if(theme_cache::is_archive()){
+    		$links['archive'] = '<a href="'.get_current_url().'">' . theme_cache::wp_title('',false) . '</a>';
     		$links['curr_text'] = ___('Archive Browser');
     	/* Singular */
-    	}else if(is_singular()){
+    	}else if(theme_cache::is_singular()){
 			global $post;
 			/* The page parent */
 			if($post->post_parent){
-				$links['singluar'] = '<a href="' .get_page_link($post->post_parent). '">' .esc_html(get_the_title($post->post_parent)). '</a>';
+				$links['singluar'] = '<a href="' . theme_cache::get_permalink($post->post_parent) . '">' . theme_cache::get_the_title($post->post_parent) . '</a>';
 			}
 			/**
 			 * post / page
@@ -866,22 +822,23 @@ class theme_functions{
 				}
 				array_multisort($parent_id, SORT_ASC,$categories);
 				foreach($categories as $cat){
-					$links['singluar'] = '<a href="' . esc_html(get_category_link($cat->cat_ID)) . '" title="' . esc_attr(sprintf(___('View all posts in %s'),$cat->name)) . '">' . esc_html($cat->name) . '</a>';
+					$cat_name = esc_html($cat->name);
+					$links['singluar'] = '<a href="' . esc_url(get_category_link($cat->cat_ID)) . '" title="' . sprintf(___('View all posts in %s'),$cat_name) . '">' . $cat_name . '</a>';
 				}
     		}
-    		$links['curr_text'] = esc_html(get_the_title());
+    		//$links['curr_text'] = esc_html(theme_cache::get_the_title($post->ID));
     	/* 404 */
-    	}else if(is_404()){
+    	}else if(theme_cache::is_404()){
     		// $nav_link = null;
     		$links['curr_text'] = ___('Not found');
     	}
 	
     return '<div class="crumb-container">
-		' .$header. '
+		' . $args['header'] . '
 		<nav class="crumb">
 			' . implode($split,apply_filters('crumb_links',$links)) . '
 		</nav>
-		' .$footer. '
+		' . $args['footer'] . '
 	</div>';
     }
 	/**
@@ -1035,7 +992,7 @@ class theme_functions{
 			$max_pages = null;
 			
 		if($page_comments === null)
-			$page_comments = get_option('page_comments');
+			$page_comments = theme_cache::get_option('page_comments');
 		/** if comment is closed, return */
 		if(!$page_comments) 
 			return false;
@@ -1044,7 +1001,7 @@ class theme_functions{
 		 * comments per page
 		 */
 		if(!$cpp === null)
-			$cpp = get_option('comments_per_page');
+			$cpp = theme_cache::get_option('comments_per_page');
 
 		/**
 		 * thread_comments
@@ -1053,7 +1010,7 @@ class theme_functions{
 			$thread_comments = get_option('thread_comments');
 
 		if($max_pages === null)
-			$max_pages = get_comment_pages_count(null,get_option('comments_per_page'),get_option('thread_comments'));
+			$max_pages = get_comment_pages_count(null,get_option('comments_per_page'),theme_cache::get_option('thread_comments'));
 			
 		/** 
 		 * defaults args
@@ -1330,7 +1287,7 @@ class theme_functions{
 					/**
 					 * if needs register to comment
 					 */
-					if(theme_features::get_option('comment_registration')){
+					if(theme_cache::get_option('comment_registration')){
 						static $reply_link;
 						if(!$reply_link)
 							$reply_link = '<a rel="nofollow" class="comment-reply-login quick-login-btn" href="' . wp_login_url(get_permalink($comment->comment_post_ID)) . '">' . ___('Reply') . '</a>';
@@ -1647,7 +1604,7 @@ class theme_functions{
 	<div class="panel-heading">
 		<h3 id="reply-title" class="panel-title comment-reply-title">
 			<span class="leave-reply">
-				<i class="fa fa-pencil-square-o"></i> 
+				<i class="fa fa-commenting"></i> 
 				<?= ___('Leave a comment');?>
 			</span>
 			<a href="javascript:;" id="cancel-comment-reply-link" class="none" title="<?= ___('Cancel reply');?>">
@@ -1686,7 +1643,7 @@ class theme_functions{
 				/**
 				 * for visitor
 				 */
-				$req = theme_features::get_option( 'require_name_email' );
+				$req = theme_cache::get_option( 'require_name_email' );
 				?>
 				<!-- author name -->
 				<div id="area-respond-visitor" class="row">
@@ -1743,7 +1700,7 @@ class theme_functions{
 							theme_comment_emotion::display_frontend('pop-btn');
 						}
 						?>
-						<button type="submit" class="submit btn btn-success" >
+						<button type="submit" class="submit btn btn-success" title="<?= ___('Post comment');?>">
 							<i class="fa fa-check"></i> 
 							<?= ___('Post comment');?>
 						</button>

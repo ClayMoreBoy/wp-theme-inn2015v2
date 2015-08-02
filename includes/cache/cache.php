@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme-cache
 Feature URI:	http://inn-studio.com
-Version:		2.1.6
+Version:		2.1.7
 Description:	theme-cache
 Author:			INN STUDIO
 Author URI:		http://inn-studio.com
@@ -76,7 +76,7 @@ class theme_cache{
 		 * when post delete
 		 */
 		add_action('delete_post', function($post_id){
-			$post = get_post($post_id);
+			$post = self::get_post($post_id);
 			$caches = (array)wp_cache_get('pages_by_path');
 			if(isset($caches[$post->post_name])){
 				unset($caches[$post->post_name]);
@@ -87,7 +87,7 @@ class theme_cache{
 		 * when post save
 		 */
 		add_action('save_post', function($post_id){
-			$post = get_post($post_id);
+			$post = self::get_post($post_id);
 			$caches = (array)wp_cache_get('pages_by_path');
 			if(!isset($caches[$post->post_name])){
 				$caches[$post->post_name] = $post_id;
@@ -213,6 +213,25 @@ class theme_cache{
 			return wp_cache_flush();
 		}
 	}
+	public static function get_post($post_id, $output = OBJECT, $filter = 'raw'){
+		static $caches = [];
+		$cache_id = $post_id . $output . $filter;
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = get_post($post_id, $output, $filter);
+		return $caches[$cache_id];
+	}
+	public static function get_the_title($post_id){
+		static $caches = [];
+		if(!isset($caches[$post_id]))
+			$caches[$post_id] = esc_html(get_the_title($post_id));
+		return $caches[$post_id];
+	}
+	public static function get_permalink($post_id,  $leavename = false){
+		static $caches = [];
+		if(!isset($caches[$post_id]))
+			$caches[$post_id] = esc_url(get_permalink($post_id,$leavename));
+		return $caches[$post_id];
+	}
 	public static function get_the_author_meta($field,$user_id){
 		static $cache = [];
 		$cache_id = $field . $user_id;
@@ -250,6 +269,28 @@ class theme_cache{
 		$caches[$key] = current_user_can($key);
 		return $caches[$key];
 	}
+	public static function wp_title($sep = '&raquo;', $display = true, $seplocation = ''){
+		static $caches = [];
+		$cache_id = md5(func_get_args());
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = esc_html(wp_title($sep, $display, $seplocation));
+		return $caches[$cache_id];
+	}
+	/**
+	 * Get option from cache
+	 *
+	 * @param string $key
+	 * @return mixed 
+	 * @version 1.0.1
+	 */
+	public static function get_option($key, $default = false){
+		static $caches = [];
+		$cache_id = $key . $default;
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = get_option($cache_id);
+		return $caches[$cache_id];
+	}
+
 	public static function home_url($path = null){
 		static $caches = [],$cache = null;
 		if($path === null){
@@ -270,11 +311,12 @@ class theme_cache{
 			$cache = (bool)is_archive();
 		return $cache;
 	}
-	public static function is_post_type_archive(){
-		static $cache = null;
-		if($cache === null)
-			$cache = (bool)is_post_type_archive();
-		return $cache;
+	public static function is_post_type_archive($post_types = null){
+		static $caches = [];
+		$cache_id = md5(func_get_args());
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = (bool)is_post_type_archive($post_types);
+		return $caches[$cache_id];
 	}
 	public static function is_front_page(){
 		static $cache = null;
@@ -282,11 +324,12 @@ class theme_cache{
 			$cache = (bool)is_front_page();
 		return $cache;
 	}
-	public static function is_author(){
-		static $cache = null;
-		if($cache === null)
-			$cache = (bool)is_author();
-		return $cache;
+	public static function is_author($author = null){
+		static $caches = [];
+		$cache_id = 'author' . $author;
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = (bool)is_author($author);
+		return $caches[$cache_id];
 	}
 	public static function is_404(){
 		static $cache = null;
@@ -312,10 +355,40 @@ class theme_cache{
 			$cache = (bool)is_category();
 		return $cache;
 	}
+	public static function is_date(){
+		static $cache = null;
+		if($cache === null)
+			$cache = (bool)is_date();
+		return $cache;
+	}
+	public static function is_day(){
+		static $cache = null;
+		if($cache === null)
+			$cache = (bool)is_day();
+		return $cache;
+	}
+	public static function is_month(){
+		static $cache = null;
+		if($cache === null)
+			$cache = (bool)is_month();
+		return $cache;
+	}
+	public static function is_year(){
+		static $cache = null;
+		if($cache === null)
+			$cache = (bool)is_year();
+		return $cache;
+	}
 	public static function is_home(){
 		static $cache = null;
 		if($cache === null)
 			$cache = (bool)is_home();
+		return $cache;
+	}
+	public static function is_singular_post(){
+		static $cache = null;
+		if($cache === null)
+			$cache = (bool)is_singular('post');
 		return $cache;
 	}
 	public static function is_singular(){
@@ -374,7 +447,7 @@ class theme_cache{
 		/** get post id from cache */
 		if(isset($caches[$page_path])){
 			$post_id = $caches[$page_path];
-			return get_post($post_id,$output);
+			return self::get_post($post_id,$output);
 		/** get post id from db */
 		}else{
 			$post = call_user_func_array('get_page_by_path',func_get_args());
