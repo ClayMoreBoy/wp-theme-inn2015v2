@@ -826,7 +826,7 @@ class theme_functions{
 					$links['singluar'] = '<a href="' . esc_url(get_category_link($cat->cat_ID)) . '" title="' . sprintf(___('View all posts in %s'),$cat_name) . '">' . $cat_name . '</a>';
 				}
     		}
-    		//$links['curr_text'] = esc_html(theme_cache::get_the_title($post->ID));
+    		$links['curr_text'] = theme_cache::get_the_title($post->ID);
     	/* 404 */
     	}else if(theme_cache::is_404()){
     		// $nav_link = null;
