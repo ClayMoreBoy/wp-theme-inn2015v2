@@ -869,27 +869,29 @@ class theme_functions{
 		}
 	}
 	public static function pagination( array $args = [] ) {
-	    
-	    $defaults = array(
-	        'custom_query'		=> false,
-	        'previous_string' 	=> '<i class="fa fa-arrow-left"></i>',
-	        'next_string'     	=> '<i class="fa fa-arrow-right"></i>',
-	        'before_output'   	=> '<div class="posts-nav btn-group btn-group-justified" role="group" aria-label="' . ___('Posts pagination navigation') . '">',
-	        'after_output'    	=> '</div>'
-	    );
-	    $args = array_merge($defaults,$args);
-	    
-	    if ( !$args['custom_query'] )
-	        $args['custom_query'] = @$GLOBALS['wp_query'];
-	        
-	    $count = (int) $args['custom_query']->max_num_pages;
-	    $page  = intval( get_query_var( 'paged' ) );
-    
-	    if ( $count <= 1 )
-	        return false;
-	    
-	    if ( !$page )
-	        $page = 1;
+		
+		$defaults = array(
+			'custom_query'		=> false,
+			'previous_string' 	=> '<i class="fa fa-arrow-left"></i>',
+			'next_string'	 	=> '<i class="fa fa-arrow-right"></i>',
+			'before_output'   	=> '<div class="posts-nav btn-group btn-group-justified" role="group" aria-label="' . ___('Posts pagination navigation') . '">',
+			'after_output'		=> '</div>'
+		);
+		$args = array_merge($defaults,$args);
+
+		$rand_id = rand(1000,9999);
+		
+		if ( !$args['custom_query'] )
+			$args['custom_query'] = @$GLOBALS['wp_query'];
+			
+		$count = (int) $args['custom_query']->max_num_pages;
+		$page  = intval( get_query_var( 'paged' ) );
+	
+		if ( $count <= 1 )
+			return false;
+		
+		if ( !$page )
+			$page = 1;
 	   
 		/**
 		 * output before_output;
@@ -899,71 +901,62 @@ class theme_functions{
 		/**
 		 * prev page
 		 */
-	    if ( $page > 1 ){
-		    $previous = intval($page) - 1;
-		    $previous_url = get_pagenum_link($previous);
-		    
-	       echo '<a class="btn btn-success prev" href="' . esc_url($previous_url) . '" title="' . ___( 'Previous page') . '">' . $args['previous_string'] . '</a>';
-        }
-	    /**
-	     * middle
-	     */
-	    if ( $count > 1 ) {
-		    ?>
-		    <div class="btn-group" role="group">
-			    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				    <?= sprintf(___('Page %d'),$page);?>
-				    <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					
-					<?php
-					/**
-					 * Previous 5 page
-					 */
-					for( $i = $page - 3; $i < $page; $i++){
-						if($i < 1 )
-							continue;
+		if ( $page > 1 ){
+			$previous = intval($page) - 1;
+			$previous_url = get_pagenum_link($previous);
+			
+		   echo '<a class="btn btn-success prev" href="' . esc_url($previous_url) . '" title="' . ___( 'Previous page') . '">' . $args['previous_string'] . '</a>';
+		}
+		/**
+		 * middle
+		 */
+		if ( $count > 1 ) {
+			?>
+			<div class="btn-group" role="group">
+				<label for="pagination-<?= $rand_id;?>" class="btn btn-default">
+					<select id="pagination-<?= $rand_id;?>" class="form-control">
+						<?php
+						/**
+						 * Previous 5 page
+						 */
+						for( $i = $page - 3; $i < $page; $i++){
+							if($i < 1 )
+								continue;
+							?>
+							<option value="<?= esc_url(get_pagenum_link($i));?>">
+								<?= sprintf(___('Page %d'),$i);?>
+							</option>
+							<?php
+						}
 						?>
-						<li>
-							<a href="<?= esc_url( get_pagenum_link($i) );?>">
-								<?= sprintf(___('Page %d'),$i);?>
-							</a>
-						</li>
-						<?php
-					}
-					?>
-					<li class="active">
-						<a href="<?= esc_url( get_pagenum_link($page) );?>">
+						<option selected value="<?= esc_url( get_pagenum_link($page) );?>">
 							<?= sprintf(___('Page %d'),$page);?>
-						</a>
-					</li>
-					<?php
-			        for( $i = $page + 1; $i < $page + 4; $i++ ) {
-				        if($i > $count)
-				        	break;
-			            ?>
-						<li>
-							<a href="<?= esc_url( get_pagenum_link($i) );?>">
-								<?= sprintf(___('Page %d'),$i);?>
-							</a>
-						</li>
+						</option>
 						<?php
-			        }
-			        ?>
-	        	</ul>
-	        </div>
-	        <?php
-	    }
-	    
-	    /**
-	     * next page
-	     */
-	    if ($page < $count ){
-		    $next = intval($page) + 1;
+						for( $i = $page + 1; $i < $page + 4; $i++ ) {
+							if($i > $count)
+								break;
+							?>
+							<option value="<?= esc_url(get_pagenum_link($i));?>">
+								<?= sprintf(___('Page %d'),$i);?>
+							</option>
+							<?php
+						}
+						?>
+					</select>
+				</label>
+			</div>
+			<?php
+		}
+		
+		/**
+		 * next page
+		 */
+		if ($page < $count ){
+			$next = intval($page) + 1;
 	   		$next_url = get_pagenum_link($next);
-	        echo '<a class="btn btn-success next" href="' . esc_url($next_url) . '" title="' . __( 'Next page') . '">' . $args['next_string'] . '</a>';
-    	}
+			echo '<a class="btn btn-success next" href="' . esc_url($next_url) . '" title="' . __( 'Next page') . '">' . $args['next_string'] . '</a>';
+		}
 
 		/**
 		 * output

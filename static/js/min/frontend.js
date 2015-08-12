@@ -1,5 +1,9 @@
 
-define(function(require,exports,module){'use strict';require.async(['modules/lazyload','modules/bootstrap-without-jq'],function(_a,_b){});var tools=require('modules/tools');exports.config={is_home:false};exports.init=function(){tools.ready(function(){exports.hide_no_js();exports.scroll_menu();exports.menu();});};exports.menu=function(){var $toggles=document.querySelectorAll('a[data-target]');if(!$toggles)
+define(function(require,exports,module){'use strict';require.async(['modules/lazyload','modules/bootstrap-without-jq'],function(_a,_b){});var tools=require('modules/tools');exports.config={is_home:false};exports.init=function(){tools.ready(function(){exports.hide_no_js();exports.scroll_menu();exports.posts_nav();exports.menu();});};exports.posts_nav=function(){var $pns=document.querySelectorAll('.posts-nav');if(!$pns[0])
+return;function helper(e){if(this.value)
+location.href=this.value;}
+for(var i=0,len=$pns.length;i<len;i++){$pns[i].querySelector('select').addEventListener('change',helper);}}
+exports.menu=function(){var $toggles=document.querySelectorAll('a[data-target]');if(!$toggles)
 return;function Q(e){return document.querySelector(e);}
 function helper(e){var $target=Q(this.getAttribute('data-target')),icon_active=this.getAttribute('data-icon-active'),icon_original=this.getAttribute('data-icon-original');if($target.classList.contains('on')){$target.classList.remove('on');if(icon_active&&icon_original){this.classList.remove(icon_active);this.classList.add(icon_original);}}else{$target.classList.add('on');if(icon_active&&icon_original){this.classList.remove(icon_original);this.classList.add(icon_active);}
 var focus_target=this.getAttribute('data-focus-target');if(focus_target){var $focus_target=Q(focus_target);if($focus_target){$focus_target.focus();}}}}
