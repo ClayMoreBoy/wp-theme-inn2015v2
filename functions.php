@@ -15,6 +15,7 @@ include __DIR__ . '/core/core-functions.php';
 add_action('after_setup_theme','theme_functions::init');
 class theme_functions{
 	public static $iden = 'inn2015v2';
+	public static $basename;
 	public static $theme_edition = 1;
 	public static $theme_date = '2015-06-17 00:00';
 	public static $thumbnail_size = ['thumbnail',150,150,true];

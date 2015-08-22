@@ -420,9 +420,9 @@ class theme_cache{
 			$cache = (bool)is_user_logged_in();
 		return $cache;
 	}
-	public static function get_author_posts_url($user_id){
+	public static function get_author_posts_url($user_id,$author_nicename = ''){
 		static $caches = [];
-		$cache_id = $user_id;
+		$cache_id = $user_id . $author_nicename;
 		$group_id = 'author_posts_urls';
 		if(isset($caches[$cache_id]))
 			return $caches[$cache_id];
@@ -430,7 +430,7 @@ class theme_cache{
 		$caches[$cache_id] = wp_cache_get($cache_id,$group_id);
 		
 		if(!$caches[$cache_id]){
-			$caches[$cache_id] = get_author_posts_url($user_id);
+			$caches[$cache_id] = get_author_posts_url($user_id,$author_nicename);
 			wp_cache_set($group_id,$caches[$cache_id],$group_id,2505600);
 		}
 		
@@ -461,19 +461,17 @@ class theme_cache{
 		}
 	}
 
-	private static function build_key($key,$group = ''){
-		return self::$cache_key . $group . '-' . $key;
-	}
 	/**
 	 * Delete cache
 	 *
 	 * @param string $key Cache key
 	 * @param string $group Cache group
 	 * @return bool
-	 * @version 2.0
+	 * @version 2.1
 	 */
-	public static function delete($key,$group = ''){
-		$key = self::build_key($key,$group);
+	public static function delete($key,$group = null){
+		if(!$group)
+			$group = 'default';
 		if(wp_using_ext_object_cache()){
 			return wp_cache_delete($key,$group);
 		}
