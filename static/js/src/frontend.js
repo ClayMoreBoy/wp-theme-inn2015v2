@@ -1,6 +1,5 @@
 define(function(require, exports, module){
 	'use strict';
-
 	require.async(['modules/lazyload','modules/bootstrap-without-jq'],function(_a,_b){});
 	
 	var tools = require('modules/tools');

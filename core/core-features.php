@@ -252,10 +252,11 @@ class theme_features{
 					include self::get_theme_includes_path('class/jsmin.php');
 					
 				$source = file_get_contents($file_path);
-				$min = theme_includes\JSMin::minify($source);
-				mkdir(dirname($file_path_min),0755,true);
-				file_put_contents($file_path_min,$min);
-				unset($min);
+				$min_dir = dirname($file_path_min);
+				if(!is_dir($min_dir))
+					mkdir($min_dir,0755,true);
+				file_put_contents($file_path_min,theme_includes\JSMin::minify($source));
+				unset($source);
 				break;
 			/**
 			 * CSS file
@@ -266,10 +267,11 @@ class theme_features{
 					
 				$source = file_get_contents($file_path);
 				$cssmin = new theme_includes\CSSMin();
-				$min = $cssmin->run($source);
-				mkdir(dirname($file_path_min),0755,true);
-				file_put_contents($file_path_min,$min);
-				unset($min);
+				$min_dir = dirname($file_path_min);
+				if(!is_dir($min_dir))
+					mkdir($min_dir,0755,true);
+				file_put_contents($file_path_min,$cssmin->run($source));
+				unset($source);
 				break;
 			/**
 			 * Other
