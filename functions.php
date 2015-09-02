@@ -223,25 +223,24 @@ class theme_functions{
 	 * @version 1.0.0
 	 */
 	public static function archive_img_content(array $args = []){
-		$defaults = array(
+		$args = array_merge([
 			'classes' => 'col-xs-6',
 			'lazyload' => true,
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 
 		global $post;
 		
 		$post_title = theme_cache::get_the_title($post->ID);
 
-		$excerpt = get_the_excerpt();
+		$excerpt = esc_html(get_the_excerpt());
 		
 		$args['classes'] .= ' list-group-item-img';
-		$thumbnail_real_src = esc_url(theme_functions::get_thumbnail_src($post->ID));
+		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
-		$thumbnail_placeholder = esc_url(theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder));
+		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
 		?>
 		<div class="<?= $args['classes'];?>">
-			<a href="<?= get_permalink();?>" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
+			<a href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
 				<div class="thumbnail-container">
 					<img class="placeholder" alt="Placeholder" src="<?= $thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					<?php
@@ -268,11 +267,10 @@ class theme_functions{
 	 * @version 1.0.0
 	 */
 	public static function archive_content(array $args = []){
-		$defaults = array(
+		$args = array_merge([
 			'classes' => '',
 			'lazyload' => true,
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 
 		global $post;
 		$args['classes'] .= ' list-group-item';
@@ -281,12 +279,12 @@ class theme_functions{
 
 		$excerpt = esc_html(get_the_excerpt());
 		
-		$thumbnail_real_src = esc_url(theme_functions::get_thumbnail_src($post->ID));
+		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
-		$thumbnail_placeholder = esc_url(theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder));
+		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
 		?>
 		<li <?php post_class([$args['classes']]);?>>
-			<a href="<?= get_permalink();?>" class="media" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
+			<a href="<?= theme_cache::get_permalink($post->ID);?>" class="media" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
 				<div class="thumbnail-container media-left">
 					<img class="placeholder media-object" alt="Placeholder" src="<?= $thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					<?php
@@ -661,25 +659,15 @@ class theme_functions{
 		$src = null;
 		
 		if(has_post_thumbnail($post_id)){
-			$src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id),$size)[0];
+			$src = esc_url(wp_get_attachment_image_src(get_post_thumbnail_id($post_id),$size)[0]);
 		}
 		
 		if(!$src){
 			$src = theme_features::get_theme_images_url($placeholder);
 		}
-		return esc_url($src);
+		return $src;
 	}
-	/**
-	 * get_content
-	 *
-	 * @return string
-	 * @version 1.0.0
-	 */
-	private static function get_content(){
-		global $post;
-		$content = str_replace(']]>', ']]&raquo;', $post->post_content);				
-		return $content;
-	}
+
 
  	/**
 	 * get_adjacent_posts

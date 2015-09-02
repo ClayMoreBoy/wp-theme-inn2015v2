@@ -13,8 +13,8 @@
 					<ul class="archive-group list-group">
 						<?php
 						$i = 0;
-						while(have_posts()){
-							the_post();
+						foreach($wp_query->posts as $post){
+							setup_postdata($post);
 							theme_functions::archive_content([
 								'lazyload' => $i <= 6 ? false : true,
 							]);
@@ -22,7 +22,7 @@
 						}
 						?>
 					</ul>
-					<?php if($GLOBALS['wp_query']->max_num_pages > 1){ ?>
+					<?php if($wp_query->max_num_pages > 1){ ?>
 						<div class="panel-footer">
 							<?= theme_functions::pagination();?>
 						</div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.3
+ * @version 1.0.4
  */
 add_action('widgets_init','widget_hot_tags::register_widget' );
 class widget_hot_tags extends WP_Widget{
@@ -17,12 +17,13 @@ class widget_hot_tags extends WP_Widget{
 		);
 	}
 	public static function frontend_display($args = [],$instance = []){
-		$cache_id = md5(serialize($instance));
+		$cache_id = md5(json_encode($instance));
 		
-		$cache = wp_cache_get($cache_id);
+		$cache = theme_cache::get($cache_id);
 
 		if($cache){
 			echo $cache;
+			unset($cache);
 			return;
 		}
 		$smallest = 11;
@@ -34,8 +35,8 @@ class widget_hot_tags extends WP_Widget{
 		$sticky_links = [];
 		if(!empty($exclude_ids)){
 			foreach($exclude_ids as $k => $v){
-				$sticky_name = isset($sticky_names[$k]) ? $sticky_names[$k] : null;
-				$sticky_links[] = '<a href="' . get_tag_link($v) . '" class="sticky-tag">' . esc_html($sticky_name) . '</a>';
+				$sticky_name = isset($sticky_names[$k]) ? esc_html($sticky_names[$k]) : null;
+				$sticky_links[] = '<a href="' . get_tag_link($v) . '" class="sticky-tag">' . $sticky_name . '</a>';
 			}
 		}
 		$tags = get_terms('post_tag',array(
@@ -86,8 +87,9 @@ class widget_hot_tags extends WP_Widget{
 		}else{
 			$cache = status_tip('info',___('No data yet.'));
 		}
-		wp_cache_set($cache_id,$cache);
+		theme_cache::set($cache_id,$cache,null,3600*24);
 		echo $cache;
+		unset($cache);
 	}
 	function widget($args = [], $instance = []){
 		$instance = array_merge([
@@ -99,15 +101,13 @@ class widget_hot_tags extends WP_Widget{
 		echo $args['before_widget'];
 		if(!empty($instance['title'])){
 			echo $args['before_title'];
-			?>
-			<i class="fa fa-tags"></i> <?= $instance['title'];?>
-			<?php
 			/**
 			 * if have theme page tags, mark as more
 			 */
-			if(class_exists('theme_page_tags') && theme_page_tags::get_url()){
-				?><a title="<?= ___('Views tags index');?>" href="<?= theme_page_tags::get_url();?>" class="more"><?= ___('More &raquo;');?></a>
+			if(class_exists('theme_page_tags') && theme_page_tags::get_url()){ ?><a title="<?= ___('Views tags index');?>" href="<?= theme_page_tags::get_url();?>">
 			<?php } ?>
+			<i class="fa fa-tags"></i> <?= $instance['title'];?>
+			<?php if(class_exists('theme_page_tags') && theme_page_tags::get_url()){ ?> &raquo;</a><?php } ?>
 			
 			<?php
 			echo $args['after_title'];
