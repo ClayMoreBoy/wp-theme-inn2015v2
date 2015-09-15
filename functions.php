@@ -136,16 +136,14 @@ class theme_functions{
 	
 	public static function get_posts_query($args,array $query_args = []){
 		global $paged;
-		$defaults = array(
+		$r = array_merge([
 			'orderby' => 'views',
 			'order' => 'desc',
 			'posts_per_page' => theme_cache::get_option('posts_per_page'),
 			'paged' => 1,
 			'category__in' => [],
 			'date' => 'all',
-			
-		);
-		$r = array_merge($defaults,$args);
+		],$args);
 		extract($r);
 		$query_args = array_merge([
 			'posts_per_page' => $posts_per_page,
@@ -345,13 +343,11 @@ class theme_functions{
 		return $output;
 	}
 	public static function archive_tx_content($args = []){
-
-		$defaults = [
-			'rank_num' => false
-		];
-		$args = array_merge( $defaults, $args );
-		
 		global $post;
+
+		$args = array_merge( [
+			'rank_num' => false
+		], $args );
 		
 		$post_title = theme_cache::get_the_title($post->ID);
 
@@ -380,12 +376,10 @@ class theme_functions{
 	public static function page_content($args = []){
 		global $post;
 
-		$defaults = array(
+		$args = array_merge([
 			'classes'			=> '',
 			'lazyload'			=> true,
-			
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 		
 		/** 
 		 * classes
@@ -435,12 +429,11 @@ class theme_functions{
 	public static function singular_content(array $args = []){
 		global $post;
 
-		$defaults = array(
+		$args = array_merge([
 			'classes'			=> '',
 			'lazyload'			=> true,
 			
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 		
 		/** 
 		 * classes
@@ -728,11 +721,10 @@ class theme_functions{
      * 
      */
     public static function get_crumb(array $args = []){
-		$defaults = array(
+		$args = array_merge([
 			'header' => null,
 			'footer' => null,
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 		
 		$links = [];
 		
@@ -859,14 +851,13 @@ class theme_functions{
 	}
 	public static function pagination( array $args = [] ) {
 		
-		$defaults = array(
+		$args = array_merge([
 			'custom_query'		=> false,
 			'previous_string' 	=> '<i class="fa fa-arrow-left"></i>',
 			'next_string'	 	=> '<i class="fa fa-arrow-right"></i>',
 			'before_output'   	=> '<div class="posts-nav btn-group btn-group-justified" role="group" aria-label="' . ___('Posts pagination navigation') . '">',
 			'after_output'		=> '</div>'
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 
 		$rand_id = rand(1000,9999);
 		
@@ -997,7 +988,7 @@ class theme_functions{
 		/** 
 		 * defaults args
 		 */
-		$defaults = [
+		$r = array_merge([
 			'classes'			=> 'comment-pagination',
 			'cpaged'			=> max(1,get_query_var('cpage')),
 			'cpp' 				=> $cpp,
@@ -1006,8 +997,7 @@ class theme_functions{
 			'default_comments_page' => 'oldest',
 			'max_pages' 		=> $max_pages,
 			
-		];
-		$r = array_merge($defaults,$args);
+		],$args);
 		extract($r,EXTR_SKIP);
 				
 		/** If has page to show me */
@@ -1047,13 +1037,11 @@ class theme_functions{
 	public static function smart_page_pagination($args = []){
 		global $post,$page,$numpages;
 
-		//$cache = wp_cache_
 		$output = null;
 	
-		$defaults = array(
+		$args = array_merge([
 			'add_fragment' => 'post-' . $post->ID
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 		
 		$output['numpages'] = $numpages;
 		$output['page'] = $page;
@@ -1332,17 +1320,17 @@ class theme_functions{
 		$cache = wp_cache_get($post->ID,$cache_group_id);
 		if($cache){
 			echo $cache;
-			return $cache;
+			unset($cache);
+			return false;
 		}
 		
-		$defaults = array(
-			'posts_per_page' => 6,
-			'orderby' => 'latest',
-		);
 		$query_args = array(
 			'post__not_in' => array($post->ID),
 		);
-		$args = array_merge($defaults,$args);
+		$args = array_merge([
+			'posts_per_page' => 6,
+			'orderby' => 'latest',
+		],$args);
 		$content_args = [
 			'classes' => 'col-xs-6 col-sm-4 col-md-2'
 		];
@@ -1398,7 +1386,7 @@ class theme_functions{
 			return false;
 			
 		echo $cache;
-		return $cache;
+		unset($cache);
 	}
 	
 
@@ -1446,7 +1434,8 @@ class theme_functions{
 		
 		if(!empty($cache)){
 			echo $cache;
-			return $cache;
+			unset($cache);
+			return;
 		}
 		global $post;
 		$query = self::get_posts_query([
@@ -1477,7 +1466,8 @@ class theme_functions{
 		wp_cache_set($cache_id,$cache,3600*24);
 
 		echo $cache;
-		return $cache;
+		unset($cache);
+		return;
 	}
 	public static function the_homebox(array $args = []){
 		if(!class_exists('theme_custom_homebox')) 
@@ -1493,7 +1483,8 @@ class theme_functions{
 		
 		if(!empty($cache)){
 			echo $cache;
-			return $cache;
+			unset($cache);
+			return;
 		}
 
 		ob_start();
@@ -1577,7 +1568,7 @@ class theme_functions{
 		
 		theme_custom_homebox::set_cache($cache);
 		echo $cache;
-		return $cache;
+		unset($cache);
 	}
 	public static function theme_respond(){
 		global $post;
@@ -1703,13 +1694,12 @@ class theme_functions{
 	 * @version 1.0.0
 	 */
 	public static function the_user_list(array $args = []){
-		$defaults = [
+		$args = array_merge([
 			'classes' => 'col-xs-4',
 			'user' => null,
 			'extra_title' => '', /** eg. You have % points */
 			'extra' => 'point',
-		];
-		$args = array_merge($defaults,$args);
+		],$args);
 		
 		$user = $args['user'];
 		
