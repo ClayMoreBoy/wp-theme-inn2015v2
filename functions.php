@@ -20,8 +20,8 @@ class theme_functions{
 	public static $theme_date = '2015-06-17 00:00';
 	public static $thumbnail_size = ['thumbnail',150,150,true];
 	public static $comment_avatar_size = 60;
-	public static $thumbnail_placeholder = 'frontend/thumbnail.png';
-	public static $avatar_placeholder = 'frontend/avatar.jpg';
+	public static $thumbnail_placeholder = 'http://ww4.sinaimg.cn/large/686ee05djw1ew7y0gjp5aj208c08c3yd.jpg';
+	public static $avatar_placeholder = 'http://ww2.sinaimg.cn/large/686ee05djw1ew5767l9voj2074074dfn.jpg';
 	public static $cache_expire = 3600;
 	public static $colors = array(
 		'61b4ca',	'e1b32a',	'ee916f',	'a89d84',
@@ -32,23 +32,23 @@ class theme_functions{
 	 * theme_meta_translate(
 	 */
 	public static function theme_meta_translate(){
-		return array(
+		return [
 			'name' => ___('INN 2015 v2'),
 			'theme_url' => ___('http://inn-studio.com/inn2015v2'),
 			'author_url' => ___('http://inn-studio.com'),
 			'author' => ___('INN STUDIO'),
-			'qq' => array(
+			'qq' => [
 				'number' => '272778765',
 				'link' => 'http://wpa.qq.com/msgrd?v=3&amp;uin=272778765&amp;site=qq&amp;menu=yes',
-			),
-			'qq_group' => array(
+			],
+			'qq_group' => [
 				'number' => '170306005',
 				'link' => 'http://wp.qq.com/wpa/qunwpa?idkey=d8c2be0e6c2e4b7dd2c0ff08d6198b618156d2357d12ab5dfbf6e5872f34a499',
-			),
+			],
 			'email' => 'kmvan.com@gmail.com',
 			'edition' => ___('Professional edition'),
 			'des' => ___('INN 2015 v2'),
-		);
+		];
 	}
 	/** 
 	 * init
@@ -60,6 +60,7 @@ class theme_functions{
 		register_nav_menus(
 			[
 				'menu-header' 			=> ___('Header menu'),
+				'menu-mobile' 			=> ___('Mobile menu'),
 				'menu-tools' 			=> ___('Tools menu'),
 			]
 		);	
@@ -75,7 +76,6 @@ class theme_functions{
 		add_theme_support('html5',['comment-list','comment-form','search-form']);
 
 		add_image_size(self::$thumbnail_size[0],self::$thumbnail_size[1],self::$thumbnail_size[2],self::$thumbnail_size[3]);
-		
 		
 		add_theme_support('title-tag');
 		/** 
@@ -106,22 +106,21 @@ class theme_functions{
 	 * widget_init
 	 */
 	public static function widget_init(){
-		$sidebar = array(
-			array(
+		$sidebar = [
+			[
 				'name' 			=> ___('Sidebar widget area'),
 				'id'			=> 'widget-area-sidebar',
 				'description' 	=> ___('Appears on every page in the sidebar.')
-			),
-			array(
+			],[
 				'name' 			=> ___('Footer widget area'),
 				'id'			=> 'widget-area-footer',
 				'description' 	=> ___('Appears on all page in the footer.'),
 				'before_widget' => '<div class="col-xs-12 col-sm-6 col-md-3"><aside id="%1$s"><div class="panel panel-default widget %2$s">',
 				'after_widget'		=> '</div></aside></div>',
-			)
-		);
+			]
+		];
 		foreach($sidebar as $v){
-			register_sidebar(array(
+			register_sidebar([
 				'name'				=> $v['name'],
 				'id'				=> $v['id'],
 				'description'		=> $v['description'],
@@ -129,11 +128,9 @@ class theme_functions{
 				'after_widget'		=> isset($v['after_widget']) ? $v['after_widget'] : '</div></aside>',
 				'before_title'		=> isset($v['before_title']) ? $v['before_title'] : '<div class="panel-heading panel-heading-default"><h3 class="widget-title panel-title">',
 				'after_title'		=> isset($v['after_title']) ? $v['after_widget'] : '</h3></div>',
-			));
+			]);
 		}
 	}
-
-	
 	public static function get_posts_query($args,array $query_args = []){
 		global $paged;
 		$r = array_merge([
@@ -235,19 +232,18 @@ class theme_functions{
 		$args['classes'] .= ' list-group-item-img';
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
-		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
 		?>
 		<div class="<?= $args['classes'];?>">
 			<a href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
 				<div class="thumbnail-container">
-					<img class="placeholder" alt="Placeholder" src="<?= $thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
+					<img class="placeholder" alt="Placeholder" src="<?= theme_functions::$thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					<?php
 					/**
 					 * lazyload img
 					 */
 					if($args['lazyload']){
 						?>
-						<img class="post-thumbnail" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
+						<img class="post-thumbnail" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php }else{ ?>
 						<img class="post-thumbnail" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php } ?>
@@ -279,19 +275,18 @@ class theme_functions{
 		
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
-		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
 		?>
 		<li <?php post_class([$args['classes']]);?>>
 			<a href="<?= theme_cache::get_permalink($post->ID);?>" class="media" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
 				<div class="thumbnail-container media-left">
-					<img class="placeholder media-object" alt="Placeholder" src="<?= $thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
+					<img class="placeholder media-object" alt="Placeholder" src="<?= theme_functions::$thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					<?php
 					/**
 					 * lazyload img
 					 */
 					if($args['lazyload']){
 						?>
-						<img class="post-thumbnail" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
+						<img class="post-thumbnail" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php }else{ ?>
 						<img class="post-thumbnail" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php } ?>
@@ -387,7 +382,6 @@ class theme_functions{
 		$args['classes'] .= ' singluar-post panel panel-default';
 
 		$post_title = theme_cache::get_the_title($post->ID);
-
 
 		?>
 		<article id="post-<?= $post->ID;?>" <?php post_class([$args['classes']]);?>>
@@ -524,7 +518,6 @@ class theme_functions{
 					</div>
 				</div>
 
-
 			
 			</div><!-- /.row -->
 			
@@ -589,57 +582,15 @@ class theme_functions{
 		</article>
 		<?php
 	}
-	public static function the_post_tags(){
-		global $post;
-		$tags = get_the_tags();
-		if(empty($tags)) return false;
-		$first_tag = array_shift($tags);
-		$split_str = '<span class="split">' . ___(', ') . '</span>';
-		?>
-		<div class="post-tags">
-			<?php
-			/** 
-			 * first tag html
-			 */
-			ob_start();
-			?>
-			<a href="<?= get_tag_link($first_tag->term_id);?>" class="tag" title="<?= sprintf(___('Views all posts by %s tag'),esc_attr($first_tag->name));?>">
-				<span class="icon-tags"></span><span class="after-icon"><?= esc_html($first_tag->name);?></span>
-			</a>
-			<?php
-			$tags_str = array(ob_get_contents());
-			ob_end_clean();
-			// $i = 0;
-			foreach($tags as $tag){
-				// if($i === 0){
-					// ++$i;
-					// continue;
-				// }
-				$tag_name = esc_html($tag->name);
-				ob_start();
-				?>
-				<a href="<?= get_tag_link($tag->term_id);?>" class="tag" title="<?= sprintf(___('Views all posts by %s tag'),$tag_name);?>">
-					<?= $tag_name;?>
-				</a>
-				<?php
-				$tags_str[] = ob_get_contents();
-				ob_end_clean();
-			} 
-			echo implode($split_str,$tags_str);
-			?>
-			
-		</div>
-		<?php
-	}
 	/**
 	 * get_thumbnail_src
 	 *
 	 * @return 
-	 * @version 1.0.2
+	 * @version 1.0.3
 	 */
 	public static function get_thumbnail_src($post_id = null,$size = 'thumbnail',$placeholder = null){
 		global $post;
-		
+
 		if(!$placeholder)
 			$placeholder = self::$thumbnail_placeholder;
 			
@@ -652,65 +603,13 @@ class theme_functions{
 		$src = null;
 		
 		if(has_post_thumbnail($post_id)){
-			$src = esc_url(wp_get_attachment_image_src(get_post_thumbnail_id($post_id),$size)[0]);
+			$src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id),$size)[0];
 		}
-		
-		if(!$src){
-			$src = theme_features::get_theme_images_url($placeholder);
-		}
-		return $src;
-	}
 
-
- 	/**
-	 * get_adjacent_posts
-	 *
-	 * @param string
-	 * @return string
-	 * @version 1.0.0
-	 */
-	public static function get_adjacent_posts($class = 'adjacent-posts'){
-		global $post;
-		$next_post = get_adjacent_post(true,null,false);
-		$next_post = $next_post ? $next_post : get_adjacent_post(false,null,false);
+		if(!$src)
+			$src = $placeholder;
 		
-		
-		$prev_post = get_adjacent_post(true,null);
-		$prev_post = $prev_post ? $prev_post : get_adjacent_post(false,null);
-		
-		if(!$next_post && ! $prev_post) return;
-		
-		ob_start();
-		?>
-		<nav class="grid-100 grid-parent <?= $class;?>">
-			<ul>
-				<li class="adjacent-post-prev grid-50 tablet-grid-50 mobile-grid-100">
-					<?php if(!$prev_post){ ?>
-						<span class="adjacent-post-not-found button"><?= ___('No more post found');?></span>
-					<?php }else{ ?>
-						<a href="<?= get_permalink($prev_post->ID);?>" title="<?= esc_attr(sprintf(___('Previous post: %s'),$prev_post->post_title));?>" class="button">
-							<span class="aquo"><?= esc_html(___('&laquo;'));?></span>
-							<?= esc_html($prev_post->post_title);?>
-						</a>
-					<?php } ?>
-				</li>
-				<li class="adjacent-post-next grid-50 tablet-grid-50 mobile-grid-100">
-					<?php if(!$next_post){ ?>
-						<span class="adjacent-post-not-found button"><?= ___('No more post found');?></span>
-					<?php }else{ ?>
-						<a href="<?= get_permalink($next_post->ID);?>" title="<?= esc_attr(sprintf(___('Next post: %s'),$next_post->post_title));?>"  class="button">
-							<?= esc_html($next_post->post_title);?>
-							<span class="aquo"><?= esc_html(___('&raquo;'));?></span>
-						</a>
-					<?php } ?>
-				</li>
-			</ul>
-		</nav>
-		<?php
-		$content = ob_get_contents();
-		ob_end_clean();
-		return $content;
-
+		return esc_url($src);
 	}
    /**
      * get_crumb
@@ -1609,7 +1508,7 @@ class theme_functions{
 			<input type="hidden" name="comment_parent" id="comment_parent" value="0">
 			
 			<div class="media-left media-top hidden-xs">
-				<img id="respond-avatar" src="<?= theme_features::get_theme_images_url(self::$avatar_placeholder);?>" alt="Avatar" class="media-object avatar" width="80" height="80">
+				<img id="respond-avatar" src="<?= self::$avatar_placeholder;?>" alt="Avatar" class="media-object avatar" width="80" height="80">
 			</div>
 			<div class="media-body">
 				<?php
@@ -1684,92 +1583,6 @@ class theme_functions{
 		</form>
 	</div>
 </div>
-		<?php
-	}
-	/**
-	 * Echo the user list within loop
-	 *
-	 * @param array $args
-	 * @return 
-	 * @version 1.0.0
-	 */
-	public static function the_user_list(array $args = []){
-		$args = array_merge([
-			'classes' => 'col-xs-4',
-			'user' => null,
-			'extra_title' => '', /** eg. You have % points */
-			'extra' => 'point',
-		],$args);
-		
-		$user = $args['user'];
-		
-		if(is_numeric($user))
-			$user = get_user_by('id',$user);
-			
-		if(empty($user))
-			return false;
-
-
-		/**
-		 * extra point value
-		 */
-		switch($args['extra']){
-			/**
-			 * user point
-			 */
-			case 'point':
-				if(class_exists('theme_custom_point')){
-					$point_value = theme_custom_point::get_point($user->ID);
-				}
-				break;
-			/**
-			 * user fav be_count
-			 */
-			case 'fav':
-				if(class_exists('custom_post_fav')){
-					$point_value = custom_post_fav::get_user_be_fav_count($user->ID);
-				}
-				break;
-			/**
-			 * user posts count
-			 */
-			case 'posts':
-				if(class_exists('theme_custom_author_profile')){
-					$point_value = theme_custom_author_profile::get_count('works',$user->ID);
-				}else{
-					$point_value = count_user_posts($user->ID);
-				}
-				break;
-			default:
-				$point_value = null;
-		}
-
-		if(!empty($args['extra_title']) && $point_value)
-			$args['extra_title'] = str_replace('%',$point_value,$args['extra_title']);
-
-		
-		$display_name = esc_html($user->display_name);
-
-		$avatar_placeholder = theme_features::get_theme_images_url(self::$avatar_placeholder);
-
-		$avatar_url = esc_url(get_avatar_url($user->ID));
-		?>
-		<div class="user-list <?= $args['classes'];?>">
-			<a href="<?= theme_cache::get_author_posts_url($user->ID)?>" title="<?= $display_name;?>">
-				<div class="avatar-container">
-					<img src="<?= $avatar_placeholder;?>" alt="<?= $display_name;?>" class="placeholder">
-					<img src="<?= $avatar_placeholder;?>" data-src="<?= $avatar_url;?>" alt="<?= $display_name;?>" class="avatar">
-				</div>
-				<h4 class="author"><?= $display_name;?></h4>
-				<?php if($args['extra']){ ?>
-					<div class="extra">
-						<span class="<?= $args['extra'];?>" title="<?= $args['extra_title'];?>">
-							<?= $point_value;?>
-						</span>
-					</div>
-				<?php }/** end args extra */ ?>
-			</a>
-		</div>
 		<?php
 	}
 }

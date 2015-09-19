@@ -64,7 +64,7 @@ class widget_comments extends WP_Widget{
 						
 					/** avatar placeholder */
 					if(!isset($caches['avatar_placeholder']))
-						$caches['avatar_placeholder'] = esc_url(theme_features::get_theme_images_url(theme_functions::$avatar_placeholder));
+						$caches['avatar_placeholder'] = theme_functions::$avatar_placeholder;
 
 					/** comment text */
 					$comment_text = str_sub(strip_tags(preg_replace('/<img[^>]+>/i','[' . ___('Image') . ']',get_comment_text($comment->comment_ID))),35);
@@ -72,7 +72,7 @@ class widget_comments extends WP_Widget{
 <li class="list-group-item">
 	<a class="media" href="<?= theme_cache::get_permalink($comment->comment_post_ID);?>#comment-<?= $comment->comment_ID;?>" title="<?= theme_cache::get_the_title($comment->comment_post_ID);?>">
 		<div class="media-left">
-			<img class="avatar media-object" data-src="<?= esc_url(get_avatar_url($comment));?>" src="<?= $caches['avatar_placeholder'];?>" alt="<?= $caches['author_name'][$comment->comment_author];?>" width="<?= self::$avatar_size;?>" height="<?= self::$avatar_size;?>"/>
+			<img class="avatar media-object" data-src="<?= esc_url(theme_cache::get_avatar_url($comment));?>" src="<?= $caches['avatar_placeholder'];?>" alt="<?= $caches['author_name'][$comment->comment_author];?>" width="<?= self::$avatar_size;?>" height="<?= self::$avatar_size;?>"/>
 		</div>
 		<div class="media-body">
 			<h4 class="media-heading">

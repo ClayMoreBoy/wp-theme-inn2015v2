@@ -58,10 +58,11 @@ class theme_asset_enqueue{
 				'deps' => [],
 				//'url' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css',
 				'url' => theme_features::get_theme_css('modules/bootstrap',false,false),
+				//'version' => null,
 			],
 			'awesome' => [
 				'deps' => [],
-				//'url' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css',
+				//'url' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css',
 				'url' => 'http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css',
 				'version' => null,
 			],
