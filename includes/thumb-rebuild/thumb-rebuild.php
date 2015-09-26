@@ -357,7 +357,7 @@ class RegenerateThumbnails {
 		$image = theme_cache::get_post( $id );
 
 		if ( ! $image || 'attachment' != $image->post_type || 'image/' != substr( $image->post_mime_type, 0, 6 ) )
-			die( json_encode( array( 'error' => sprintf( ___( 'Failed resize: %s is an invalid image ID.'), esc_html( $_REQUEST['id'] ) ) ) ) );
+			die( json_encode( array( 'error' => sprintf( ___( 'Failed resize: %s is an invalid image ID.'), htmlspecialchars( $_REQUEST['id'] ) ) ) ) );
 
 		if ( ! theme_cache::current_user_can( $this->capability ) )
 			$this->die_json_error_msg( $image->ID, ___( "Your user account doesn't have permission to resize images") );
@@ -365,7 +365,7 @@ class RegenerateThumbnails {
 		$fullsizepath = get_attached_file( $image->ID );
 
 		if ( false === $fullsizepath || ! file_exists( $fullsizepath ) )
-			$this->die_json_error_msg( $image->ID, sprintf( ___( 'The originally uploaded image file cannot be found at %s'), '<code>' . esc_html( $fullsizepath ) . '</code>' ) );
+			$this->die_json_error_msg( $image->ID, sprintf( ___( 'The originally uploaded image file cannot be found at %s'), '<code>' . htmlspecialchars( $fullsizepath ) . '</code>' ) );
 
 		@set_time_limit( 900 ); // 5 minutes per image should be PLENTY
 
@@ -379,13 +379,13 @@ class RegenerateThumbnails {
 		// If this fails, then it just means that nothing was changed (old value == new value)
 		wp_update_attachment_metadata( $image->ID, $metadata );
 
-		die( json_encode( array( 'success' => sprintf( ___( '&quot;%1$s&quot; (ID %2$s) was successfully resized in %3$s seconds.'), esc_html( get_the_title( $image->ID ) ), $image->ID, timer_stop() ) ) ) );
+		die( json_encode( array( 'success' => sprintf( ___( '&quot;%1$s&quot; (ID %2$s) was successfully resized in %3$s seconds.'), theme_cache::get_the_title( $image->ID ), $image->ID, timer_stop() ) ) ) );
 	}
 
 
 	// Helper to make a JSON error message
 	function die_json_error_msg( $id, $message ) {
-		die( json_encode( array( 'error' => sprintf( ___( '&quot;%1$s&quot; (ID %2$s) failed to resize. The error message was: %3$s'), esc_html( get_the_title( $id ) ), $id, $message ) ) ) );
+		die( json_encode( array( 'error' => sprintf( ___( '&quot;%1$s&quot; (ID %2$s) failed to resize. The error message was: %3$s'), theme_cache::get_the_title( $id ), $id, $message ) ) ) );
 	}
 
 

@@ -1,16 +1,11 @@
 <?php
-
 /**
- * Class Name: custom_navwalker
- * GitHub URI: https://github.com/twittem/wp-bootstrap-navwalker
- * Description: A custom WordPress nav walker class to implement the Bootstrap 3 navigation style in a custom theme using the WordPress built in menu manager.
- * Version: 2.0.4
- * Author: Edward McIntyre -
- * 
- * @twittem License: GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * @version 1.0.1
  */
-custom_navwalker::custom_nav_menu_hook();
+add_filter('theme_includes',function($fns){
+	$fns[] = 'custom_navwalker::custom_nav_menu_hook';
+	return $fns;
+});
 class custom_navwalker extends Walker_Nav_Menu{
 	/**
 	 * Starts the list before the elements are added.
@@ -197,7 +192,7 @@ class custom_navwalker extends Walker_Nav_Menu{
 		/**
 		 * icon
 		 */
-		if( isset($_REQUEST['menu-item-hide-title'][$menu_item_db_id]) ){
+		if( isset($_REQUEST['menu-item-hide-title'][$menu_item_db_id]) && $_REQUEST['menu-item-hide-title'][$menu_item_db_id] == 1){
 			update_post_meta($menu_item_db_id, '_menu_item_hide_title', 1);
 		}else{
 			delete_post_meta($menu_item_db_id, '_menu_item_hide_title');
@@ -313,9 +308,9 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 		<li id="menu-item-<?= $item_id; ?>" class="<?= implode(' ', $classes ); ?>">
 			<dl class="menu-item-bar">
 				<dt class="menu-item-handle">
-					<span class="item-title"><span class="menu-item-title"><?= esc_html( $title ); ?></span> <span class="is-submenu" <?= $submenu_text; ?>><?php _e( 'sub item' ); ?></span></span>
+					<span class="item-title"><span class="menu-item-title"><?= htmlspecialchars( $title ); ?></span> <span class="is-submenu" <?= $submenu_text; ?>><?php _e( 'sub item' ); ?></span></span>
 					<span class="item-controls">
-						<span class="item-type"><?= esc_html( $item->type_label ); ?></span>
+						<span class="item-type"><?= htmlspecialchars( $item->type_label ); ?></span>
 						<span class="item-order hide-if-js">
 							<a href="<?php
 								echo wp_nonce_url(
@@ -380,8 +375,10 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 				<!-- awesome icon -->
 				<p class="description description-thin">
 					<label for="edit-menu-item-awesome-<?= $item_id; ?>">
-						<?php __e( 'Awesome icon' ); ?><br />
-						<input type="text" id="edit-menu-item-awesome-<?= $item_id; ?>" class="widefat edit-menu-item-awesome" name="menu-item-awesome[<?= $item_id; ?>]" value="<?= esc_attr( $item->awesome ); ?>" />
+						<?php __e( 'Awesome icon' ); ?> <a href="//fortawesome.github.io/Font-Awesome/icons" target="_blank" title="<?= ___('Views all icons');?>">#<?= ___('ALL');?></a>
+						<br />
+						<input type="text" id="edit-menu-item-awesome-<?= $item_id; ?>" class="widefat edit-menu-item-awesome" name="menu-item-awesome[<?= $item_id; ?>]" value="<?= $item->awesome;?>" list="edit-menu-item-awesome-<?= $item_id; ?>-datalist">
+						<?= icon_option_list('edit-menu-item-awesome-' . $item_id . '-datalist');?>
 					</label>
 				</p><!-- /awesome icon -->
 				
@@ -394,7 +391,11 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 				<!-- only show icon -->
 				<p class="description description-thin field-hide-title">
 					<label for="edit-menu-item-hide-title-<?= $item_id; ?>">
-						<input type="checkbox" id="edit-menu-item-hide-title-<?= $item_id; ?>" class="widefat edit-menu-item-hide-title" name="menu-item-hide-title[<?= $item_id; ?>]" value="1" <?= isset( $item->hide_title ) && $item->hide_title == 1 ? 'checked' : null; ?> /> <?php __e( 'Hide navigation label' ); ?>
+						<?= ___( 'Toggle navigation label' ); ?><br>
+						<select id="edit-menu-item-hide-title-<?= $item_id; ?>" class="widefat edit-menu-item-hide-title" name="menu-item-hide-title[<?= $item_id; ?>]" >
+							<option value="-1"><?= ___('Show navigation label');?></option>
+							<option value="1" <?= isset( $item->hide_title ) && $item->hide_title == 1 ? 'select' : null;?>><?= ___('Hide navigation label');?></option>
+						</select>
 					</label>
 				</p><!-- /only show icon -->
 				
@@ -407,7 +408,7 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 				<p class="field-description description description-wide">
 					<label for="edit-menu-item-description-<?= $item_id; ?>">
 						<?php _e( 'Description' ); ?><br />
-						<textarea id="edit-menu-item-description-<?= $item_id; ?>" class="widefat edit-menu-item-description" rows="3" cols="20" name="menu-item-description[<?= $item_id; ?>]"><?= esc_html( $item->description ); // textarea_escaped ?></textarea>
+						<textarea id="edit-menu-item-description-<?= $item_id; ?>" class="widefat edit-menu-item-description" rows="3" cols="20" name="menu-item-description[<?= $item_id; ?>]"><?= htmlspecialchars( $item->description ); // textarea_escaped ?></textarea>
 						<span class="description"><?php _e('The description will be displayed in the menu if the current theme supports it.'); ?></span>
 					</label>
 				</p>
@@ -426,7 +427,7 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 				<div class="menu-item-actions description-wide submitbox">
 					<?php if( 'custom' != $item->type && $original_title !== false ) : ?>
 						<p class="link-to-original">
-							<?php printf( __('Original: %s'), '<a href="' . esc_attr( $item->url ) . '">' . esc_html( $original_title ) . '</a>' ); ?>
+							<?php printf( __('Original: %s'), '<a href="' . esc_attr( $item->url ) . '">' . htmlspecialchars( $original_title ) . '</a>' ); ?>
 						</p>
 					<?php endif; ?>
 					<a class="item-delete submitdelete deletion" id="delete-<?= $item_id; ?>" href="<?php

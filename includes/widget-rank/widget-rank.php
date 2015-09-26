@@ -26,7 +26,7 @@ class widget_rank extends WP_Widget{
 			'category__in' => [],
 			'content_type' => 'tx',
 		],$instance);
-		$title = esc_html($instance['title']);
+		$title = htmlspecialchars($instance['title']);
 		echo $args['before_title'];
 		if(isset($instance['category__in'][0])){ ?>
 			<a class="link" href="<?= get_category_link($instance['category__in'][0]);?>" title="<?= sprintf(___('Views more about %s'),$title);?>">
@@ -148,7 +148,7 @@ class widget_rank extends WP_Widget{
 			>
 				<?php
 				foreach(self::get_rank_data() as $k => $v){
-					echo get_option_list($k,$v,$instance['date']);
+					the_option_list($k,$v,$instance['date']);
 				}
 				?>
 			</select>
@@ -164,12 +164,12 @@ class widget_rank extends WP_Widget{
 				/** 
 				 * image type
 				 */
-				echo get_option_list('img',___('Image type'),$instance['content_type']);
+				the_option_list('img',___('Image type'),$instance['content_type']);
 				
 				/** 
 				 * text type
 				 */
-				echo get_option_list('tx',___('Text type'),$instance['content_type']);?>
+				the_option_list('tx',___('Text type'),$instance['content_type']);?>
 			</select>
 		</p>
 		<p>
@@ -188,31 +188,31 @@ class widget_rank extends WP_Widget{
 				 * orderby views
 				 */
 				if(class_exists('theme_post_views') && theme_post_views::is_enabled()){
-					echo get_option_list('views',___('Most views'),$instance['orderby']);
+					the_option_list('views',___('Most views'),$instance['orderby']);
 				}
 				
 				/** 
 				 * orderby thumb-up
 				 */
 				if(class_exists('theme_post_thumb') && theme_post_thumb::is_enabled()){
-					echo get_option_list('thumb-up',___('Thumb up'),$instance['orderby']);
+					the_option_list('thumb-up',___('Thumb up'),$instance['orderby']);
 				}
 				
 				/** 
 				 * orderby recommended
 				 */
 				if(class_exists('theme_recommended_post')){
-					echo get_option_list('recommended',___('Recommended'),$instance['orderby']);
+					the_option_list('recommended',___('Recommended'),$instance['orderby']);
 				}
 				/** 
 				 * orderby random
 				 */
-				echo get_option_list('random',___('Random'),$instance['orderby']);
+				the_option_list('random',___('Random'),$instance['orderby']);
 				
 				/** 
 				 * orderby latest
 				 */
-				echo get_option_list('latest',___('Latest'),$instance['orderby']);
+				the_option_list('latest',___('Latest'),$instance['orderby']);
 				
 				?>
 			</select>
@@ -235,13 +235,11 @@ class widget_rank extends WP_Widget{
 	 *
 	 * @param 
 	 * @return 
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	private static function get_cat_checkbox_list($name,$id,$selected_cat_ids = []){
-		$cats = get_categories(array(
+		$cats = theme_cache::get_categories(array(
 			'hide_empty' => false,
-			'orderby' => 'term_group',
-			'exclude' => '1',
 		));
 		
 		ob_start();
@@ -263,10 +261,11 @@ class widget_rank extends WP_Widget{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-					<?= esc_html($cat->name);?>
+					<?= htmlspecialchars($cat->name);?>
 			</label>
 			<?php 
 			}
+			unset($cats);
 		}else{ ?>
 			<p><?= ___('No category, pleass go to add some categories.');?></p>
 		<?php }

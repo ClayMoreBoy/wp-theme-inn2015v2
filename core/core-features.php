@@ -6,7 +6,7 @@
  * Help you write a wp site quickly.
  *
  * @package KMTF
- * @version 5.0.5
+ * @version 5.0.6
  */
 theme_features::init();
 class theme_features{
@@ -101,26 +101,14 @@ class theme_features{
 		 */
 		}else{
 			$file = $file_or_dir;
-			$pi = pathinfo($file);
-			$ext = strtolower($pi['extension']);
+			$ext = new SplFileInfo($file);
+			$ext = strtolower($ext->getExtension());
 			/** 
 			 * not js or css ,return
 			 */
-			if($ext !== 'js' && $ext !== 'css') return;
-			/** 
-			 * replace // to /,\ to /,\\ to /
-			 */
-			$file = str_replace(
-				[
-					'//',
-					'\\',
-					'\\\\',
-					'/\\',
-					'\\/'
-				],
-				'/',
-				$file
-			);
+			if($ext !== 'js' && $ext !== 'css') 
+				return;
+		
 			/** 
 			 * check has /src/ keyword and minify
 			 */
@@ -233,17 +221,17 @@ class theme_features{
 	 * @param string 
 	 * @param string 
 	 * @return n/a
-	 * @version 1.0.1
+	 * @version 1.0.2
 	 */
-	public static function minify($file_path = null,$file_path_min){
+	public static function minify($file_path,$file_path_min){
 		if(!is_file($file_path)) 
 			return false;
 			
-		$file_path_info = pathinfo($file_path);
 		/**
 		 * minify
 		 */
-		switch(strtolower($file_path_info['extension'])){
+		$ext = new SplFileInfo($file_path);
+		switch(strtolower($ext->getExtension())){
 			/**
 			 * JS file
 			 */
@@ -778,37 +766,6 @@ class theme_features{
 		}
 	}
 	/**
-	 * Get user avatar
-	 *
-	 * @param int|object $user The user stdClass object or user ID
-	 * @return string
-	 * @version 1.0.2
-	 */
-	public static function get_avatar($user,$size = 80,$default = null,$alt = null){
-		
-		static $caches = [];
-		
-		$cache_id = md5(json_encode(func_get_args()));
-		
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-			
-		if(is_object($user)){
-			$user_id = $user->ID;
-		}else{
-			$user_id = (int)$user;
-			$user = get_user_by('id',$user);
-		}
-
-		/** check avatar from user meta */
-		$caches[$cache_id] = get_user_meta($user_id,'avatar',true);
-		/** check avatar from  */
-		if(!$caches[$cache_id]){
-			$caches[$cache_id] = get_avatar($user->user_email,$size, $default, $alt);
-		}
-		return $caches[$cache_id];
-	}
-	/**
 	 * theme_features::get_theme_url
 	 * 
 	 * @param 
@@ -1072,7 +1029,7 @@ class theme_features{
 	 * 
 	 */
 	public static function get_current_cat_name(){
-		$cat_obj = get_category(self::get_current_cat_id());
+		$cat_obj = theme_cache::get_category(self::get_current_cat_id());
 		$cat_name = $cat_obj->name;
 		return $cat_name;
 	}
@@ -1085,7 +1042,7 @@ class theme_features{
 	 * 
 	 */
 	public static function get_current_cat_slug(){
-		$cat_obj = get_category(self::get_current_cat_id());
+		$cat_obj = theme_cache::get_category(self::get_current_cat_id());
 		$cat_slug = $cat_obj->slug;
 		return $cat_slug;
 	}
@@ -1104,7 +1061,7 @@ class theme_features{
 			
 		global $cat,$post;
 		if($cat){
-			$cat_obj = get_category($cat);
+			$cat_obj = theme_cache::get_category($cat);
 			$cache = $cat_obj->term_id;
 		}else if($post){
 			$cat_obj = get_the_category($post->ID);
@@ -1124,7 +1081,7 @@ class theme_features{
 		/* 如果无参数，进行备选方案 */
 		$current_cat_id = $current_cat_id ? $current_cat_id : self::get_current_cat_id();
 		/* 获取目录对象 */
-		$current_cat_parent_obj = get_category($current_cat_id);
+		$current_cat_parent_obj = theme_cache::get_category($current_cat_id);
 		/* 获取父目录ID */
 		$current_cat_parent_id = $current_cat_parent_obj->category_parent;
 		/* 获取当前目录ID */
@@ -1149,7 +1106,7 @@ class theme_features{
 	 * 
 	 */
 	public static function get_cat_root_slug($current_cat_id = null){
-		$current_cat_obj = get_category(self::get_cat_root_id($current_cat_id));
+		$current_cat_obj = theme_cache::get_category(self::get_cat_root_id($current_cat_id));
 		$current_cat_slug = $current_cat_obj->slug;
 		return $current_cat_slug;
 	}
@@ -1179,7 +1136,7 @@ class theme_features{
 	 */
 	public static function get_cat_slug_by_id($cat_id = null){
 		if(!$cat_id) return false;
-		$cat_obj = get_category($cat_id,false); 
+		$cat_obj = theme_cache::get_category($cat_id,false); 
 		$cat_slug = $cat_obj->slug;
 		$output = $cat_slug;
 		return $output;
@@ -1333,7 +1290,7 @@ class theme_features{
 			ob_start(); 
 			?>
 			<a href="<?= $prev_page_url;?>" class="page-numbers page-prev <?= esc_attr($numbers_class_str);?> <?= $first_class;?>">
-				<?= esc_html(___('&lsaquo; Previous'));?>
+				<?= ___('&lsaquo; Previous');?>
 			</a>
 			<?php
 			$prev_page_str = ob_get_contents();
@@ -1368,7 +1325,7 @@ class theme_features{
 			
 			<?php ob_start(); ?>
 			<a href="<?= $next_page_url;?>" class="page-numbers page-next <?= esc_attr($numbers_class_str);?> <?= $last_class;?>">
-				<?= esc_html(___('Next &rsaquo;'));?>
+				<?= ___('Next &rsaquo;');?>
 			</a>
 			<?php
 			$next_page_str = ob_get_contents();
@@ -1687,20 +1644,18 @@ class theme_features{
 	 * auto_minify
 	 *
 	 * @return 
-	 * @version 1.0.3
+	 * @version 1.0.4
 	 */
 	public static function auto_minify(){
 		/** 
 		 * js and css files version
 		 */
-		if(theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
+		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
 			@ini_set('max_input_nesting_level','10000');
-			@ini_set('max_execution_time','300'); 
+			@ini_set('max_execution_time',0); 
 			
-			remove_dir(self::get_stylesheet_directory() . self::$basedir_js_min);
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_js_src);
 			
-			remove_dir(self::get_stylesheet_directory() . self::$basedir_css_min);
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_css_src);
 			
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_includes);
@@ -1716,14 +1671,16 @@ class theme_features{
 	 * @param string $cat_id
 	 * @param bool $child
 	 * @return string
-	 * @version 1.1.0
+	 * @version 1.1.1
 	 */
 	public static function cat_option_list($group_id,$cat_id,$child = false){
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));
 
-		if(isset($caches[$cache_id]))
+		if(isset($caches[$cache_id])){
 			echo $caches[$cache_id];
+			return;
+		}
 			
 		$opt = (array)theme_options::get_options($group_id);
 		if($child !== false){
@@ -1750,19 +1707,20 @@ class theme_features{
 	 * @param string $group_id
 	 * @param string $ids_name
 	 * @return string
-	 * @version 1.1.2
+	 * @version 1.1.3
 	 */
 	public static function cat_checkbox_list($group_id,$ids_name){
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));
 
-		if(isset($caches[$cache_id]))
+		if(isset($caches[$cache_id])){
 			echo $caches[$cache_id];
+			return;
+		}
 			
 		$opt = (array)theme_options::get_options($group_id);
 		$cats = get_categories(array(
 			'hide_empty' => false,
-			'exclude' => 1
 		));
 		$cat_ids = isset($opt[$ids_name]) ? (array)$opt[$ids_name] : [];
 
@@ -1786,23 +1744,16 @@ class theme_features{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-					<?= esc_html($cat->name);?> 
-					
-					<a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank">
-						<small>
-							<?= esc_html(sprintf(___('(%s)'),urldecode($cat->slug)));?>
-						</small>
-					</a>
+				<?= htmlspecialchars($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank"><?= urldecode($cat->slug);?></a>
 			</label>
 			<?php 
 			}
 		}else{ ?>
-			<p><?= esc_html(___('No category, pleass go to add some categories.'));?></p>
+			<p><?= ___('No category, pleass go to add some categories.');?></p>
 		<?php }
 		$caches[$cache_id] = ob_get_contents();
 		ob_end_clean();
 		echo $caches[$cache_id];
-
 	}
 	/**
 	 * Display page list on select tag
@@ -1810,14 +1761,16 @@ class theme_features{
 	 * @param string $group_id
 	 * @param string $page_slug
 	 * @return
-	 * @version 1.1.0
+	 * @version 1.1.1
 	 */
 	public static function page_option_list($group_id,$page_slug){
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));
 
-		if(isset($caches[$cache_id]))
+		if(isset($caches[$cache_id])){
 			echo $caches[$cache_id];
+			return;
+		}
 			
 		$opt = theme_options::get_options($group_id);
 		$page_id = isset($opt[$page_slug]) ? (int)$opt[$page_slug] : null;
@@ -1896,7 +1849,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_all_cats_by_child($cat_id, array & $all_cat_id){
-		$cat = get_category($cat_id);
+		$cat = theme_cache::get_category($cat_id);
 		if(!$cat){
 			return false;
 		}

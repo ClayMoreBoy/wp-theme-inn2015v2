@@ -35,7 +35,7 @@ class widget_hot_tags extends WP_Widget{
 		$sticky_links = [];
 		if(!empty($exclude_ids)){
 			foreach($exclude_ids as $k => $v){
-				$sticky_name = isset($sticky_names[$k]) ? esc_html($sticky_names[$k]) : null;
+				$sticky_name = isset($sticky_names[$k]) ? htmlspecialchars($sticky_names[$k]) : null;
 				$sticky_links[] = '<a href="' . get_tag_link($v) . '" class="sticky-tag">' . $sticky_name . '</a>';
 			}
 		}
@@ -74,7 +74,7 @@ class widget_hot_tags extends WP_Widget{
 					style="
 						font-size:<?= str_replace( ',', '.', ( $smallest + ( ( $count - $min_count ) * $font_step ) ) ),$unit;?>;
 						color:rgb(<?= mt_rand(50,200);?>,<?= mt_rand(50,200);?>,<?= mt_rand(50,200);?>);"
-				><?= esc_html($tag->name);?></a>&nbsp;
+				><?= htmlspecialchars($tag->name);?></a>&nbsp;
 				<?php
 				$tag_links[] = html_minify(ob_get_contents());
 				ob_end_clean();
@@ -129,35 +129,35 @@ class widget_hot_tags extends WP_Widget{
 		$sticky_tx = implode(PHP_EOL,(array)$instance['sticky']);
 		?>
 		<p>
-			<label for="<?= esc_attr(self::get_field_id('title'));?>"><?= esc_html(___('Title (optional)'));?></label>
+			<label for="<?= esc_attr(self::get_field_id('title'));?>"><?= ___('Title (optional)');?></label>
 			<input 
 				id="<?= esc_attr(self::get_field_id('title'));?>"
 				class="widefat"
 				name="<?= esc_attr(self::get_field_name('title'));?>" 
 				type="text" 
 				value="<?= esc_attr($instance['title']);?>" 
-				placeholder="<?= esc_attr(___('Title (optional)'));?>"
+				placeholder="<?= ___('Title (optional)');?>"
 			/>
 		</p>
 		<p>
-			<label for="<?= esc_attr(self::get_field_id('number'));?>"><?= esc_html(___('Tags number (required)'));?></label>
+			<label for="<?= esc_attr(self::get_field_id('number'));?>"><?= ___('Tags number (required)');?></label>
 			<input 
 				id="<?= esc_attr(self::get_field_id('number'));?>" 
 				class="widefat"
 				name="<?= esc_attr(self::get_field_name('number'));?>" 
 				type="number" 
 				value="<?= esc_attr($instance['number']);?>" 
-				placeholder="<?= esc_attr(___('Tags number (required)'));?>"
+				placeholder="<?= ___('Tags number (required)');?>"
 				required
 			/>
 		</p>
 		<p>
-			<label for="<?= esc_attr(self::get_field_id('sticky'));?>"><?= esc_html(___('Sticky tags (optional, one tag per line)'));?></label>
+			<label for="<?= esc_attr(self::get_field_id('sticky'));?>"><?= ___('Sticky tags (optional, one tag per line)');?></label>
 			<textarea 
 				id="<?= esc_attr(self::get_field_id('sticky'));?>" 
 				class="widefat"
 				name="<?= esc_attr(self::get_field_name('sticky'));?>" 
-				placeholder="<?= esc_attr(___('Sticky tags (optional, one tag per line)'));?>"
+				placeholder="<?= ___('Sticky tags (optional, one tag per line)');?>"
 			><?= esc_attr($sticky_tx);?></textarea>
 		</p>
 		<?php

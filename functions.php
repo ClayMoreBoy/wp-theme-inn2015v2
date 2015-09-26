@@ -88,11 +88,6 @@ class theme_functions{
 			'default-attachment'	=> 'fixed',
 			'wp-head-callback'		=> 'theme_features::_fix_custom_background_cb',
 		));
-
-		/**
-		 * filter filter_get_comment_text
-		 */
-		add_filter('get_comment_text' , __CLASS__ . '::filter_get_comment_text', 10, 2);
 	}
 	
 	public static function frontend_seajs_use(){
@@ -131,28 +126,29 @@ class theme_functions{
 			]);
 		}
 	}
-	public static function get_posts_query($args,array $query_args = []){
+	public static function get_posts_query(array $args = [],array $query_args = []){
 		global $paged;
-		$r = array_merge([
+		$args = array_merge([
 			'orderby' => 'views',
 			'order' => 'desc',
 			'posts_per_page' => theme_cache::get_option('posts_per_page'),
 			'paged' => 1,
 			'category__in' => [],
 			'date' => 'all',
+			
 		],$args);
-		extract($r);
+		
 		$query_args = array_merge([
-			'posts_per_page' => $posts_per_page,
-			'paged' => $paged,
-			'ignore_sticky_posts' => 1,
-			'category__in' => $category__in,
+			'posts_per_page' => $args['posts_per_page'],
+			'paged' => $args['paged'],
+			'ignore_sticky_posts' => true,
+			'category__in' => $args['category__in'],
 			'post_status' => 'publish',
 			'post_type' => 'post',
 			'has_password' => false,
 		],$query_args);
 		
-		switch($orderby){
+		switch($args['orderby']){
 			case 'views':
 				$query_args['meta_key'] = 'views';
 				$query_args['orderby'] = 'meta_value_num';
@@ -177,15 +173,15 @@ class theme_functions{
 				if(class_exists('theme_recommended_post')){
 					$query_args['post__in'] = (array)theme_recommended_post::get_ids();
 				}else{
-					$query_args['post__in'] = (array)get_option( 'sticky_posts' );
-				unset($query_args['ignore_sticky_posts']);
+					$query_args['post__in'] = (array)theme_cache::get_option( 'sticky_posts' );
+					unset($query_args['ignore_sticky_posts']);
 				}
 				unset($query_args['post__not_in']);
 				break;
 			default:
 				$query_args['orderby'] = 'date';
 		}
-		if($date && $date != 'all'){
+		if($args['date'] && $args['date'] != 'all'){
 			/** 
 			 * date query
 			 */
@@ -202,14 +198,12 @@ class theme_functions{
 				default:
 					$after = 'day';
 			}
-			$query_args['date_query'] = array(
-				array(
-					'column' => 'post_date_gmt',
-					'after'  => '1 ' . $after . ' ago',
-				)
-			);
+			$query_args['date_query'] = [[
+				'column' => 'post_date_gmt',
+				'after'  => '1 ' . $after . ' ago',
+			]];
 		}
-		return theme_cache::get_queries($query_args);
+		return new WP_Query($query_args);
 	}
 	/**
 	 * archive_img_content
@@ -227,7 +221,7 @@ class theme_functions{
 		
 		$post_title = theme_cache::get_the_title($post->ID);
 
-		$excerpt = esc_html(get_the_excerpt());
+		$excerpt = htmlspecialchars(get_the_excerpt());
 		
 		$args['classes'] .= ' list-group-item-img';
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
@@ -270,8 +264,8 @@ class theme_functions{
 		$args['classes'] .= ' list-group-item';
 		
 		$post_title = theme_cache::get_the_title($post->ID);
-
-		$excerpt = esc_html(get_the_excerpt());
+		
+		$excerpt = htmlspecialchars(get_the_excerpt());
 		
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
@@ -346,7 +340,7 @@ class theme_functions{
 		
 		$post_title = theme_cache::get_the_title($post->ID);
 
-		$post_title = !empty($post_title) ? $post_title : esc_html(get_the_excerpt());
+		$post_title = !empty($post_title) ? $post_title : htmlspecialchars(get_the_excerpt());
 		?>
 		<li class="list-group-item">
 			<a href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title;?>">
@@ -562,7 +556,7 @@ class theme_functions{
 				?>
 				<a href="#comments" class="post-meta quick-comment comment-count" data-post-id="<?= $post->ID;?>">
 					<i class="fa fa-comment"></i>
-					<span class="comment-count-number"><?= $comment_count;?></span> <span class="hidden-xs"><?= esc_html($comment_tx);?></span>
+					<span class="comment-count-number"><?= $comment_count;?></span> <span class="hidden-xs"><?= htmlspecialchars($comment_tx);?></span>
 				</a>
 
 				<?php
@@ -588,9 +582,12 @@ class theme_functions{
 	 * @return 
 	 * @version 1.0.3
 	 */
-	public static function get_thumbnail_src($post_id = null,$size = 'thumbnail',$placeholder = null){
+	public static function get_thumbnail_src($post_id,$size = 'thumbnail',$placeholder = null){
 		global $post;
-
+		if($post->ID != $post_id){
+			$post_bak = $post;
+			$post = theme_cache::get_post($post_id);
+		}
 		if(!$placeholder)
 			$placeholder = self::$thumbnail_placeholder;
 			
@@ -606,6 +603,16 @@ class theme_functions{
 			$src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id),$size)[0];
 		}
 
+		/** get img src from post content */
+		if(!$src)
+			$src = get_img_source($post->post_content);
+
+		/** restore post */
+		if($post->ID != $post_id){
+			$post = $post_bak;
+			unset($post_bak);
+		}
+		
 		if(!$src)
 			$src = $placeholder;
 		
@@ -651,7 +658,7 @@ class theme_functions{
     	}else if(theme_cache::is_tag()){
     		$tag_id = theme_features::get_current_tag_id();
 			$tag_obj = get_tag($tag_id);
-    		$links['tag'] = '<a href="'. esc_url(get_tag_link($tag_id)).'">' . esc_html(theme_features::get_current_tag_name()).'</a>';
+    		$links['tag'] = '<a href="'. esc_url(get_tag_link($tag_id)).'">' . htmlspecialchars(theme_features::get_current_tag_name()).'</a>';
     		$links['curr_text'] = ___('Tags Browser');
     		/* date */
     	}else if(theme_cache::is_date()){
@@ -674,7 +681,7 @@ class theme_functions{
     	/* search*/
     	}else if(theme_cache::is_search()){
     		// $nav_link = null;
-    		$links['curr_text'] = sprintf(___('Search Result: %s'),esc_html(get_search_query()));
+    		$links['curr_text'] = sprintf(___('Search Result: %s'),htmlspecialchars(get_search_query()));
 		/* author */
 		}else if(theme_cache::is_author()){
 			global $author;
@@ -702,7 +709,7 @@ class theme_functions{
 				}
 				array_multisort($parent_id, SORT_ASC,$categories);
 				foreach($categories as $cat){
-					$cat_name = esc_html($cat->name);
+					$cat_name = htmlspecialchars($cat->name);
 					$links['singluar'] = '<a href="' . esc_url(get_category_link($cat->cat_ID)) . '" title="' . sprintf(___('View all posts in %s'),$cat_name) . '">' . $cat_name . '</a>';
 				}
     		}
@@ -1077,42 +1084,44 @@ class theme_functions{
 		
 		$GLOBALS['comment'] = $comment;
 
-		$classes = ['media'];
-		
-		if(!empty( $args['has_children'])) 
-			$classes[] = 'parent';
-			
-		if($comment->comment_approved == '0') 
-			$classes[] = 'moderation';
+		switch ( $comment->comment_type ){
+			default :
+				$classes = ['media'];
+				
+				if(!empty( $args['has_children'])) 
+					$classes[] = 'parent';
+					
+				if($comment->comment_approved == '0') 
+					$classes[] = 'moderation';
 
-		/**
-		 * post author checker
-		 */
-		
-		if($comment->user_id == $post->post_author){
-			$is_post_author = true;
-			$classes[] = 'is-post-author';
-		}else{
-			$is_post_author = false;
-		}
+				/**
+				 * post author checker
+				 */
+				if($comment->user_id == $post->post_author){
+					$is_post_author = true;
+					$classes[] = 'is-post-author';
+				}else{
+					$is_post_author = false;
+				}
 
-		/**
-		 * check is my comment
-		 */
-		if($comment->user_id != 0 && theme_cache::get_current_user_id() == $comment->user_id){
-			$classes[] = 'is-me';
-		}
+				/**
+				 * check is my comment
+				 */
+				if($comment->user_id != 0){
+					if(theme_cache::get_current_user_id() == $comment->user_id)
+						$classes[] = 'is-me';
+				}
 
-		/**
-		 * author url
-		 */
-		$author_url = get_comment_author_url();
-		if(!empty($author_url) && stripos($author_url,theme_cache::home_url()) === false){
-			$author_nofollow = ' rel="external nofollow" ';
-		}else{
-			$author_nofollow = null;
-		}
-		?>
+				/**
+				 * author url
+				 */
+				$author_url = get_comment_author_url();
+				if(!empty($author_url) && stripos($author_url,theme_cache::home_url()) === false){
+					$author_nofollow = ' rel="external nofollow" ';
+				}else{
+					$author_nofollow = null;
+				}
+				?>
 <li <?php comment_class($classes);?> id="comment-<?= $comment->comment_ID;?>">
 	<div id="comment-body-<?= $comment->comment_ID; ?>" class="comment-body">
 	
@@ -1120,10 +1129,10 @@ class theme_functions{
 			<div class="media-left">
 				<?php if($author_url){ ?>
 					<a href="<?= esc_url($author_url);?>" class="avatar-link" target="_blank" <?= $author_nofollow;?> >
-						<?= get_avatar($comment,50);?>
+						<?= theme_cache::get_avatar($comment,50);?>
 					</a>
 				<?php }else{
-					echo get_avatar($comment,50);
+					echo theme_cache::get_avatar($comment,50);
 				} ?>
 			</div><!-- /.media-left -->
 		<?php } ?>
@@ -1141,15 +1150,13 @@ class theme_functions{
 				<span class="comment-meta-data author">
 					<?php
 					if($comment->comment_parent != 0){
-						echo get_avatar($comment,50);
-						echo '&nbsp;';
+						echo theme_cache::get_avatar($comment,50), '&nbsp;';
 					}
 					comment_author_link();
-					
 					?>
 				</span>
 				<time class="comment-meta-data time" datetime="<?= get_comment_time('c');?>">
-					<a href="<?= esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?= friendly_date(get_comment_time('U')); ?></a>
+					<a href="<?= esc_url(get_comment_link( $comment->comment_ID));?>"><?= friendly_date(get_comment_time('U')); ?></a>
 				</time>
 				<?php
 				if(!theme_cache::is_user_logged_in()){
@@ -1159,7 +1166,7 @@ class theme_functions{
 					if(theme_cache::get_option('comment_registration')){
 						static $reply_link;
 						if(!$reply_link)
-							$reply_link = '<a rel="nofollow" class="comment-reply-login quick-login-btn" href="' . wp_login_url(get_permalink($comment->comment_post_ID)) . '">' . ___('Reply') . '</a>';
+							$reply_link = '<a rel="nofollow" class="comment-reply-login quick-login-btn" href="' . wp_login_url(theme_cache::get_permalink($comment->comment_post_ID)) . '">' . ___('Reply') . '</a>';
 					}else{
 						$reply_link = get_comment_reply_link(
 							[
@@ -1191,23 +1198,10 @@ class theme_functions{
 					</span><!-- .reply -->
 				<?php } ?>
 			</h4>
-			
 		</div><!-- /.media-body -->
 	</div><!-- /.comment-body -->
-	<?php
-	}
-	public static function filter_get_comment_text($comment_content,$comment){
-		/**
-		 * has parent
-		 */
-		if($comment->comment_parent != 0){
-			$parent_comment = get_comment($comment->comment_parent);
-			
-			$parent_author = get_comment_author($parent_comment->comment_ID);
-			
-			$comment_content = '<a href="' . esc_url(get_permalink($parent_comment->comment_post_ID)) . '#comment-' . $parent_comment->comment_ID . '" class="at" rel="nofollow">@' . $parent_author . '</a> ' . $comment_content;
+		<?php
 		}
-		return $comment_content;
 	}
 	public static function the_related_posts_plus(array $args = []){
 		global $post;

@@ -8,6 +8,83 @@
 	color:#fff;
 }
 
+/**
+ * #ajax-loading
+ * @version 1.0.1
+ */
+#ajax-loading-container{
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 100000;
+	width: 100%;
+	text-align: center;
+	padding: 10px;
+	font-size: 20px;
+	line-height: 30px;
+	box-shadow: 0 20px 50px rgba(0,0,0,.5);
+	-webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	transition: all .3s;
+}
+	#ajax-loading-container .fa{
+		vertical-align: inherit;
+	}
+	/** 
+	 * type
+	 */
+	#ajax-loading-container.closed{
+		-moz-transform: translateY(-100%);
+		-webkit-transform: translateY(-100%);
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+	#ajax-loading-container.success,
+	#ajax-loading-container.green{background:#defcd5}
+
+	#ajax-loading-container.error,
+	#ajax-loading-container.ban{background:#f1d7d7}
+
+	#ajax-loading-container.warning{background:#f6f3d5}
+
+	#ajax-loading-container.help,
+	#ajax-loading-container.blue,
+	#ajax-loading-container.info{background:#e6f4f9}
+	#ajax-loading-container.question{background:#FBEC88}
+
+	#ajax-loading-container.spinner,
+	#ajax-loading-container.loading{background:#FBEC88}
+
+	#ajax-loading-container .btn-close{
+		position: absolute;
+		top: 7px;
+		right: 30px;
+		padding: 2px 5px;
+		cursor: pointer;
+		font-size: 30px;
+		color: #FBEEEE;
+		border-radius: 2px;
+		box-shadow: none;
+		border-bottom: 2px solid rgba(0,0,0,.1);
+		background: #D54E21;
+	}
+		#ajax-loading-container .btn-close:hover{
+			color:#fff;
+		}
+		#ajax-loading-container .btn-close .number{
+			font-size: 90%;
+		}
+	#ajax-loading-container .tip-status{
+		display: inline;
+		margin: 0 auto;
+		background: none;
+		border: none;
+	}
+	#ajax-loading-container #ajax-loading{
+		visibility: visible;
+		margin: 0 40px;
+	}
+
 /* 描述 */
 .description{
 	padding-left:1rem;
@@ -17,6 +94,20 @@
  */
 #settings-updated{
 	margin-top:10px;
+}
+select{
+	cursor: pointer;
+}
+	select option{
+		-webkit-appearance: none;
+	}
+fieldset h3{
+	padding:10px;
+	background:rgb(250,251,253);
+	border:1px solid #DDD;
+	color:rgb(33, 117, 155);
+	text-shadow:0 1px 0 white;
+	border-radius:3px;
 }
 
 /** 
@@ -72,6 +163,8 @@ fieldset{
 	border-radius:4px;
 	background:rgb(245,245,245);
 	box-shadow:0 0 0 1px white inset;
+	background:-webkit-linear-gradient(rgb(250,251,253),rgb(245,245,245));
+	background:linear-gradient(rgb(250,251,253),rgb(245,245,245));
 }
 	fieldset legend{
 		margin: 5px 0 0;
@@ -84,82 +177,47 @@ fieldset{
 		font-weight:bold;
 		font-size:15px;
 		box-shadow:0 1px 3px rgba(0,0,0,.1),0 0 0 1px white inset;
+		cursor: pointer;
 	}
 @media screen and (-webkit-min-device-pixel-ratio:0){fieldset legend{border-top-width:2px;}}
 
-fieldset.active,
-fieldset:hover{
-	background:rgb(248,248,248);
-}
 	fieldset:hover > legend,
 	fieldset.active > legend{
 		color:#D54E21;
 		background:rgb(248,248,248);
 	}
-h3{
-	padding:10px;
-	background:rgb(250,251,253);
-	border:1px solid #DDD;
-	color:rgb(33, 117, 155);
-	text-shadow:0 1px 0 white;
-	border-radius:3px;
-}
-
-/* kandyTabs custom */
 #backend-tab{
 	display:none;
 }
-/* tab 按钮盒*/
-	#backend-tab .tabtitle{
+	#backend-tab .tab-header{
+		overflow: hidden;
 		margin-bottom:-1px;
 	}
 		/* tab 按钮*/
-		#backend-tab .tabtitle .tabbtn{
-			display:inline-block;
+		#backend-tab .tab-header > .tab-item{
+			float: left;
 			background:rgb(245,245,245);
 			border:1px solid #DDD;
 			padding:.5rem 1rem;
 			box-shadow:0 1px 0 0 white inset;
 			margin-left: 5px;
-			cursor:pointer;
 			color:#B4B4B4;
+			cursor: wait;
 			text-shadow:0 1px 0 white;
 			border-radius: 5px 5px 0 0;
 		}
-		#backend-tab .tabtitle .tabbtn:hover{
-			background:rgb(245,245,245);
-			background:linear-gradient(rgb(245,245,245),rgb(250,251,253));
-			background:-moz-linear-gradient(rgb(245,245,245),rgb(250,251,253));
-			background:-webkit-linear-gradient(rgb(245,245,245), rgb(250,251,253));
-			background:-o-linear-gradient(rgb(245,245,245), rgb(250,251,253));
-			background:-webkit-gradient(linear,from(rgb(245,245,245)),to(rgb(250,251,253)));
-			color:#D54E21;
-		}
-		/* tab 当前按钮*/
-		#backend-tab .tabtitle .tabcur{
+		#backend-tab .tab-header > .tab-item.active{
 			background:rgb(250,251,253);
-			background:linear-gradient(rgb(245,245,245),rgb(250,251,253));
-			background:-moz-linear-gradient(rgb(245,245,245),rgb(250,251,253));
 			background:-webkit-linear-gradient(rgb(245,245,245),rgb(250,251,253));
-			background:-o-linear-gradient(rgb(245,245,245), rgb(250,251,253));
-			background:-webkit-gradient(linear,from(rgb(245,245,245)),to(rgb(250,251,253)));
+			background:linear-gradient(rgb(245,245,245),rgb(250,251,253));
 			border-bottom:1px solid rgb(250,251,253);
 			color:#21759B;
 			cursor:default;
 			position:relative;
 			z-index:2;
 		}
-		#backend-tab .tabtitle .tabcur:hover{
-			background:rgb(250,251,253);
-			background:linear-gradient(rgb(245,245,245),rgb(250,251,253));
-			background:-moz-linear-gradient(rgb(245,245,245),rgb(250,251,253));
-			background:-webkit-linear-gradient(rgb(245,245,245), rgb(250,251,253));
-			background:-o-linear-gradient(rgb(245,245,245), rgb(250,251,253));
-			background:-webkit-gradient(linear,from(rgb(245,245,245)),to(rgb(250,251,253)));
-			color:#21759B;
-		}
 	/* tab 内容盒子*/
-	#backend-tab .tabbody{
+	#backend-tab .tab-body{
 		position:relative;
 		background:rgb(250,251,253);
 		margin-left:0;
@@ -170,12 +228,16 @@ h3{
 		border-radius:6px;
 		z-index:1;
 	}
-		#backend-tab .tabbody .tabcont{
+		#backend-tab .tab-body > .tab-item{
+			display: none;
 			margin-left:0;
 			background:rgb(250,251,253);
 		}
+		#backend-tab .tab-body > .tab-item.active{
+			display: block;
+		}
 
-.tabnav-container{
+.tab-nav-container{
 	display: none;
 	background:rgb(250,251,253);
 	background:linear-gradient(left,rgb(245,245,245),rgb(250,251,253));
@@ -188,39 +250,48 @@ h3{
 	left: 0;
 	width: 120px;
 	height: 100%;
-	
 }
 .tab-title{
 	display: none;
 	float: left;
-	padding:.5rem 1rem;
+	padding:.5rem 0;
+	width: 120px;
 	font-weight: bold;
 	color:rgb(200,200,200);
-	text-shadow: 0 1px 0 white;
+	text-shadow: 0 1px 0 #fff;
+	text-align: center;
+	text-overflow: ellipsis;white-space: nowrap;overflow: hidden;
+	text-decoration: none;
 }
-
-.tabnav{
+	.tab-title:hover{
+		text-decoration: underline;
+	}
+.tab-nav{
+	display: none;
 	width: 120px;
 	overflow: hidden;
+	max-height: 80%;
+	overflow-y: auto;
 	padding-top: 20px;
 	text-align: center;
 }
-	.tabnav:after{clear: both;content:'.';display: block;overflow:hidden;visibility:hidden;font-size:0;line-height:0;width:0;height:0;}
-	.tabnav li{
-		padding: 3px 10px;
-		text-decoration: none;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
-		cursor: pointer;
-		margin: 0;
-		font-size: 12px;
+	.tab-nav.active{
+		display: block;
 	}
-			.tabnav li.active,
-			.tabnav li:hover{
-				font-weight: bold;
-				color:#D54E21
-			}
+	.tab-nav:after{clear: both;content:'.';display: block;overflow:hidden;visibility:hidden;font-size:0;line-height:0;width:0;height:0;}
+	.tab-nav span{
+		display: block;
+		padding: 3px 10px;
+		text-overflow: ellipsis;white-space: nowrap;overflow: hidden;
+		cursor: pointer;
+		font-size: 12px;
+		color: #666;
+	}
+		.tab-nav span:hover,
+		.tab-nav span.active{
+			font-weight: bold;
+			color:#D54E21;
+		}
 
 .none,
 .hide{
@@ -240,9 +311,10 @@ input.text-select{
 	float:right;
 }
 
-#backend-tab .tabbtn .tx{
+#backend-tab .tab-header .tx{
 	display: none;
 }
+
 #submit{
 	position: fixed;
 	bottom: 10px;
@@ -259,16 +331,19 @@ input.text-select{
 		#submit .tx{
 			display: inline-block;
 		}
-	#backend-tab .tabbtn .tx{
-		display: inline;
-	}
-	.tabnav-container{
+	.tab-title{
 		display: block;
 	}
-	#backend-tab .tabbody{
+	#backend-tab .tab-header .tx{
+		display: inline;
+	}
+	.tab-nav-container{
+		display: block;
+	}
+	#backend-tab .tab-body{
 		padding-left: 120px;
 	}
-	.tab-title{
+	.tab-header{
 		display: block;
 	}
 }
