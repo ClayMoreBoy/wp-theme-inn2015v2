@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-19 18:07+0800\n"
-"PO-Revision-Date: 2015-09-19 18:11+0800\n"
+"POT-Creation-Date: 2015-09-27 16:28+0800\n"
+"PO-Revision-Date: 2015-09-27 16:29+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -25,139 +25,151 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:25 core/core-options.php:170 functions.php:1489
-#: includes/clean-up/clean-up.php:227
+#: comments.php:25 functions.php:1289 includes/clean-up/clean-up.php:226
 #: includes/comment-ajax/comment-ajax.php:472 includes/mailer/mailer.php:216
 #: includes/post-thumb/post-thumb.php:311
 #: includes/post-thumb/post-thumb.php:328
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
 
-#: core/core-features.php:748
+#: core/core-features.php:736
 msgid "Sorry, referer is invalid."
 msgstr "抱歉，无效的来路。"
 
-#: core/core-features.php:775
+#: core/core-features.php:763
 msgid "Sorry, security code is invalid."
 msgstr "抱歉，无效的安全码。"
 
-#: core/core-features.php:1336 core/core-features.php:1401
+#: core/core-features.php:1293 core/core-features.php:1358
 msgid "&lsaquo; Previous"
 msgstr "&lsaquo;  上一页"
 
-#: core/core-features.php:1371 core/core-features.php:1402
+#: core/core-features.php:1328 core/core-features.php:1359
 msgid "Next &rsaquo;"
 msgstr "下一页 &rsaquo;"
 
-#: core/core-features.php:1400
+#: core/core-features.php:1357
 msgid "&laquo; First"
 msgstr "&laquo; 首页"
 
-#: core/core-features.php:1403
+#: core/core-features.php:1360
 msgid "Last &raquo;"
 msgstr "尾页 &raquo;"
 
-#: core/core-features.php:1737
+#: core/core-features.php:1694
 msgid "Select category"
 msgstr "选择目录"
 
-#: core/core-features.php:1793
-#, php-format
-msgid "(%s)"
-msgstr "（%s）"
-
-#: core/core-features.php:1800 includes/widget-rank/widget-rank.php:271
+#: core/core-features.php:1752 includes/widget-rank/widget-rank.php:270
 msgid "No category, pleass go to add some categories."
 msgstr "暂无分类目录，请去添加一些分类。"
 
-#: core/core-features.php:1828
+#: core/core-features.php:1781
 msgid "Select page"
 msgstr "选择页面"
 
-#: core/core-functions.php:632
+#: core/core-functions.php:644
 msgid "Just"
 msgstr "刚刚"
 
-#: core/core-functions.php:638
+#: core/core-functions.php:650
 #, php-format
 msgid "%dmin ago"
 msgstr "%d分钟前"
 
-#: core/core-functions.php:644
+#: core/core-functions.php:656
 #, php-format
 msgid "%dh ago"
 msgstr "%d小时前"
 
-#: core/core-functions.php:650
+#: core/core-functions.php:662
 #, php-format
 msgid "%dd ago"
 msgstr "%d天前"
 
-#: core/core-functions.php:656
+#: core/core-functions.php:668
 #, php-format
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:662 functions.php:464
+#: core/core-functions.php:674 functions.php:417
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
-#: core/core-options.php:141
-msgid "theme settings"
-msgstr "主题设置"
+#: core/core-options.php:134
+msgid "Saving your settings, please wait..."
+msgstr "正在保存您的设置，请稍后……"
 
-#: core/core-options.php:163
-msgid "Settings have been saved."
-msgstr "设置已保存。"
+#: core/core-options.php:157
+msgid "Your settings were saved successfully."
+msgstr "您的设置已保存成功。"
 
-#: core/core-options.php:174
-msgid "Theme common settings."
-msgstr "主题通用的设置。"
+#: core/core-options.php:164
+msgid "Loading your settings, please wait..."
+msgstr "正在加载您的设置，请稍后……"
 
-#: core/core-options.php:176
-msgid "Basic Settings"
+#: core/core-options.php:169
+msgid "Visit the official of theme"
+msgstr "访问主题官网"
+
+#: core/core-options.php:173
+msgid "The theme common basic settings."
+msgstr "主题通用的基本设置。"
+
+#: core/core-options.php:175
+msgid "Basic settings"
 msgstr "基本设置"
 
-#: core/core-options.php:184
-msgid "Theme appearance/template settings."
-msgstr "主题的外观/模板设置。"
+#: core/core-options.php:178
+msgid "You can customize the theme in this label."
+msgstr "您可以在这个标签中自定义主题。"
 
-#: core/core-options.php:186
-msgid "Page Settings"
+#: core/core-options.php:180
+msgid "Page settings"
 msgstr "页面设置"
 
-#: core/core-options.php:194
-msgid "Theme special settings, you need to know what are you doing."
-msgstr "主题独有的设置，您需要知道自己正在做什么。"
+#: core/core-options.php:183
+msgid ""
+"If the theme there are some problems, you can try to use these settings."
+msgstr "如果主题有一些问题，你可以尝试使用这些设置。"
 
-#: core/core-options.php:196
-msgid "Advanced Settings"
+#: core/core-options.php:185
+msgid "Advanced settings"
 msgstr "高级设置"
 
-#: core/core-options.php:206
-msgid "Developer Mode"
-msgstr "开发者模式"
+#: core/core-options.php:188
+msgid ""
+"This settings is for developer, if you want to debug code, you can try this."
+msgstr "此设置专为开发者，如果你想调试代码，你可以试试这个。"
 
-#: core/core-options.php:215
-msgid "About &amp; Help"
+#: core/core-options.php:190
+msgid "Developer settings"
+msgstr "开发者设置"
+
+#: core/core-options.php:193
+msgid "If you in trouble, maybe this label can help you."
+msgstr "如果你陷入困境，也许这个标签可以帮助你。"
+
+#: core/core-options.php:195
+msgid "About &amp; help"
 msgstr "关于 &amp; 帮助"
 
-#: core/core-options.php:226
+#: core/core-options.php:227
 msgid "Save all settings"
 msgstr "保存所有设置"
 
-#: core/core-options.php:228
+#: core/core-options.php:229
 msgid ""
 "Something error with theme? Try to restore. Be careful, theme options will "
 "be cleared up!"
 msgstr "主题发生了错误？试试还原数据。注意，主题选项将会被清空！"
 
-#: core/core-options.php:230
+#: core/core-options.php:231
 msgid "Restore to theme default options"
 msgstr "还原主题选项"
 
-#: core/core-options.php:317 core/core-options.php:318
-#: core/core-options.php:340
+#: core/core-options.php:318 core/core-options.php:319
+#: core/core-options.php:341
 msgid "Theme settings"
 msgstr "主题设置"
 
@@ -201,197 +213,177 @@ msgstr "手机菜单"
 msgid "Tools menu"
 msgstr "工具栏菜单"
 
-#: functions.php:111
+#: functions.php:105
 msgid "Sidebar widget area"
 msgstr "侧栏小工具区域"
 
-#: functions.php:113
+#: functions.php:107
 msgid "Appears on every page in the sidebar."
 msgstr "显示在每个页面的侧栏"
 
-#: functions.php:115
+#: functions.php:109
 msgid "Footer widget area"
 msgstr "底部 小工具区域"
 
-#: functions.php:117
+#: functions.php:111
 msgid "Appears on all page in the footer."
 msgstr "显示在每个页面的底部。"
 
-#: functions.php:317 includes/widget-rank/widget-rank.php:198
-msgid "Thumb up"
-msgstr "顶/赞"
-
-#: functions.php:324
-msgid "Comment count"
-msgstr "评论统计"
-
-#: functions.php:332 functions.php:471 includes/post-views/post-views.php:190
-msgid "Views"
-msgstr "查看数"
-
-#: functions.php:457
+#: functions.php:410
 msgid "Category"
 msgstr "分类"
 
-#: functions.php:534
+#: functions.php:424 includes/post-views/post-views.php:190
+msgid "Views"
+msgstr "查看数"
+
+#: functions.php:487
 msgid "Good"
 msgstr "赞"
 
-#: functions.php:561
+#: functions.php:514
 msgid "comment"
 msgstr "评论"
 
-#: functions.php:561
+#: functions.php:514
 msgid "comments"
 msgstr "评论"
 
-#: functions.php:633 functions.php:635
+#: functions.php:599 functions.php:601
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:648
+#: functions.php:614
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:655
+#: functions.php:621
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:673
+#: functions.php:639
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:677
+#: functions.php:643
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:683
+#: functions.php:649
 msgid "Author posts"
 msgstr "作者文章"
 
-#: functions.php:687
+#: functions.php:653
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:706
+#: functions.php:672
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:713
+#: functions.php:679
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:741
+#: functions.php:707
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:742
+#: functions.php:708
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:757
+#: functions.php:723
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:787 functions.php:1310
+#: functions.php:753 functions.php:1263
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:806 functions.php:812 functions.php:820
+#: functions.php:772 functions.php:778 functions.php:786
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:931
+#: functions.php:897
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1036
+#: functions.php:1002
 msgid "Preview page"
 msgstr "上一页"
 
-#: functions.php:1036
+#: functions.php:1002
 msgid "Preview post"
 msgstr "上一篇"
 
-#: functions.php:1045 functions.php:1307
+#: functions.php:1011 functions.php:1260
 msgid "Next page"
 msgstr "下一页"
 
-#: functions.php:1045
+#: functions.php:1011
 msgid "Next post"
 msgstr "下一篇"
 
-#: functions.php:1136
+#: functions.php:1104
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1162
+#: functions.php:1128
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1242 includes/related-post/related-post.php:54
+#: functions.php:1195 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1327
-msgid "Please set some recommended posts to display."
-msgstr "请设置一些推荐文章以显示。"
-
-#: functions.php:1395
-msgid "Please add some homebox."
-msgstr "请添加一些首页盒子。"
-
-#: functions.php:1416
-msgid "&raquo; more"
-msgstr "&raquo; 更多"
-
-#: functions.php:1480
+#: functions.php:1280
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1482
+#: functions.php:1282
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1495
+#: functions.php:1295
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1496
+#: functions.php:1296
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1528
+#: functions.php:1328
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1530
+#: functions.php:1330
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1541
+#: functions.php:1341
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1543
+#: functions.php:1343
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1554
+#: functions.php:1354
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1555
+#: functions.php:1355
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1575 functions.php:1577
+#: functions.php:1375 functions.php:1377
 msgid "Post comment"
 msgstr "发表评论"
 
@@ -399,96 +391,96 @@ msgstr "发表评论"
 msgid "Please input search keyword"
 msgstr "请输入搜索关键词"
 
-#: includes/cache/cache.php:109
+#: includes/cache/cache.php:88
 msgid "Theme cache"
 msgstr "主题缓存"
 
-#: includes/cache/cache.php:110
+#: includes/cache/cache.php:89
 msgid ""
 "Maybe the theme used cache for improve performance, you can clean it when "
 "you modify some site contents if you want."
 msgstr ""
 "或许主题使用了缓存提高了性能，当您改变了站点内容时候，您可以选择清空缓存。"
 
-#: includes/cache/cache.php:115
+#: includes/cache/cache.php:94
 msgid "Memcache cache"
 msgstr "Memcache 缓存"
 
-#: includes/cache/cache.php:119
+#: includes/cache/cache.php:98
 msgid "Are you sure DELETE object-cache.php to disable theme object cache?"
 msgstr "你确定删除 object-cache.php 来禁用主题对象缓存吗？"
 
-#: includes/cache/cache.php:120
+#: includes/cache/cache.php:99
 msgid "Disable theme object cache"
 msgstr "禁用主题对象缓存"
 
-#: includes/cache/cache.php:123
+#: includes/cache/cache.php:102
 msgid ""
 "Are you sure RE-CREATE object-cache.php to re-enable theme object cache?"
 msgstr "你确定重建 object-cache.php 来重新启用主题对象缓存吗？"
 
-#: includes/cache/cache.php:124
+#: includes/cache/cache.php:103
 msgid "Re-enable theme object cache"
 msgstr "重新启用的主题对象缓存"
 
-#: includes/cache/cache.php:129
+#: includes/cache/cache.php:108
 msgid "Enable theme object cache"
 msgstr "启用主题对象缓存"
 
-#: includes/cache/cache.php:132
+#: includes/cache/cache.php:111
 msgid "Save your settings before click."
 msgstr "点击之前保存设置。"
 
-#: includes/cache/cache.php:138 includes/file-timestamp/file-timestamp.php:58
-#: includes/min-rebuild/min-rebuild.php:37
+#: includes/cache/cache.php:117 includes/file-timestamp/file-timestamp.php:58
+#: includes/min-rebuild/min-rebuild.php:32
 msgid "Control"
 msgstr "操作"
 
-#: includes/cache/cache.php:142
+#: includes/cache/cache.php:121
 msgid "Theme cache has been cleaned or rebuilt."
 msgstr "主题缓存已被清空或重建。"
 
-#: includes/cache/cache.php:152 includes/cache/cache.php:155
-#: includes/cache/cache.php:157 includes/cache/cache.php:159
-#: includes/setting-import/setting-import.php:153
+#: includes/cache/cache.php:131 includes/cache/cache.php:134
+#: includes/cache/cache.php:136 includes/cache/cache.php:138
+#: includes/setting-import/setting-import.php:152
 msgid "Processing, please wait..."
 msgstr "处理中，请稍候…"
 
-#: includes/cache/cache.php:152
+#: includes/cache/cache.php:131
 msgid "Clean PoiCache cache"
 msgstr "清空 PoiCache 缓存"
 
-#: includes/cache/cache.php:155
+#: includes/cache/cache.php:134
 msgid "Clean all cache"
 msgstr "清空全部缓存"
 
-#: includes/cache/cache.php:157
+#: includes/cache/cache.php:136
 msgid "Clean widget cache"
 msgstr "清空小工具缓存"
 
-#: includes/cache/cache.php:159
+#: includes/cache/cache.php:138
 msgid "Clean menu cache"
 msgstr "清空菜单缓存"
 
-#: includes/cache/cache.php:162
+#: includes/cache/cache.php:141
 msgid "Save your settings before clean"
 msgstr "在清空前请保存您的设置"
 
-#: includes/cache/cache.php:175
+#: includes/cache/cache.php:154
 #, php-format
 msgid "Can not delete the %s file, please make sure the folder can be written."
 msgstr "无法删除 %s 文件，请确保该文件夹可写。"
 
-#: includes/cache/cache.php:180
+#: includes/cache/cache.php:159
 #, php-format
 msgid "Can not create the %s file, please make sure the folder can be written."
 msgstr "无法创建 %s 文件，请确定文件夹是否可写。"
 
-#: includes/clean-up/clean-up.php:26
+#: includes/clean-up/clean-up.php:25
 msgid "Database Optimization"
 msgstr "数据库优化"
 
-#: includes/clean-up/clean-up.php:27
+#: includes/clean-up/clean-up.php:26
 msgid ""
 "If your site works for a long time, maybe will have some redundant data in "
 "the database, they will reduce the operating speed of the your site, "
@@ -497,60 +489,60 @@ msgstr ""
 "如果您的站点运作了一段很长的时间，也许会在数据库中产生了一些冗余数据，它们会"
 "降低站点的运作效率，建议定期清理。"
 
-#: includes/clean-up/clean-up.php:28
+#: includes/clean-up/clean-up.php:27
 msgid "Attention: this action will be auto clean up all theme cache."
 msgstr "注意：这个操作将会清空所有主题缓存。"
 
-#: includes/clean-up/clean-up.php:32
+#: includes/clean-up/clean-up.php:31
 msgid "Clean redundant post data"
 msgstr "清理冗余文章数据"
 
-#: includes/clean-up/clean-up.php:40
+#: includes/clean-up/clean-up.php:39
 msgid "Delete revision &amp; draft &amp; auto-draft &amp; trash posts"
 msgstr "删除修订 &amp; 草稿 &amp; 自动草稿 & 垃圾箱文章"
 
-#: includes/clean-up/clean-up.php:49
+#: includes/clean-up/clean-up.php:48
 msgid "Delete orphan post meta"
 msgstr "删除冗余的文章元数据"
 
-#: includes/clean-up/clean-up.php:55
+#: includes/clean-up/clean-up.php:54
 msgid "Clean redundant comment data"
 msgstr "删除冗余的评论元数据"
 
-#: includes/clean-up/clean-up.php:62
+#: includes/clean-up/clean-up.php:61
 msgid "Delete moderated &amp; spam &amp; trash comments"
 msgstr "删除待审核 &amp; 广告 &amp; 垃圾箱评论"
 
-#: includes/clean-up/clean-up.php:69
+#: includes/clean-up/clean-up.php:68
 msgid "Delete orphan comment meta"
 msgstr "删除冗余的评论元数据"
 
-#: includes/clean-up/clean-up.php:74
+#: includes/clean-up/clean-up.php:73
 msgid "Clean redundant other data"
 msgstr "清理其它冗余数据"
 
-#: includes/clean-up/clean-up.php:80
+#: includes/clean-up/clean-up.php:79
 msgid "Delete orphan relationship"
 msgstr "删除冗余的关系数据"
 
-#: includes/clean-up/clean-up.php:85
+#: includes/clean-up/clean-up.php:84
 msgid "Optimizate the WP Database"
 msgstr "立即优化"
 
-#: includes/clean-up/clean-up.php:91
+#: includes/clean-up/clean-up.php:90
 msgid "Optimizate Now"
 msgstr "立即优化"
 
-#: includes/clean-up/clean-up.php:205
+#: includes/clean-up/clean-up.php:204
 msgid "No param"
 msgstr "无参数"
 
-#: includes/clean-up/clean-up.php:215
+#: includes/clean-up/clean-up.php:214
 #, php-format
 msgid "Database updated in %s s."
 msgstr "数据库已在 %s 秒内更新。"
 
-#: includes/clean-up/clean-up.php:228 includes/mailer/mailer.php:217
+#: includes/clean-up/clean-up.php:227 includes/mailer/mailer.php:217
 msgid "Server error or network is disconnected."
 msgstr "服务器错误或网络未连接。"
 
@@ -577,6 +569,7 @@ msgstr "启用 AJAX 评论"
 #: includes/post-copyright/post-copyright.php:43
 #: includes/post-share/post-share.php:98 includes/post-thumb/post-thumb.php:72
 #: includes/post-views/post-views.php:64
+#: includes/recomm-post/recomm-post.php:145
 msgid "Enable"
 msgstr "启用"
 
@@ -692,9 +685,11 @@ msgid ""
 msgstr "如果您的服务器支持，当评论被回复时，它将会发送一封通知邮件给被回复人。"
 
 #: includes/comment-notify/comment-notify.php:49
+#: includes/gravatar-fix/gravatar-fix.php:33
 #: includes/link-manager/link-manager.php:30
 #: includes/post-copyright/post-copyright.php:39
 #: includes/post-share/post-share.php:97 includes/post-thumb/post-thumb.php:68
+#: includes/recomm-post/recomm-post.php:141
 msgid "Enable or not?"
 msgstr "启用"
 
@@ -744,8 +739,6 @@ msgid "Views the comment: %s"
 msgstr "查看此条评论：%s"
 
 #: includes/custom-colorful/custom-colorful.php:33
-#: includes/img-placeholder/img-placeholder.php:58
-#: includes/img-placeholder/img-placeholder.php:71
 msgid "Default"
 msgstr "默认"
 
@@ -787,9 +780,27 @@ msgstr "配色方案"
 msgid "Schemes"
 msgstr "配色方案"
 
-#: includes/custom-navwalker/custom-navwalker.php:383
+#: includes/custom-navwalker/custom-navwalker.php:378
 msgid "Awesome icon"
 msgstr "Awesome 图标"
+
+#: includes/custom-navwalker/custom-navwalker.php:378
+#: includes/recomm-post/recomm-post.php:158
+msgid "Views all icons"
+msgstr "查看所有图标"
+
+#: includes/custom-navwalker/custom-navwalker.php:378
+#: includes/recomm-post/recomm-post.php:158
+msgid "ALL"
+msgstr "全部"
+
+#: includes/custom-navwalker/custom-navwalker.php:394
+msgid "Toggle navigation label"
+msgstr "导航标签开关"
+
+#: includes/custom-navwalker/custom-navwalker.php:396
+msgid "Show navigation label"
+msgstr "显示"
 
 #: includes/custom-navwalker/custom-navwalker.php:397
 msgid "Hide navigation label"
@@ -812,8 +823,6 @@ msgstr "开发者模式"
 
 #: includes/dev-mode/dev-mode.php:77 includes/dev-mode/dev-mode.php:89
 #: includes/dev-mode/dev-mode.php:100 includes/post-views/post-views.php:68
-#: includes/recomm-post/recomm-post.php:132
-#: includes/recomm-post/recomm-post.php:136
 msgid "Enabled"
 msgstr "启用"
 
@@ -912,9 +921,10 @@ msgstr ""
 "此功能可以修复 Gravatar 头像无法在中国内地显示，仅对中国内地用户使用。如果使"
 "用“自定义默认 Gravatar 头像”，请不要启用此功能。"
 
-#: includes/gravatar-fix/gravatar-fix.php:33
-msgid "Enabled or not?"
-msgstr "是否启用？"
+#: includes/gravatar-fix/gravatar-fix.php:36
+#: includes/recomm-post/recomm-post.php:144
+msgid "Disable"
+msgstr "禁用"
 
 #: includes/help/help.php:30
 msgid "Theme Information"
@@ -989,27 +999,27 @@ msgstr "捐赠给 INN 工作室（%s）"
 msgid "Message for INN STUDIO:"
 msgstr "给 INN 工作室留言："
 
-#: includes/img-placeholder/img-placeholder.php:45
+#: includes/img-placeholder/img-placeholder.php:50
 msgid "Default image placeholder settings"
 msgstr "默认占位图片设置"
 
-#: includes/img-placeholder/img-placeholder.php:46
+#: includes/img-placeholder/img-placeholder.php:51
 msgid "You can custom the image placeholder here."
 msgstr "您可以在这里自定义占位图片。"
 
-#: includes/img-placeholder/img-placeholder.php:50
+#: includes/img-placeholder/img-placeholder.php:55
 msgid "Thumbnail image URL"
 msgstr "特色图（文章封面）URL"
 
-#: includes/img-placeholder/img-placeholder.php:57
+#: includes/img-placeholder/img-placeholder.php:62
 msgid "Your custom thumbnail image URL address"
 msgstr "您的自定义特色图 URL 地址"
 
-#: includes/img-placeholder/img-placeholder.php:63
+#: includes/img-placeholder/img-placeholder.php:67
 msgid "Avatar image URL"
 msgstr "头像图片 URL"
 
-#: includes/img-placeholder/img-placeholder.php:70
+#: includes/img-placeholder/img-placeholder.php:74
 msgid "Your custom avatar image URL address"
 msgstr "您的自定义头像图片的 URL 地址"
 
@@ -1197,11 +1207,11 @@ msgstr ""
 "很抱歉给您带来不便，我们目前执行一些维护。如果需要您可以随时<a href=\"mailto:"
 "%s\">联系我们</a>，我们很快就回来！"
 
-#: includes/min-rebuild/min-rebuild.php:32
+#: includes/min-rebuild/min-rebuild.php:27
 msgid "Rebuild minify version"
 msgstr "重建压缩版文件"
 
-#: includes/min-rebuild/min-rebuild.php:33
+#: includes/min-rebuild/min-rebuild.php:28
 msgid ""
 "Rebuild the minify version file of JS and CSS. If you have edit JS or CSS "
 "file, please run it. May take several minutes."
@@ -1209,19 +1219,19 @@ msgstr ""
 "重建 JS 和 CSS 的压缩版文件。如果你曾经修改过 JS 或 CSS 文件，请运行它。执行"
 "过程可能需数分钟。"
 
-#: includes/min-rebuild/min-rebuild.php:41
+#: includes/min-rebuild/min-rebuild.php:36
 msgid "Files have been rebuilt."
 msgstr "文件已经重建完成。"
 
-#: includes/min-rebuild/min-rebuild.php:45
+#: includes/min-rebuild/min-rebuild.php:40
 msgid "Rebuilding, please wait..."
 msgstr "重建中，请稍后…"
 
-#: includes/min-rebuild/min-rebuild.php:45
+#: includes/min-rebuild/min-rebuild.php:40
 msgid "Start rebuild"
 msgstr "开始重建"
 
-#: includes/min-rebuild/min-rebuild.php:46
+#: includes/min-rebuild/min-rebuild.php:41
 msgid "Save your settings before rebuild"
 msgstr "在重建前请保存您的设置"
 
@@ -1447,28 +1457,44 @@ msgstr ""
 msgid "Recommended post"
 msgstr "推荐文章"
 
-#: includes/recomm-post/recomm-post.php:55
-msgid "Set as recommended post"
-msgstr "作为推荐文章"
+#: includes/recomm-post/recomm-post.php:53
+msgid "Add to recommended posts"
+msgstr "添加到推荐文章"
 
-#: includes/recomm-post/recomm-post.php:127
+#: includes/recomm-post/recomm-post.php:77
+msgid "Recommend"
+msgstr "推荐"
+
+#: includes/recomm-post/recomm-post.php:136
 msgid "Recommended posts"
 msgstr "推荐文章"
 
-#: includes/recomm-post/recomm-post.php:128
+#: includes/recomm-post/recomm-post.php:137
 msgid "Recommended posts will display on home page if enabled."
 msgstr "如果启用，将会在首页显示推荐文章。"
 
-#: includes/recomm-post/recomm-post.php:141
+#: includes/recomm-post/recomm-post.php:150
+msgid "Box title"
+msgstr "盒子标题"
+
+#: includes/recomm-post/recomm-post.php:157
+msgid "Box icon"
+msgstr "盒子图标"
+
+#: includes/recomm-post/recomm-post.php:172
+msgid "Show posts number"
+msgstr "文章数量"
+
+#: includes/recomm-post/recomm-post.php:178
 msgid "Marked posts"
 msgstr "已标记的文章"
 
-#: includes/recomm-post/recomm-post.php:158
+#: includes/recomm-post/recomm-post.php:195
 msgid "Open in open window"
 msgstr "在新窗口中打开"
 
-#: includes/recomm-post/recomm-post.php:164
-#: includes/recomm-post/recomm-post.php:167
+#: includes/recomm-post/recomm-post.php:201
+#: includes/recomm-post/recomm-post.php:204
 msgid "No any post yet"
 msgstr "暂无任何资料"
 
@@ -1535,11 +1561,11 @@ msgstr "站点关键词"
 msgid "For example: graphic design%s 3D design ..."
 msgstr "例如：平面设计%s三维设计 ……"
 
-#: includes/setting-import/setting-import.php:28
+#: includes/setting-import/setting-import.php:26
 msgid "Import &amp; export theme settings"
 msgstr "导入 &amp; 导出主题选项"
 
-#: includes/setting-import/setting-import.php:30
+#: includes/setting-import/setting-import.php:28
 msgid ""
 "You can select the settings file to upload and restore settings if you have "
 "the *.txt file. If you want to export the settings backup, please click the "
@@ -1548,43 +1574,43 @@ msgstr ""
 "如果您有 *.txt 文件，可以将其上传并还原。如果您想导出设置备份，请点击点出按"
 "钮。"
 
-#: includes/setting-import/setting-import.php:35
+#: includes/setting-import/setting-import.php:33
 msgid "Import"
 msgstr "导入"
 
-#: includes/setting-import/setting-import.php:41
+#: includes/setting-import/setting-import.php:39
 msgid "Select a setting file to restore"
 msgstr "选择一个文件还原"
 
-#: includes/setting-import/setting-import.php:49
+#: includes/setting-import/setting-import.php:47
 msgid "Export"
 msgstr "导出"
 
-#: includes/setting-import/setting-import.php:55
+#: includes/setting-import/setting-import.php:53
 msgid "Start export settings file"
 msgstr "开始导出设置文件"
 
-#: includes/setting-import/setting-import.php:90
+#: includes/setting-import/setting-import.php:88
 msgid "Settings has been restored, refreshing page, please wait..."
 msgstr "设置已经成功还原，页面正在刷新，请稍候…"
 
-#: includes/setting-import/setting-import.php:96
+#: includes/setting-import/setting-import.php:94
 msgid "Invalid content."
 msgstr "无效的内容。"
 
-#: includes/setting-import/setting-import.php:120
+#: includes/setting-import/setting-import.php:118
 msgid "Backup"
 msgstr "备份"
 
-#: includes/setting-import/setting-import.php:154
+#: includes/setting-import/setting-import.php:153
 msgid "Error: Your browser does not support HTML5. "
 msgstr "错误：您的浏览器不支持 HTML5。"
 
-#: includes/setting-import/setting-import.php:155
+#: includes/setting-import/setting-import.php:154
 msgid "Error: failed to complete the operation. "
 msgstr "错误：无法完成操作。"
 
-#: includes/setting-import/setting-import.php:156
+#: includes/setting-import/setting-import.php:155
 msgid "Error: Not match file. "
 msgstr "错误：文件不匹配。"
 
@@ -1780,14 +1806,14 @@ msgid "Header code"
 msgstr "头部代码"
 
 #: includes/user-code/user-code.php:40
-msgid "This code will be put between <header> and </header>."
-msgstr "该代码会放置在 <header> 和 </header> 标签之间。"
+msgid "This codes will be put between <head> and </head>."
+msgstr "此处代码将会被放在 <head> 和 </head> 标签之间。"
 
 #: includes/user-code/user-code.php:44
 msgid "Footer code"
 msgstr "底部代码"
 
-#: includes/user-code/user-code.php:46
+#: includes/user-code/user-code.php:46 includes/user-code/user-code.php:48
 msgid "Default codes"
 msgstr "默认代码"
 
@@ -1941,6 +1967,10 @@ msgstr "排序"
 msgid "Most views"
 msgstr "最多查看"
 
+#: includes/widget-rank/widget-rank.php:198
+msgid "Thumb up"
+msgstr "顶/赞"
+
 #: includes/widget-rank/widget-rank.php:205
 msgid "Recommended"
 msgstr "推荐文章"
@@ -1998,6 +2028,60 @@ msgstr "最新日志"
 #: sidebar.php:12
 msgid "Please set some widgets in sidebar."
 msgstr "请设置一些小工具在侧栏。"
+
+#~ msgid "(%s)"
+#~ msgstr "（%s）"
+
+#~ msgid "theme settings"
+#~ msgstr "主题设置"
+
+#~ msgid "Settings have been saved."
+#~ msgstr "设置已保存。"
+
+#~ msgid "Theme common settings."
+#~ msgstr "主题通用的设置。"
+
+#~ msgid "Basic Settings"
+#~ msgstr "基本设置"
+
+#~ msgid "Theme appearance/template settings."
+#~ msgstr "主题的外观/模板设置。"
+
+#~ msgid "Page Settings"
+#~ msgstr "页面设置"
+
+#~ msgid "Theme special settings, you need to know what are you doing."
+#~ msgstr "主题独有的设置，您需要知道自己正在做什么。"
+
+#~ msgid "Advanced Settings"
+#~ msgstr "高级设置"
+
+#~ msgid "Developer Mode"
+#~ msgstr "开发者模式"
+
+#~ msgid "About &amp; Help"
+#~ msgstr "关于 &amp; 帮助"
+
+#~ msgid "Comment count"
+#~ msgstr "评论统计"
+
+#~ msgid "Please set some recommended posts to display."
+#~ msgstr "请设置一些推荐文章以显示。"
+
+#~ msgid "Please add some homebox."
+#~ msgstr "请添加一些首页盒子。"
+
+#~ msgid "&raquo; more"
+#~ msgstr "&raquo; 更多"
+
+#~ msgid "Enabled or not?"
+#~ msgstr "是否启用？"
+
+#~ msgid "Set as recommended post"
+#~ msgstr "作为推荐文章"
+
+#~ msgid "This code will be put between <header> and </header>."
+#~ msgstr "该代码会放置在 <header> 和 </header> 标签之间。"
 
 #~ msgid ", "
 #~ msgstr "、"
@@ -2621,9 +2705,6 @@ msgstr "请设置一些小工具在侧栏。"
 #~ msgid "Add a new home box"
 #~ msgstr "添加一个新的盒子"
 
-#~ msgid "Box title"
-#~ msgstr "盒子标题"
-
 #~ msgid "Box link"
 #~ msgstr "盒子链接"
 
@@ -2669,9 +2750,6 @@ msgstr "请设置一些小工具在侧栏。"
 
 #~ msgid "Rank"
 #~ msgstr "排行榜"
-
-#~ msgid "Recommend"
-#~ msgstr "推荐"
 
 #~ msgid "Daily popular"
 #~ msgstr "每日最赞"
@@ -4195,10 +4273,6 @@ msgstr "请设置一些小工具在侧栏。"
 
 #~ msgid "Display different content on homepage."
 #~ msgstr "在首页中显示不同的内容。"
-
-#, fuzzy
-#~ msgid "Show posts number"
-#~ msgstr "文章数量："
 
 #, fuzzy
 #~ msgid "Must be common multiple of 5 and 2."

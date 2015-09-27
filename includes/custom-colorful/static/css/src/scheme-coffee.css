@@ -54,7 +54,7 @@
 	.list-group-item-img a:active h3{
 		color: #c7a589;
 	}
-	.archive-group .sticky a:after{
+	.archive-group .sticky:after{
 		border-color: #c7a589 transparent transparent transparent;
 	}
 /*.primary-text-color    { color: #757575; }*/

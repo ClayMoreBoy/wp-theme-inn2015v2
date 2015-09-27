@@ -20,7 +20,7 @@ class theme_functions{
 	public static $theme_date = '2015-06-17 00:00';
 	public static $thumbnail_size = ['thumbnail',150,150,true];
 	public static $comment_avatar_size = 60;
-	public static $thumbnail_placeholder = 'http://ww4.sinaimg.cn/large/686ee05djw1ew7y0gjp5aj208c08c3yd.jpg';
+	public static $thumbnail_placeholder = 'http://ww1.sinaimg.cn/large/686ee05djw1ewgyg4trr5j208c08ct8s.jpg';
 	public static $avatar_placeholder = 'http://ww2.sinaimg.cn/large/686ee05djw1ew5767l9voj2074074dfn.jpg';
 	public static $cache_expire = 3600;
 	public static $colors = array(
@@ -101,19 +101,17 @@ class theme_functions{
 	 * widget_init
 	 */
 	public static function widget_init(){
-		$sidebar = [
-			[
-				'name' 			=> ___('Sidebar widget area'),
-				'id'			=> 'widget-area-sidebar',
-				'description' 	=> ___('Appears on every page in the sidebar.')
-			],[
-				'name' 			=> ___('Footer widget area'),
-				'id'			=> 'widget-area-footer',
-				'description' 	=> ___('Appears on all page in the footer.'),
-				'before_widget' => '<div class="col-xs-12 col-sm-6 col-md-3"><aside id="%1$s"><div class="panel panel-default widget %2$s">',
-				'after_widget'		=> '</div></aside></div>',
-			]
-		];
+		$sidebar = [[
+			'name' 			=> ___('Sidebar widget area'),
+			'id'			=> 'widget-area-sidebar',
+			'description' 	=> ___('Appears on every page in the sidebar.')
+		],[
+			'name' 			=> ___('Footer widget area'),
+			'id'			=> 'widget-area-footer',
+			'description' 	=> ___('Appears on all page in the footer.'),
+			'before_widget' => '<div class="col-xs-12 col-sm-6 col-md-3"><aside id="%1$s"><div class="panel panel-default widget %2$s">',
+			'after_widget'		=> '</div></aside></div>',
+		]];
 		foreach($sidebar as $v){
 			register_sidebar([
 				'name'				=> $v['name'],
@@ -293,44 +291,6 @@ class theme_functions{
 		</li>
 		<?php
 	}
-	/**
-	 * get_meta_type
-	 *
-	 * @param string $type
-	 * @return array
-	 * @version 1.0.1
-	 */
-	public static function get_meta_type($type){
-		global $post;
-		$output = [];
-		switch($type){
-			case 'thumb-up':
-				$output = array(
-					'icon' => 'thumbs-o-up',
-					'num' => (int)get_post_meta($post->ID,'post_thumb_count_up',true),
-					'tx' => ___('Thumb up'),
-				);
-				break;
-			case 'comments':
-				$output = array(
-					'icon' => 'comment',
-					'num' => $post->comment_count,
-					'tx' => ___('Comment count'),
-				);
-				break;
-			case 'views':
-			case 'view':
-				$output = array(
-					'icon' => 'play',
-					'num' => (int)get_post_meta($post->ID,'views',true),
-					'tx' => ___('Views'),
-				);
-				break;
-			default:
-				return false;
-		}
-		return $output;
-	}
 	public static function archive_tx_content($args = []){
 		global $post;
 
@@ -340,7 +300,6 @@ class theme_functions{
 		
 		$post_title = theme_cache::get_the_title($post->ID);
 
-		$post_title = !empty($post_title) ? $post_title : htmlspecialchars(get_the_excerpt());
 		?>
 		<li class="list-group-item">
 			<a href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title;?>">
@@ -1309,159 +1268,6 @@ class theme_functions{
 		);
 		$output .= theme_features::get_pagination($args);
 		return $output;
-	}
-	/**
-	 * the_recommended
-	 */
-	public static function the_recommended(){
-		$recomms = theme_recommended_post::get_ids();
-		
-		if(empty($recomms)){
-			?>
-			<div class="page-tip"><?= status_tip('info',___('Please set some recommended posts to display.'));?></div>
-			<?php
-			return false;
-		}
-		$cache_id = md5(serialize($recomms));
-		$cache = wp_cache_get($cache_id);
-		
-		if(!empty($cache)){
-			echo $cache;
-			unset($cache);
-			return;
-		}
-		global $post;
-		$query = self::get_posts_query([
-			'posts_per_page' => 6,
-			'orderby' => 'recomm',
-		]);
-		ob_start();
-		if(have_posts()){
-			?>
-			<ul class="home-recomm row post-img-lists">
-				<?php
-				foreach($query->posts as $post){
-					setup_postdata($post);
-					self::archive_img_content([
-						'classes' => 'col-sm-4',
-						'lazyload' => false,
-					]);
-				}
-				wp_reset_postdata();
-				?>
-			</ul>
-			<?php
-		}else{
-			
-		}
-		$cache = ob_get_contents();
-		ob_end_clean();
-		wp_cache_set($cache_id,$cache,3600*24);
-
-		echo $cache;
-		unset($cache);
-		return;
-	}
-	public static function the_homebox(array $args = []){
-		if(!class_exists('theme_custom_homebox')) 
-			return false;
-			
-		$opt = (array)theme_custom_homebox::get_options();
-
-		/**
-		 * cache
-		 */
-
-		$cache = theme_custom_homebox::get_cache();
-		
-		if(!empty($cache)){
-			echo $cache;
-			unset($cache);
-			return;
-		}
-
-		ob_start();
-		
-		if(is_null_array($opt)){
-			?>
-			<div class="panel panel-primary">
-				<div class="panel-body">
-					<div class="page-tip"><?= status_tip('info',___('Please add some homebox.'));?></div>
-				</div>
-			</div>
-			<?php
-			return false;
-		}
-
-		global $post;
-		static $i = 0;
-		foreach($opt as $k => $v){
-			?>
-<div id="homebox-<?= $k;?>" class="homebox panel panel-primary mx-panel">
-	
-	<div class="panel-heading mx-panel-heading clearfix">
-		<h3 class="panel-title mx-panel-title">
-			<?php 
-			
-			if(empty($v['link'])){
-				echo stripcslashes($v['title']);
-			}else{
-				?>
-				<a href="<?= esc_url($v['link']);?>"><?= stripcslashes($v['title']);?> <small><?= ___('&raquo; more');?></small></a>
-				<?php
-			}
-			?>
-		</h3>
-		<div class="mx-panel-heading-extra">
-			
-			<?php if(!is_null_array($v['keywords'])){ ?>
-				<div class="extra keywords hidden-xs">
-					<?php foreach(theme_custom_homebox::keywords_to_html($v['keywords']) as $kw){?>
-						<a href="<?= esc_url($kw['url']);?>">
-							<?= $kw['name'];?>
-						</a>
-					<?php } ?>
-				</div>
-			<?php } ?>
-			
-			
-			
-		</div>
-	</div>
-	<div class="panel-body">
-		<ul class="row mx-card-body post-img-lists">
-			<?php
-			$query = new WP_Query([
-				'category__in' => isset($v['cats']) ? $v['cats'] : [],
-				'posts_per_page' => 8,
-				'ignore_sticky_posts' => false,
-			]);
-			if($query->have_posts()){
-				foreach($query->posts as $post){
-					setup_postdata($post);
-					self::archive_img_content([
-						'classes' => 'col-xs-6 col-sm-3',
-						'lazyload' => $i < 1 ? false : true,
-					]);
-				}
-				wp_reset_postdata();
-			}else{
-				
-			}
-			?>
-		</ul>
-	</div>
-</div>
-		<?php
-			++$i;
-		} /** end foreach */
-
-		$cache = html_minify(ob_get_contents());
-		ob_end_clean();
-		
-		theme_custom_homebox::set_cache($cache);
-		echo $cache;
-		unset($cache);
 	}
 	public static function theme_respond(){
 		global $post;

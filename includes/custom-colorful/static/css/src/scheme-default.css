@@ -30,7 +30,7 @@ a:active,
 .list-group-item-img a:active h3{
 	color: #00BCD4;
 }
-.archive-group .sticky a:after{
+.archive-group .sticky:after{
 	border-color: #607D8B transparent transparent transparent;
 }
 /**
