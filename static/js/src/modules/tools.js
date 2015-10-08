@@ -1,10 +1,11 @@
 define(function(require, exports, module){
 	'use strict';
 	
-	var js_request = require('theme-cache-request');
+	var js_request = require('theme-cache-request'),
+		cache = {};
 
 
-	exports.click_handler = ('ontouchstart' in document.documentElement ? 'touchstart' : 'click');
+	exports.click_handler = ('touchend' in document.documentElement ? 'touchend' : 'click');
 	/**
 	 * get ele offset left
 	 */
@@ -35,14 +36,31 @@ define(function(require, exports, module){
 		return t.firstChild;
 	};
 
-	exports.scrollTop = function(y) {
-		function loop(){
-			if(document.documentElement.scrollTop > y){
-				setTimeout(function(){
-					window.scrollTo(0,document.documentElement.scrollTop - 10);
-					loop();
-				},15)
+	exports.scrollTop = function(y,callback){
+		var interval = Math.abs(y - window.pageYOffset) / 16,
+			st;
+			//console.log(interval);
+		function scroll_down(){
+			if(window.pageYOffset < y){
+				scrollTo(0,window.pageYOffset + interval);
+				st = setTimeout(scroll_down,16);
+			}else{
+				clearTimeout(st);
 			}
+		}
+		function scroll_up(){
+			if(window.pageYOffset > y){
+				scrollTo(0,window.pageYOffset - interval);
+				st = setTimeout(scroll_up,16);
+			}else{
+				clearTimeout(st);
+			}
+		}
+		if(window.pageYOffset < y){
+			//console.log(window.pageYOffset);
+			scroll_down();
+		}else{
+			scroll_up();
 		}
 	};
 	/**
@@ -53,63 +71,67 @@ define(function(require, exports, module){
 	 * @param int Timeout to hide(second)
 	 * @version 1.0.1
 	 */
-	var si;
 	exports.ajax_loading_tip = function(t,s,timeout){
-		var I = function(e){
-				return document.getElementById(e);
-			},
-			$t_container = I('ajax-loading-container'),
-			$t = I('ajax-loading'),
-			$close = I('ajax-loading-close'),
-			action_close_st;
-		
-		if(!$t_container){
-			$close = document.createElement('i');
-			$close.setAttribute('class','btn btn-danger btn-xs btn-close fa fa-times');
-			$close.id = 'ajax-loading-close';
+		var doc = document,
+			I = function(e){return doc.getElementById(e)};
 			
-			$t_container = document.createElement('div');
-			$t_container.id = 'ajax-loading-container';
+		if(!cache.alt)
+			cache.alt = {};
 
-			$t = document.createElement('div');
-			$t.id = 'ajax-loading';
+		if(!cache.alt.si)
+			cache.alt.si = false;
 			
-			$t_container.appendChild($t)
-			$t_container.appendChild($close);
-			document.body.appendChild($t_container);
+		/** if first */
+		if(!cache.alt.$t_container){
+			cache.alt.$c = doc.createElement('i');
+			cache.alt.$c.setAttribute('class','btn-close fa fa-times fa-fw');
 			
-			$close.addEventListener(exports.click_handler,function(){
+			cache.alt.$t_container = doc.createElement('div');
+			cache.alt.$t_container.id = 'ajax-loading-container';
+			
+			cache.alt.$t = doc.createElement('div');
+			cache.alt.$t.id = 'ajax-loading';
+			
+			cache.alt.$t_container.appendChild(cache.alt.$t)
+			cache.alt.$t_container.appendChild(cache.alt.$c);
+			doc.body.appendChild(cache.alt.$t_container);
+			
+			cache.alt.$c.addEventListener(exports.click_handler,function(){
 				action_close();
-				clearInterval(si);
+				clearInterval(cache.alt.si);
 			});
 		}
-		clearInterval(si);
+			
+		clearInterval(cache.alt.si);
 		if(timeout > 0){
 			set_close_time(timeout);
-			si = setInterval(function(){
+			cache.alt.si = setInterval(function(){
 				timeout--;
 				set_close_time(timeout);
 				if(timeout <= 0){
 					action_close();
-					$close.innerHTML = '';
+					cache.alt.$c.innerHTML = '';
 					clearInterval(si);
 				}
 			},1000);
 		}else{
-			$close.innerHTML = '';
+			cache.alt.$c.innerHTML = '';
 		}
-		if(s !== 'hide'){
-			$t.innerHTML = exports.status_tip(t,s);
-			$t_container.setAttribute('class',t);
-			$t_container.style.display = 'block';
-		}else{
+		/** hide */
+		if(t === 'hide'){
 			action_close();
+		/** show */
+		}else{
+			setTimeout(function(){
+				cache.alt.$t_container.className = t + ' show';
+			},1);
+			cache.alt.$t.innerHTML = exports.status_tip(t,s);
 		}
 		function set_close_time(t){
-			$close.innerHTML = '<span class="number">' + t + '</span>';
+			cache.alt.$c.innerHTML = '<span class="number">' + t + '</span>';
 		}
 		function action_close(){
-			$t_container.classList.add('closed');
+			cache.alt.$t_container.classList.remove('show');
 		}
 	};
 	exports.param = function(obj){
@@ -376,7 +398,6 @@ define(function(require, exports, module){
 
 		return '<' + wrapper + ' class="tip-status tip-status-' + size + ' tip-status-' + type + '"><i class="fa fa-' + icon + '"></i> ' + content + '</' + wrapper + '>';
 	};
-
 	/** 
 	 * cookie
 	 */

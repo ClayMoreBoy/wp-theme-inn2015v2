@@ -219,7 +219,7 @@ class theme_functions{
 		
 		$post_title = theme_cache::get_the_title($post->ID);
 
-		$excerpt = htmlspecialchars(get_the_excerpt());
+		$excerpt = esc_html(get_the_excerpt());
 		
 		$args['classes'] .= ' list-group-item-img';
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
@@ -263,7 +263,7 @@ class theme_functions{
 		
 		$post_title = theme_cache::get_the_title($post->ID);
 		
-		$excerpt = htmlspecialchars(get_the_excerpt());
+		$excerpt = esc_html(get_the_excerpt());
 		
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
@@ -515,7 +515,7 @@ class theme_functions{
 				?>
 				<a href="#comments" class="post-meta quick-comment comment-count" data-post-id="<?= $post->ID;?>">
 					<i class="fa fa-comment"></i>
-					<span class="comment-count-number"><?= $comment_count;?></span> <span class="hidden-xs"><?= htmlspecialchars($comment_tx);?></span>
+					<span class="comment-count-number"><?= $comment_count;?></span> <span class="hidden-xs"><?= esc_html($comment_tx);?></span>
 				</a>
 
 				<?php
@@ -617,7 +617,7 @@ class theme_functions{
     	}else if(theme_cache::is_tag()){
     		$tag_id = theme_features::get_current_tag_id();
 			$tag_obj = get_tag($tag_id);
-    		$links['tag'] = '<a href="'. esc_url(get_tag_link($tag_id)).'">' . htmlspecialchars(theme_features::get_current_tag_name()).'</a>';
+    		$links['tag'] = '<a href="'. esc_url(get_tag_link($tag_id)).'">' . esc_html(theme_features::get_current_tag_name()).'</a>';
     		$links['curr_text'] = ___('Tags Browser');
     		/* date */
     	}else if(theme_cache::is_date()){
@@ -640,7 +640,7 @@ class theme_functions{
     	/* search*/
     	}else if(theme_cache::is_search()){
     		// $nav_link = null;
-    		$links['curr_text'] = sprintf(___('Search Result: %s'),htmlspecialchars(get_search_query()));
+    		$links['curr_text'] = sprintf(___('Search Result: %s'),esc_html(get_search_query()));
 		/* author */
 		}else if(theme_cache::is_author()){
 			global $author;
@@ -668,7 +668,7 @@ class theme_functions{
 				}
 				array_multisort($parent_id, SORT_ASC,$categories);
 				foreach($categories as $cat){
-					$cat_name = htmlspecialchars($cat->name);
+					$cat_name = esc_html($cat->name);
 					$links['singluar'] = '<a href="' . esc_url(get_category_link($cat->cat_ID)) . '" title="' . sprintf(___('View all posts in %s'),$cat_name) . '">' . $cat_name . '</a>';
 				}
     		}

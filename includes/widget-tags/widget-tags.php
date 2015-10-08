@@ -35,7 +35,7 @@ class widget_hot_tags extends WP_Widget{
 		$sticky_links = [];
 		if(!empty($exclude_ids)){
 			foreach($exclude_ids as $k => $v){
-				$sticky_name = isset($sticky_names[$k]) ? htmlspecialchars($sticky_names[$k]) : null;
+				$sticky_name = isset($sticky_names[$k]) ? esc_html($sticky_names[$k]) : null;
 				$sticky_links[] = '<a href="' . get_tag_link($v) . '" class="sticky-tag">' . $sticky_name . '</a>';
 			}
 		}
@@ -66,24 +66,21 @@ class widget_hot_tags extends WP_Widget{
 			foreach ( $tags as $key => $tag ) {
 				$count = $counts[ $key ];
 				ob_start();
-				
-				?>
-				<a 
+				?><a 
 					class="hot-tag" 
 					href="<?= get_tag_link($tag->term_id);?>" 
 					style="
 						font-size:<?= str_replace( ',', '.', ( $smallest + ( ( $count - $min_count ) * $font_step ) ) ),$unit;?>;
 						color:rgb(<?= mt_rand(50,200);?>,<?= mt_rand(50,200);?>,<?= mt_rand(50,200);?>);"
-				><?= htmlspecialchars($tag->name);?></a>&nbsp;
-				<?php
+				><?= esc_html($tag->name);?></a><?php
 				$tag_links[] = html_minify(ob_get_contents());
 				ob_end_clean();
 			}
 		}
-		$tags =  array_merge($tag_links,$sticky_links);
+		$tags =  array_filter(array_merge($tag_links,$sticky_links));
 		if(!empty($tags)){
-			shuffle($tags);
-			$cache = implode(' ',$tags);
+			//shuffle($tags);
+			$cache = implode('',$tags);
 		}else{
 			$cache = status_tip('info',___('No data yet.'));
 		}

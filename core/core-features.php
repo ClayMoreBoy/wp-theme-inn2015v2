@@ -6,9 +6,8 @@
  * Help you write a wp site quickly.
  *
  * @package KMTF
- * @version 5.0.6
+ * @version 5.0.7
  */
-theme_features::init();
 class theme_features{
 	
 	public static $basedir_js 					= '/static/js/';
@@ -26,8 +25,10 @@ class theme_features{
 	
 	public static $iden = 'theme_features';	
 	
-	
 	public static function init(){
+		/** mt_xx encoding */
+		mb_internal_encoding('UTF-8');
+		
 		self::set_basename();
 		add_action('after_setup_theme',	__CLASS__ . '::after_setup_theme');
 		add_action('wp_footer',			__CLASS__ . '::theme_js',20);
@@ -888,7 +889,7 @@ class theme_features{
 	 * @version 1.0.1
 	 */
 	public static function get_current_tag_obj(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			static $cache = null;
 			if($cache !== null)
 				return $cache;
@@ -906,7 +907,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_current_tag_name(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			$tag_obj = self::get_current_tag_obj();
 			$tag_name = $tag_obj->name;
 			return $tag_name;
@@ -919,7 +920,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_current_tag_slug(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			$tag_obj = self::get_current_tag_obj();
 			$tag_slug = $tag_obj->slug;
 			return $tag_slug;
@@ -932,7 +933,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_current_tag_count(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			$tag_obj = self::get_current_tag_obj();
 			$tag_count = $tag_obj->count;
 			return $tag_count;
@@ -945,7 +946,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_current_tag_id(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			global $wp_query;
 			$tag_id = $wp_query->query_vars['tag_id'];
 			return $tag_id;
@@ -1128,28 +1129,6 @@ class theme_features{
 		}
 		return $caches[$slug];
 	}
-	
-	/**
-	 * Get theme local dir
-	 * 
-	 * 
-	 * @param string $file_name The file name
-	 * @return string The file path
-	 * @version 1.0.0
-	 * 
-	 */
-	public static function get_wp_themes_local_dir($file_name = null){
-		static $caches = [];
-		$cache_id = md5($file_name);
-		
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-			
-		$basedir_name = '/themes/';
-		$file_name = $file_name ? '/' . $file_name : '/';
-		$caches[$cache_id] = self::get_stylesheet_directory().$basedir_name.$file_name;
-		return $caches[$cache_id];
-	}
 	/**
 	 * get_link_page_url
 	 *
@@ -1218,11 +1197,11 @@ class theme_features{
 		
 		ob_start();
 		?>
-		<nav class="<?= esc_attr($nav_class);?>">
+		<nav class="<?= $nav_class;?>">
 			<?php 
 			ob_start(); 
 			?>
-			<a href="<?= $prev_page_url;?>" class="page-numbers page-prev <?= esc_attr($numbers_class_str);?> <?= $first_class;?>">
+			<a href="<?= $prev_page_url;?>" class="page-numbers page-prev <?= $numbers_class_str;?> <?= $first_class;?>">
 				<?= ___('&lsaquo; Previous');?>
 			</a>
 			<?php
@@ -1235,7 +1214,7 @@ class theme_features{
 			 */
 			echo apply_filters('prev_pagination_link',$prev_page_str,$page,$numpages);
 			?>
-			<div class="page-numbers page-middle <?= esc_attr($middle_class);?>">
+			<div class="page-numbers page-middle <?= $middle_class;?>">
 				<span class="page-middle-btn"><?= $page , ' / ' , $numpages;?></span>
 				<div class="page-middle-numbers">
 				<?php
@@ -1257,7 +1236,7 @@ class theme_features{
 			</div>
 			
 			<?php ob_start(); ?>
-			<a href="<?= $next_page_url;?>" class="page-numbers page-next <?= esc_attr($numbers_class_str);?> <?= $last_class;?>">
+			<a href="<?= $next_page_url;?>" class="page-numbers page-next <?= $numbers_class_str;?> <?= $last_class;?>">
 				<?= ___('Next &rsaquo;');?>
 			</a>
 			<?php
@@ -1424,13 +1403,6 @@ class theme_features{
 		wp_cache_set($cache_id,$count,null,3600);
 		return $count;
 	}
-
-	/* 后台登录logo 链接修改 */
-	public static function custom_login_logo_url() {
-		return theme_cache::home_url();
-	}
-
-	/* 增強bodyclass樣式 */
 	public static function theme_body_classes(array $classes = []){
 		if(theme_cache::is_singular())
 			$classes[] = 'singular';
@@ -1527,19 +1499,13 @@ class theme_features{
 		/**
 		 * Custom login logo url
 		 */
-		add_filter('login_headerurl',__CLASS__ . '::custom_login_logo_url' );
+		add_filter('login_headerurl', function(){
+			return theme_cache::home_url();
+		});
 		/**
 		 * Add thumbnails function
 		 */
 		add_theme_support('post-thumbnails');
-		/**
-		 * MB functions charset
-		 */
-		mb_internal_encoding(get_bloginfo('charset'));
-		/**
-		 * Add editor style
-		 */
-		add_editor_style();
 		/**
 		 * Load includes functions
 		 */
@@ -1577,15 +1543,15 @@ class theme_features{
 	 * auto_minify
 	 *
 	 * @return 
-	 * @version 1.0.4
+	 * @version 1.0.5
 	 */
 	public static function auto_minify(){
 		/** 
 		 * js and css files version
 		 */
 		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
-			@ini_set('max_input_nesting_level','10000');
-			@ini_set('max_execution_time',0); 
+			ini_set('max_input_nesting_level','10000');
+			ini_set('max_execution_time',0); 
 			
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_js_src);
 			
@@ -1677,7 +1643,7 @@ class theme_features{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-				<?= htmlspecialchars($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank"><?= urldecode($cat->slug);?></a>
+				<?= esc_html($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank"><?= urldecode($cat->slug);?></a>
 			</label>
 			<?php 
 			}
@@ -1792,5 +1758,4 @@ class theme_features{
 		}
 	}
 }
-
-?>
+theme_features::init();

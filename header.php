@@ -26,11 +26,12 @@ if(wp_is_mobile()){
 ?>
 <div class="main-nav ">
 	<div class="container">
-		<a href="javascript:;" class="navicon toggle visible-xs-block fa fa-navicon fa-2x fa-fw" data-mobile-target=".menu-mobile" data-icon-active="fa-arrow-left" data-icon-original="fa-navicon"></a>
+		<?php if(wp_is_mobile()){ ?>
+			<a href="javascript:;" class="navicon toggle visible-xs-block fa fa-navicon fa-2x fa-fw" data-mobile-target=".menu-mobile" data-icon-active="fa-arrow-left" data-icon-original="fa-navicon"></a>
+		<?php } ?>
 		
 		<h1>
-			<a href="<?= theme_cache::home_url();?>">
-			<i class="fa fa-home fa-fw hidden-xs"></i>
+			<a href="<?= theme_cache::home_url();?>" title="<?= ___('Home page');?>">
 			<?= theme_cache::get_bloginfo('name');?></a>
 		</h1>
  
@@ -66,14 +67,22 @@ if(wp_is_mobile()){
 		   	]);
 			?>
 			
-			<a class="tool search fa fa-search" href="javascript:;" data-toggle-target="#fm-search" data-focus-target="#fm-search-s" data-icon-active="fa-arrow-down" data-icon-original="fa-search"></a>
+			<a 
+				class="tool search fa fa-search fa-fw" 
+				href="javascript:;" 
+				data-toggle-target="#fm-search" 
+				data-focus-target="#fm-search-s" 
+				data-icon-active="fa-arrow-down" 
+				data-icon-original="fa-search" 
+				title="<?= ___('Search');?>" 
+			></a>
 			
 		</div><!-- .tools -->
 
 	</div><!-- .container -->
 	
 	<div class="container">
-		<form id="fm-search" action="<?= theme_cache::home_url('/'); ?>" data-focus-target="#fm-search-s">
+		<form id="fm-search" action="<?= theme_cache::home_url(); ?>/" data-focus-target="#fm-search-s">
 			<input id="fm-search-s" name="s" class="form-control" placeholder="<?= ___('Please input search keyword');?>" value="<?= esc_attr(get_search_query())?>" type="search" required>
         </form>		
 	</div>

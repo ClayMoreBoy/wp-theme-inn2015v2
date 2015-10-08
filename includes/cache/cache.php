@@ -254,7 +254,7 @@ class theme_cache{
 	public static function get_comment_author($comment_id){
 		static $caches = [];
 		if(!isset($caches[$comment_id]))
-			$caches[$comment_id] = htmlspecialchars(get_comment_author($comment_id));
+			$caches[$comment_id] = esc_html(get_comment_author($comment_id));
 		return $caches[$comment_id];
 	}
 	public static function get_comment(&$comment = null, $output = OBJECT){
@@ -274,7 +274,7 @@ class theme_cache{
 	public static function get_the_title($post_id){
 		static $caches = [];
 		if(!isset($caches[$post_id]))
-			$caches[$post_id] = htmlspecialchars(get_the_title($post_id));
+			$caches[$post_id] = esc_html(get_the_title($post_id));
 		return $caches[$post_id];
 	}
 	public static function get_permalink($post_id,  $leavename = false){
@@ -298,7 +298,7 @@ class theme_cache{
 				case 'user_firstname':
 				case 'user_lastname':
 				case 'nickname':
-					$cache[$cache_id] = htmlspecialchars(get_the_author_meta($field,$user_id));
+					$cache[$cache_id] = esc_html(get_the_author_meta($field,$user_id));
 					break;
 				default:
 					$cache[$cache_id] = get_the_author_meta($field,$user_id);
@@ -328,7 +328,7 @@ class theme_cache{
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));
 		if(!isset($caches[$cache_id]))
-			$caches[$cache_id] = htmlspecialchars(wp_title($sep, $display, $seplocation));
+			$caches[$cache_id] = esc_html(wp_title($sep, $display, $seplocation));
 		return $caches[$cache_id];
 	}
 	/**
@@ -446,28 +446,19 @@ class theme_cache{
 			$cache = (bool)is_home();
 		return $cache;
 	}
-	public static function is_singular_post(){
-		static $cache = null;
-		if($cache === null)
-			$cache = (bool)is_singular('post');
-		return $cache;
-	}
-	public static function is_singular(){
-		static $cache = null;
-		if($cache === null)
-			$cache = (bool)is_singular();
-		return $cache;
+	public static function is_singular($post_types = null){
+		static $caches = [];
+		$cache_id = md5(json_encode(func_get_args()));
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = (bool)is_singular($post_types);
+		return $caches[$cache_id];
 	}
 	public static function is_page($page = null){
-		static $caches = [],$cache = null;
-		if($page === null){
-			if($cache === null)
-				$cache = is_page();
-			return $cache;
-		}
-		if(!isset($caches[$page]))
-			$caches[$page] = is_page($page);
-		return $caches[$page];
+		static $caches = [];
+		$cache_id = md5(json_encode(func_get_args()));
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = (bool)is_page($page);
+		return $caches[$cache_id];
 	}
 	public static function get_bloginfo($key){
 		static $caches = [];
@@ -600,7 +591,6 @@ class theme_cache{
 			
 		if(self::is_singular()){
 			global $post;
-			wp_reset_postdata();
 			$cache_id_prefix = 'post-' . $post->ID;
 		}else if(self::is_home()){
 			$cache_id_prefix = 'home';
@@ -632,11 +622,11 @@ class theme_cache{
 	 * @param string The widget sidebar name/id
 	 * @param int Cache expire time
 	 * @return string
-	 * @version 3.0.0
+	 * @version 3.0.1
 	 */
 	public static function dynamic_sidebar($id,$expire = 3600){
 		$cache_group_id = 'dynamic-sidebar';
-		$cache_id = md5(self::get_page_prefix() . wp_is_mobile() . $id);
+		$cache_id = md5(get_current_url() . wp_is_mobile() . $id);
 
 		$cache = self::get($cache_id,$cache_group_id);
 
