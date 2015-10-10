@@ -27,7 +27,7 @@ if(wp_is_mobile()){
 <div class="main-nav ">
 	<div class="container">
 		<?php if(wp_is_mobile()){ ?>
-			<a href="javascript:;" class="navicon toggle visible-xs-block fa fa-navicon fa-2x fa-fw" data-mobile-target=".menu-mobile" data-icon-active="fa-arrow-left" data-icon-original="fa-navicon"></a>
+			<a href="javascript:;" class="navicon toggle fa fa-navicon fa-fw" data-mobile-target=".menu-mobile" data-icon-active="fa-arrow-left" data-icon-original="fa-navicon"></a>
 		<?php } ?>
 		
 		<h1>
@@ -88,3 +88,4 @@ if(wp_is_mobile()){
 	</div>
 
 </div><!-- .main-nav -->
+<div class="main-nav-placeholder"></div>
