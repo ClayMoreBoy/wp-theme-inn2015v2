@@ -404,7 +404,7 @@ img{
 	}
 	.menu-header .sub-menu{
 		position: absolute;
-		background: #fff;
+		background: #607D8B;
 		box-shadow: 0 2px 5px rgba(0,0,0,.3);
 		opacity: 0;
 		visibility: collapse;
@@ -424,7 +424,10 @@ img{
 		.menu-header .sub-menu .sub-menu{
 			left: 100%;
 			top: 0;
-			
+			-ms-transform: scale3d(0,1,1);
+			-webkit-transform: scale3d(0,1,1);
+			transform: scale3d(0,1,1);
+		
 			-webkit-transform-origin: left;
 			-ms-transform-origin: left;
 			transform-origin: left;
@@ -542,14 +545,8 @@ body.menu-on #mobile-on-layer{
 		font-family: FontAwesome;
 		content:"\f0d7";
 	}
-
-	.slide-menu .sub-menu li{
-		
-	}
 		.slide-menu .sub-menu a{
 			padding: 0 10px;
-		}
-		.slide-menu .sub-menu a:hover{
 		}
 
 /**
