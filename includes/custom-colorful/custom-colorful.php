@@ -8,7 +8,6 @@ add_filter('theme_includes',function($fns){
 });
 class theme_custom_colorful{
 
-	public static $iden = 'theme_custom_colorful';
 	public static function init(){
 
 		add_action('page_settings', __CLASS__ . '::display_backend');
@@ -56,12 +55,12 @@ class theme_custom_colorful{
 		return $caches;
 	}
 	public static function customize_register($wp_customize){
-		$opt_prefix = theme_options::$iden . '[' . self::$iden . ']';
+		$opt_prefix = theme_options::$iden . '[' . __CLASS__ . ']';
 		$choices = [];
 		foreach(self::get_schemes() as $v){
 			$choices[ $v['id']] = $v['text'];
 		}
-		$wp_customize->add_section(self::$iden,[
+		$wp_customize->add_section(__CLASS__,[
 			'title' 		=> ___('Theme colorful settings'),
 			'description' 	=> ___('The theme has some color schemes, you can choose a color scheme you like. Also ,you can try to choose random scheme.'),
 			'priority' 		=> 20,
@@ -72,9 +71,9 @@ class theme_custom_colorful{
 			'type'           => 'theme_mod',
 			'transport'      => 'postMessage',
 		]);
-		$wp_customize->add_control(self::$iden . '-scheme', [
+		$wp_customize->add_control(__CLASS__ . '-scheme', [
 			'label'      => ___('Color Scheme'),
-			'section'    => self::$iden,
+			'section'    => __CLASS__,
 			'settings'   => $opt_prefix . '[scheme]',
 			'type'       => 'radio',
 			'choices'    => $choices,
@@ -82,7 +81,7 @@ class theme_custom_colorful{
 	}
 	public static function customizer_live_preview(){
 		wp_enqueue_script( 
-			self::$iden,
+			__CLASS__,
 			theme_features::get_theme_includes_js(__DIR__,'customizer-live-preview'),
 			['customize-preview'],
 			theme_file_timestamp::get_timestamp(),
@@ -93,7 +92,7 @@ class theme_custom_colorful{
 		return self::get_options('scheme') === 'random';
 	}
 	public static function get_and_set_random_scheme(){
-		$cookie_id = self::$iden . current_time('d');
+		$cookie_id = __CLASS__ . current_time('d');
 		$rand = isset($_COOKIE[$cookie_id]) ? (int)$_COOKIE[$cookie_id] : false;
 		$len = count(self::get_schemes()) - 1;
 		if($rand === false || $rand < 0 || $rand > $len){
@@ -106,19 +105,19 @@ class theme_custom_colorful{
 	public static function get_options($key = null){
 		static $caches = null;
 		if($caches === null)
-			$caches = theme_options::get_options(self::$iden);
+			$caches = theme_options::get_options(__CLASS__);
 		if($key)
 			return isset($caches[$key]) ? $caches[$key] : false;
 		return $caches;
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[self::$iden])){
-			$opts[self::$iden] = $_POST[self::$iden];
+		if(isset($_POST[__CLASS__])){
+			$opts[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $opts;
 	}
 	public static function options_default(array $opts = []){
-		$opts[self::$iden]['scheme'] = 'default';
+		$opts[__CLASS__]['scheme'] = 'default';
 		return $opts;
 	}
 	public static function display_backend(){
@@ -134,13 +133,13 @@ class theme_custom_colorful{
 				<tr>
 					<th><?= ___('Schemes');?></th>
 					<td>
-						<div id="<?= self::$iden;?>">
+						<div id="<?= __CLASS__;?>">
 							<?php foreach(self::get_schemes() as $scheme){
 								$checked = $current_scheme === $scheme['id'] ? 'checked' : null;
 								?>
-								<div class="<?= self::$iden;?>-item">
-									<input type="radio" name="<?= self::$iden;?>[scheme]" id="<?= self::$iden,'-',$scheme['id'];?>" value="<?= $scheme['id'];?>" <?= $checked;?>>
-									<label for="<?= self::$iden,'-',$scheme['id'];?>">
+								<div class="<?= __CLASS__;?>-item">
+									<input type="radio" name="<?= __CLASS__;?>[scheme]" id="<?= __CLASS__,'-',$scheme['id'];?>" value="<?= $scheme['id'];?>" <?= $checked;?>>
+									<label for="<?= __CLASS__,'-',$scheme['id'];?>">
 										<?php foreach($scheme['colors'] as $color){ 
 											?><i style="background-color: <?= $color;?>"></i><?php 
 										} ?>
@@ -163,20 +162,20 @@ class theme_custom_colorful{
 			$scheme = self::get_options('scheme');
 		}
 		wp_register_style( 
-			self::$iden . '-frontend',
+			__CLASS__ . '-frontend',
 			theme_features::get_theme_includes_css(__DIR__,'scheme-' . $scheme),
 			['frontend'],
 			theme_file_timestamp::get_timestamp()
 		);
-		wp_enqueue_style(self::$iden . '-frontend');
+		wp_enqueue_style(__CLASS__ . '-frontend');
 	}
 	public static function backend_css(){
 		wp_register_style( 
-			self::$iden . '-backend',
+			__CLASS__ . '-backend',
 			theme_features::get_theme_includes_css(__DIR__,'backend'),
 			false,
 			theme_file_timestamp::get_timestamp()
 		);
-		wp_enqueue_style(self::$iden . '-backend');
+		wp_enqueue_style(__CLASS__ . '-backend');
 	}
 }
