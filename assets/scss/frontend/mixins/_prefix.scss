@@ -2,5 +2,5 @@
 	-webkit-#{$key}: $value;
 	-moz-#{$key}: $value;
 	-ms-#{$key}: $value;
-	$key: $value;
+	#{$key}: $value;
 }
