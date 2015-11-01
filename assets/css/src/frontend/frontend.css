@@ -2172,20 +2172,20 @@ body.menu-on {
 
 @media (min-width: 960px) {
   .main-card-group {
-    -webkit-column-count: #value;
-    -moz-column-count: #value;
-    -ms-column-count: #value;
-    -webkit-column-gap: #value;
-    -moz-column-gap: #value;
-    -ms-column-gap: #value;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    -ms-column-count: 2;
+    -webkit-column-gap: 0;
+    -moz-column-gap: 0;
+    -ms-column-gap: 0;
     margin-bottom: 2rem; }
     .main-card-group > .card {
       display: inline-block;
       width: auto;
       float: none;
-      -webkit-column-break-inside: #value;
-      -moz-column-break-inside: #value;
-      -ms-column-break-inside: #value; } }
+      -webkit-column-break-inside: avoid;
+      -moz-column-break-inside: avoid;
+      -ms-column-break-inside: avoid; } }
 .widget_comments .author {
   font-weight: bold; }
 .widget_comments a {
