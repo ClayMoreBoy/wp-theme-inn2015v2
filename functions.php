@@ -1,5 +1,4 @@
 <?php
-
 /** Theme options */
 include __DIR__ . '/core/core-options.php';
 
@@ -12,13 +11,14 @@ include __DIR__ . '/core/core-functions.php';
 /** 
  * theme_functions
  */
-add_action('after_setup_theme','theme_functions::init');
 class theme_functions{
 	public static $iden = 'inn2015v2';
 	public static $basename;
 	public static $theme_edition = 1;
 	public static $theme_date = '2015-06-17 00:00';
 	public static $thumbnail_size = ['thumbnail',150,150,true];
+	public static $medium_size = ['medium',600,600,false];
+	public static $large_size = ['large',1024,1024,false];
 	public static $comment_avatar_size = 60;
 	public static $thumbnail_placeholder = 'http://ww1.sinaimg.cn/large/686ee05djw1ewgyg4trr5j208c08ct8s.jpg';
 	public static $avatar_placeholder = 'http://ww2.sinaimg.cn/large/686ee05djw1ew5767l9voj2074074dfn.jpg';
@@ -101,26 +101,28 @@ class theme_functions{
 	 * widget_init
 	 */
 	public static function widget_init(){
-		$sidebar = [[
-			'name' 			=> ___('Sidebar widget area'),
-			'id'			=> 'widget-area-sidebar',
-			'description' 	=> ___('Appears on every page in the sidebar.')
-		],[
-			'name' 			=> ___('Footer widget area'),
-			'id'			=> 'widget-area-footer',
-			'description' 	=> ___('Appears on all page in the footer.'),
-			'before_widget' => '<div class="col-xs-12 col-sm-6 col-md-3"><aside id="%1$s"><div class="panel panel-default widget %2$s">',
-			'after_widget'		=> '</div></aside></div>',
-		]];
-		foreach($sidebar as $v){
+		$sidebar = [
+			'widget-area-sidebar' => [
+				'name' 			=> ___('Home widget area'),
+				'description' 	=> ___('Appears on home in the sidebar.'),
+			],
+		
+			'widget-area-footer' => [
+				'name' 			=> ___('Footer widget area'),
+				'description' 	=> ___('Appears on all page in the footer.'),
+				'before_widget' => '<div class="g-desktop-1-4"><aside id="%1$s"><div class="widget %2$s">',
+				'after_widget'		=> '</div></aside></div>',
+			],
+		];
+		foreach($sidebar as $k => $v){
 			register_sidebar([
+				'id'				=> $k,
 				'name'				=> $v['name'],
-				'id'				=> $v['id'],
 				'description'		=> $v['description'],
-				'before_widget'		=> isset($v['before_widget']) ? $v['before_widget'] : '<aside id="%1$s"><div class="panel panel-default widget %2$s">',
+				'before_widget'		=> isset($v['before_widget']) ? $v['before_widget'] : '<aside id="%1$s"><div class="widget %2$s">',
 				'after_widget'		=> isset($v['after_widget']) ? $v['after_widget'] : '</div></aside>',
-				'before_title'		=> isset($v['before_title']) ? $v['before_title'] : '<div class="panel-heading panel-heading-default"><h3 class="widget-title panel-title">',
-				'after_title'		=> isset($v['after_title']) ? $v['after_widget'] : '</h3></div>',
+				'before_title'		=> isset($v['before_title']) ? $v['before_title'] : '<div class="heading "><h2 class="widget-title">',
+				'after_title'		=> isset($v['after_title']) ? $v['after_widget'] : '</h2></div>',
 			]);
 		}
 	}
@@ -247,6 +249,49 @@ class theme_functions{
 		<?php
 	}
 	/**
+	 * archive_card_xs
+	 *
+	 * @return
+	 * @version 1.0.0
+	 */
+	public static function archive_card_xs(array $args = []){
+		global $post;
+		$args = array_merge([
+			'classes' => 'g-desktop-1-2',
+			'lazyload' => true,
+			'target' => '_blank',
+		],$args);
+
+		$args['classes'] .= ' card xs ';
+			
+		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
+		$post_title = theme_cache::get_the_title($post->ID);
+		?>
+		<article class="<?= $args['classes'];?>">
+			<a 
+			class="card-bg" 
+			href="<?= theme_cache::get_permalink($post->ID);?>" 
+			title="<?= $post_title;?>" 
+			target="<?= $args['target'];?>" 
+			>
+				<div class="thumbnail-container">
+					<?php
+					/**
+					 * lazyload img
+					 */
+					if($args['lazyload']){
+						?>
+						<img class="thumbnail" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>" >
+					<?php }else{ ?>
+						<img class="thumbnail" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>" >
+					<?php } ?>
+				</div>
+				<h3 class="title"><?= $post_title;?></h3>
+			</a>
+		</article>
+		<?php
+	}
+	/**
 	 * archive_content
 	 *
 	 * @return
@@ -254,12 +299,12 @@ class theme_functions{
 	 */
 	public static function archive_content(array $args = []){
 		$args = array_merge([
-			'classes' => '',
+			'classes' => 'g-tablet-1-2',
 			'lazyload' => true,
 		],$args);
 
 		global $post;
-		$args['classes'] .= ' list-group-item';
+		$args['classes'] .= ' card lg ';
 		
 		$post_title = theme_cache::get_the_title($post->ID);
 		
@@ -268,27 +313,30 @@ class theme_functions{
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
 		?>
-		<li <?php post_class([$args['classes']]);?>>
-			<a href="<?= theme_cache::get_permalink($post->ID);?>" class="media" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
-				<div class="thumbnail-container media-left">
-					<img class="placeholder media-object" alt="Placeholder" src="<?= theme_functions::$thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
-					<?php
-					/**
-					 * lazyload img
-					 */
-					if($args['lazyload']){
-						?>
-						<img class="post-thumbnail" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
-					<?php }else{ ?>
-						<img class="post-thumbnail" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
-					<?php } ?>
-				</div>
-				<div class="media-body">
-					<h3 class="media-heading"><?= $post_title;?></h3>
-					<p class="excerpt"><?= $excerpt;?></p>
-				</div>
-			</a>
-		</li>
+		<article <?php post_class([$args['classes']]);?>>
+			<div class="card-bg" >
+				<a href="<?= theme_cache::get_permalink($post->ID);?>" class="media" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
+					<div class="media">
+						<div class="thumbnail-container media-left">
+							<?php
+							/**
+							 * lazyload img
+							 */
+							if($args['lazyload']){
+								?>
+								<img class="thumbnail" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
+							<?php }else{ ?>
+								<img class="thumbnail" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
+							<?php } ?>
+						</div>
+						<div class="media-body">
+							<h3 class="media-heading"><?= $post_title;?></h3>
+							<p class="excerpt"><?= $excerpt;?></p>
+						</div>
+					</div>
+				</a>
+			</div>
+		</article>
 		<?php
 	}
 	public static function archive_tx_content($args = []){
@@ -319,54 +367,101 @@ class theme_functions{
 		self::archive_tx_content($args);
 	}
 	public static function widget_rank_img_content($args = []){
-		self::archive_img_content();
+		global $post;
+		
+		$args = array_merge([
+			'classes' => '',
+			'lazyload' => true,
+			'excerpt' => false,
+			'target' => '_blank',
+		],$args);
+
+		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
+		$post_title = theme_cache::get_the_title($post->ID);
+
+		?>
+		<li class="list-group-item <?= $args['classes'];?>">
+			<a 
+				class="list-group-item-bg media" 
+				href="<?= theme_cache::get_permalink($post->ID);?>" 
+				title="<?= $post_title;?>" 
+				target="<?= $args['target'];?>" 
+			>
+				<div class="media-left">
+					<div class="thumbnail-container">
+						<img 
+							class="thumbnail" 
+							src="<?= theme_functions::$thumbnail_placeholder;?>" 
+							data-src="<?= $thumbnail_real_src;?>" 
+							alt="<?= $post_title;?>" 
+							width="<?= theme_functions::$thumbnail_size[1];?>" 
+							height="<?= theme_functions::$thumbnail_size[2];?>" 
+						>
+					</div>
+				</div>
+				<div class="media-body">
+					<h3 class="media-heading"><?= $post_title;?></h3>
+					<div class="metas row">
+						<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
+							<div class="view meta g-phone-1-2">
+								<i class="fa fa-play-circle"></i> 
+								<?= theme_post_views::get_views();?>
+							</div>
+						<?php } ?>
+
+						<div class="comments meta g-phone-1-2">
+							<i class="fa fa-comment"></i> 
+							<?= (int)$post->comment_count;?>
+						</div>
+					</div>
+				</div>			
+			</a>
+		</li>
+		<?php
 	}
 	public static function page_content($args = []){
 		global $post;
 
-		$args = array_merge([
+		$args = array_merge(array(
 			'classes'			=> '',
 			'lazyload'			=> true,
-		],$args);
+			
+		),$args);
 		
 		/** 
 		 * classes
 		 */
-		$args['classes'] .= ' singluar-post panel panel-default';
-
-		$post_title = theme_cache::get_the_title($post->ID);
+		$args['classes'] .= ' singular-post panel ';
 
 		?>
-		<article id="post-<?= $post->ID;?>" <?php post_class([$args['classes']]);?>>
-			<div class="panel-heading">
-				<div class="panel-title">
-					<?= self::get_crumb();?>
-				</div>
-			</div>
-			<div class="panel-body">
+		<article id="post-<?= $post->ID;?>" <?php post_class($args['classes']);?>>
+			<h2 class="entry-title"><?= theme_cache::get_the_title($post->ID);?></h2>
+			
+			<div class="entry-body">
 				
 				<!-- post-content -->
-				<div class="post-content content-reset">
+				<div class="entry-content content-reset">
 					<?php the_content();?>
 				</div>
-			</div><!-- .panel-body -->
-			<!-- post-footer -->
-			<footer class="post-footer post-metas panel-footer clearfix">
 
-				<?php
-				/** 
-				 * post-share
-				 */
-				if(class_exists('theme_post_share') && theme_post_share::is_enabled()){
-					?>
-					<div class="post-meta post-share">
-						<?= theme_post_share::display();?>
-					</div>
+				<?php self::the_page_pagination();?>
+
+				<!-- post-footer -->
+				<footer class="entry-footer">
 					<?php
-				} /** end post-share */
-				?>
-				
-			</footer>
+					/** 
+					 * post-share
+					 */
+					if(class_exists('theme_post_share') && theme_post_share::is_enabled()){
+						?>
+						<div class="entry-share">
+							<?= theme_post_share::display();?>
+						</div>
+						<?php
+					} /** end post-share */
+					?>
+				</footer>
+			</div><!-- /.entry-body -->
 		</article>
 		<?php
 	}
@@ -376,162 +471,119 @@ class theme_functions{
 	public static function singular_content(array $args = []){
 		global $post;
 
-		$args = array_merge([
+		$args = array_merge(array(
 			'classes'			=> '',
 			'lazyload'			=> true,
 			
-		],$args);
+		),$args);
 		
 		/** 
 		 * classes
 		 */
-		$args['classes'] .= ' singluar-post panel panel-default';
-
-		$post_title = theme_cache::get_the_title($post->ID);
-
+		$args['classes'] .= ' singular-post panel ';
 
 		?>
-		<article id="post-<?= $post->ID;?>" <?php post_class([$args['classes']]);?>>
-			<div class="panel-heading">
-				<div class="panel-title">
-					<?= self::get_crumb();?>
-				</div>
-			</div>
-			<div class="panel-body">
-				<h2 class="post-title">
-					<?= $post_title;?>
-				</h2>
-				<div class="post-header post-metas">
-					<!-- category -->
-					<?php
-					$cats = get_the_category_list(', ');
-					if(!empty($cats)){
-						?>
-						<span class="post-meta post-category" title="<?= ___('Category');?>">
-							<i class="fa fa-folder-open"></i>
-							<?= $cats;?>
-						</span>
-					<?php } ?>
-					
-					<!-- time -->
-					<time class="post-meta post-time" datetime="<?= get_the_time('Y-m-d H:i:s');?>" title="<?= get_the_time(___('M j, Y'));?>">
-						<i class="fa fa-clock-o"></i>
-						<?= friendly_date(get_the_time('U'));?>
-					</time>
-					
-					<!-- views -->
-					<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
-						<span class="post-meta post-views" title="<?= ___('Views');?>">
-							<i class="fa fa-play-circle"></i>
-							<span class="number" id="post-views-number-<?= $post->ID;?>">-</span>
-						</span>
-					<?php } ?>
-				</div>
-				
-				<!-- post-content -->
-				<div class="post-content content-reset">
-					<?php the_content();?>
-				</div>
-
-				<!-- theme_custom_post_source -->
-				<?php if(class_exists('theme_custom_post_source') && theme_custom_post_source::is_enabled()){
-					theme_custom_post_source::display_frontend($post->ID);
-				}
-				?>
+		<article id="post-<?= $post->ID;?>" <?php post_class($args['classes']);?>>
+			<h2 class="entry-title"><?= theme_cache::get_the_title($post->ID);?></h2>
+			<header class="entry-header">
+				<!-- category -->
 				<?php
-				/**
-				 * Hook fires after_singular_post_content
-				 */
-				do_action('after_singular_post_content');
-				?>
-				
-				<div class="row">
-					<div class="col-xs-12 col-lg-5">
-						<?php
-						/**
-						 * post point
-						 */
-						if(class_exists('custom_post_point') && class_exists('theme_custom_point')){
-							?>
-							<div class="post-point">
-								<?php custom_post_point::post_btn($post->ID);?>
-								
-							</div>
-							<?php
-						}
-						?>						
-					</div>
-					<div class="col-xs-12 col-lg-7">
-						<!-- theme_custom_storage -->
-						<?php if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
-							theme_custom_storage::display_frontend($post->ID);
-						}
-						?>
-						
-					</div>
-				</div>
-
-			
-			</div><!-- /.row -->
-			
-			
-			<!-- post-footer -->
-			<footer class="post-footer post-metas panel-footer clearfix">
-				<?php
-				/**
-				 * thumb up/down
-				 */
-				if(class_exists('theme_post_thumb') && theme_post_thumb::is_enabled()){
+				$cats = get_the_category_list('<i class="split"> / </i> ');
+				if(!empty($cats)){
 					?>
-					<div class="post-thumb post-meta btn-group btn-group-xs">
-						<?php theme_post_thumb::display_frontend('up',$post->ID,'btn btn-success',___('Good'));?>
-						<?php theme_post_thumb::display_frontend('down',$post->ID,'btn btn-default');?>
-					</div>
-					<?php
-				}
-				?>
-				<?php
-				/** 
-				 * tags
-				 */
-				$tags = get_the_tags();
-				if(!empty($tags)){
-					?>
-					<div class="post-tags post-meta">
-						<?php
-						the_tags('<i class="fa fa-tag"></i> ');
-						?>
-					</div>
-					<?php
-				}
-				?>
-					
+					<span class="entry-meta post-category" title="<?= ___('Category');?>">
+						<i class="fa fa-folder-open"></i>
+						<?= $cats;?>
+					</span>
+				<?php } ?>
+				
+				<!-- time -->
+				<time class="entry-meta post-time" datetime="<?= get_the_time('Y-m-d H:i:s');?>" title="<?= get_the_time(___('M j, Y'));?>">
+					<i class="fa fa-clock-o"></i>
+					<?= friendly_date(get_the_time('U'));?>
+				</time>
+				
+				<!-- views -->
+				<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
+					<span class="entry-meta post-views" title="<?= ___('Views');?>">
+						<i class="fa fa-play-circle"></i>
+						<span class="number" id="post-views-number-<?= $post->ID;?>">-</span>
+					</span>
+				<?php } ?>
 				<?php
 				/** 
 				 * comment
 				 */
-				$comment_count = (int)get_comments_number();
-				$comment_tx = $comment_count <= 1 ? ___('comment') : ___('comments');
+				$comment_count = (int)get_comments_number() . '';
 				?>
-				<a href="#comments" class="post-meta quick-comment comment-count" data-post-id="<?= $post->ID;?>">
+				<a href="#comments" class="entry-meta quick-comment comment-count" data-post-id="<?= $post->ID;?>">
 					<i class="fa fa-comment"></i>
-					<span class="comment-count-number"><?= $comment_count;?></span> <span class="hidden-xs"><?= esc_html($comment_tx);?></span>
+					<span class="comment-count-number"><?= $comment_count;?></span>
 				</a>
-
 				<?php
-				/** 
-				 * post-share
+				/**
+				 * edit
 				 */
-				if(class_exists('theme_post_share') && theme_post_share::is_enabled()){
+				if(class_exists('theme_custom_edit') &&  $post->post_author == theme_cache::get_current_user_id()){
 					?>
-					<div class="post-meta post-share">
-						<?= theme_post_share::display();?>
-					</div>
-					<?php
-				} /** end post-share */
-				?>
+					<a class="post-meta edit-post" href="<?= theme_custom_edit::get_edit_post_link($post->ID);?>">
+						<i class="fa fa-edit"></i> <?= ___('Edit');?>
+					</a>
+				<?php } ?>
 				
-			</footer>
+				
+			</header>
+			<div class="entry-body">
+				<?php
+				/**
+				 * ad
+				 */
+				if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('below-post-title'))){
+					?>
+					<div class="ad-container ad-below-post-title"><?= theme_adbox::display_frontend('below-post-title');?></div>
+					<?php
+				}
+				?>
+			
+				<!-- post-content -->
+				<div class="entry-content content-reset">
+					<?php the_content();?>
+				</div>
+
+				<?php self::the_page_pagination();?>
+
+					
+				<!-- post-footer -->
+				<footer class="entry-footer">
+					<?php
+					/** 
+					 * tags
+					 */
+					$tags = get_the_tags();
+					if(!empty($tags)){
+						?>
+						<div class="entry-tags">
+							<?php the_tags('',''); ?>
+						</div>
+						<?php
+					}
+					?>
+					<?php
+					/** 
+					 * post-share
+					 */
+					if(class_exists('theme_post_share') && theme_post_share::is_enabled()){
+						?>
+						<div class="entry-share">
+							<?= theme_post_share::display();?>
+						</div>
+						<?php
+					} /** end post-share */
+					?>
+					
+				</footer>
+			</div><!-- /.entry-body -->
+			
 		</article>
 		<?php
 	}
@@ -710,7 +762,7 @@ class theme_functions{
 			'custom_query'		=> false,
 			'previous_string' 	=> '<i class="fa fa-arrow-left"></i>',
 			'next_string'	 	=> '<i class="fa fa-arrow-right"></i>',
-			'before_output'   	=> '<div class="posts-nav btn-group btn-group-justified" role="group" aria-label="' . ___('Posts pagination navigation') . '">',
+			'before_output'   	=> '<div class="pager" aria-label="' . ___('Posts pagination navigation') . '">',
 			'after_output'		=> '</div>'
 		],$args);
 
@@ -740,47 +792,45 @@ class theme_functions{
 			$previous = intval($page) - 1;
 			$previous_url = get_pagenum_link($previous);
 			
-		   echo '<a class="btn btn-success prev" href="' . esc_url($previous_url) . '" title="' . ___( 'Previous page') . '">' . $args['previous_string'] . '</a>';
+		   echo '<a class="prev" href="' . esc_url($previous_url) . '" title="' . ___( 'Previous page') . '">' . $args['previous_string'] . '</a>';
 		}
 		/**
 		 * middle
 		 */
 		if ( $count > 1 ) {
 			?>
-			<div class="btn-group" role="group">
-				<label for="pagination-<?= $rand_id;?>" class="btn btn-default">
-					<select id="pagination-<?= $rand_id;?>" class="form-control">
-						<?php
-						/**
-						 * Previous 5 page
-						 */
-						for( $i = $page - 3; $i < $page; $i++){
-							if($i < 1 )
-								continue;
-							?>
-							<option value="<?= esc_url(get_pagenum_link($i));?>">
-								<?= sprintf(___('Page %d'),$i);?>
-							</option>
-							<?php
-						}
+			<label for="pagination-<?= $rand_id;?>" class="middle">
+				<select id="pagination-<?= $rand_id;?>" class="form-control">
+					<?php
+					/**
+					 * Previous 5 page
+					 */
+					for( $i = $page - 3; $i < $page; ++$i ){
+						if($i < 1 )
+							continue;
 						?>
-						<option selected value="<?= esc_url( get_pagenum_link($page) );?>">
-							<?= sprintf(___('Page %d'),$page);?>
+						<option value="<?= esc_url(get_pagenum_link($i));?>">
+							<?= sprintf(___('Page %d'),$i);?>
 						</option>
 						<?php
-						for( $i = $page + 1; $i < $page + 4; $i++ ) {
-							if($i > $count)
-								break;
-							?>
-							<option value="<?= esc_url(get_pagenum_link($i));?>">
-								<?= sprintf(___('Page %d'),$i);?>
-							</option>
-							<?php
-						}
+					}
+					?>
+					<option selected value="<?= esc_url( get_pagenum_link($page) );?>">
+						<?= sprintf(___('Page %d'),$page);?>
+					</option>
+					<?php
+					for( $i = $page + 1; $i < $page + 4; ++$i ) {
+						if($i > $count)
+							break;
 						?>
-					</select>
-				</label>
-			</div>
+						<option value="<?= esc_url(get_pagenum_link($i));?>">
+							<?= sprintf(___('Page %d'),$i);?>
+						</option>
+						<?php
+					}
+					?>
+				</select>
+			</label>
 			<?php
 		}
 		
@@ -790,7 +840,7 @@ class theme_functions{
 		if ($page < $count ){
 			$next = intval($page) + 1;
 	   		$next_url = get_pagenum_link($next);
-			echo '<a class="btn btn-success next" href="' . esc_url($next_url) . '" title="' . __( 'Next page') . '">' . $args['next_string'] . '</a>';
+			echo '<a class="next" href="' . esc_url($next_url) . '" title="' . __( 'Next page') . '">' . $args['next_string'] . '</a>';
 		}
 
 		/**
@@ -843,7 +893,7 @@ class theme_functions{
 		/** 
 		 * defaults args
 		 */
-		$r = array_merge([
+		$defaults = [
 			'classes'			=> 'comment-pagination',
 			'cpaged'			=> max(1,get_query_var('cpage')),
 			'cpp' 				=> $cpp,
@@ -852,7 +902,8 @@ class theme_functions{
 			'default_comments_page' => 'oldest',
 			'max_pages' 		=> $max_pages,
 			
-		],$args);
+		];
+		$r = array_merge($defaults,$args);
 		extract($r,EXTR_SKIP);
 				
 		/** If has page to show me */
@@ -880,6 +931,7 @@ class theme_functions{
 		}
 	}
 	
+	
 	/** 
 	 * no_post
 	 */ 
@@ -890,31 +942,60 @@ class theme_functions{
 	 * smart_page_pagination
 	 */
 	public static function smart_page_pagination($args = []){
-		global $post,$page,$numpages;
+			
+		global $post, $page, $numpages;
 
-		$output = null;
+		$output = [];
 	
 		$args = array_merge([
-			'add_fragment' => 'post-' . $post->ID
+			'add_fragment' => 'post-' . $post->ID,
+			'same_category' => false,
 		],$args);
 		
 		$output['numpages'] = $numpages;
 		$output['page'] = $page;
+		
+		/** rand posts */
+		$get_rand_post = function(){
+			$query = theme_functions::get_posts_query([
+				'posts_per_page' => 1,
+				'ignore_sticky_posts' => true,
+				'post_type' => 'post',
+				'orderby' => 'rand',
+			]);
+			return $query->have_posts() ? $query->posts[0] : false;
+		};
 		/** 
 		 * prev post
 		 */
 		$prev_post = get_previous_post(true);
-		$prev_post = empty($prev_post) ? get_previous_post() : $prev_post;
-		if(!empty($prev_post)){
+		
+		if(!$prev_post && $args['same_category'] === false)
+			$prev_post = get_previous_post();
+			
+		/** random */
+		if(!$prev_post){
+			$prev_post = $get_rand_post();
+			$output['rand'] = 'prev-post';
+		}
+			
+		if($prev_post){
 			$output['prev_post'] = $prev_post;
 		}
 		/** 
 		 * next post
 		 */
 		$next_post = get_next_post(true);
-		$next_post = empty($next_post) ? get_next_post() : $next_post;
-		// var_dump($next_post);
-		if(!empty($next_post)){
+
+		if(!$next_post && $args['same_category'] === false)
+			$next_post = get_next_post();
+		/** random */
+		if(!$next_post){
+			$next_post = $get_rand_post();
+			$output['rand'] = 'next-post';
+		}
+			
+		if($next_post){
 			$output['next_post'] = $next_post;
 		}		
 		/** 
@@ -938,96 +1019,80 @@ class theme_functions{
 				$output['next_page']['number'] = $next_page_number;
 			}
 		}
+		//var_dump($output);
 		return array_filter($output);
 	}
-
-	
-	
-	public static function the_post_pagination(){
-		global $post,$page;
-		$cache_id = $post->ID . $page;
-		$cache_group = 'post-pagi';
+	public static function the_page_pagination(){
+		global $post,$page,$numpages;
+		$cache_id = $post->ID . $page . $numpages;
+		$cache_group = 'page-pagi';
 
 		$cache = theme_cache::get($cache_id,$cache_group);
 		if(!empty($cache)){
 			echo $cache;
+			unset($cache);
 			return;
 		}
+		$page_pagination = self::smart_page_pagination([
+			'same_category' => true,
+		]);
+		
+		if(!isset($page_pagination['numpages']) || $page_pagination['numpages'] <= 1)
+			return false;
+			
 		ob_start();
 		?>
-		<div class="prev-next-pagination">
-			<nav class="btn-group btn-group-justified">
-				<?php
-				$prev_next_pagination = self::smart_page_pagination();
-
-				$prev_url = null;
-				$next_url = null;
-
-				/**
-				 * prev
-				 */
-				if(isset($prev_next_pagination['prev_page'])){
-					$prev_url = $prev_next_pagination['prev_page']['url'];
-					$prev_type = 'page';
-				}else{
-					if(isset($prev_next_pagination['next_post'])){
-						$prev_url = get_permalink($prev_next_pagination['next_post']->ID);
-						$prev_type = 'post';
-					}
-				}
-				/**
-				 * next
-				 */
-				if(isset($prev_next_pagination['next_page'])){
-					$next_url = $prev_next_pagination['next_page']['url'];
-					$next_type = 'page';
-				}else{
-					if(isset($prev_next_pagination['prev_post'])){
-						$next_url = get_permalink($prev_next_pagination['prev_post']->ID);
-						$next_type = 'post';
-					}
-				}
-				if($prev_url){
-					$prev_btn = $prev_type === 'page' ? 'btn-success' : 'btn-primary';
-					$prev_tx =  $prev_type === 'page' ? ___('Preview page') : ___('Preview post');
-					?>
-					<div class="btn-group btn-group-lg" role="group">
-						<a href="<?= esc_url($prev_url);?>" class="prev-page btn btn-default"><i class="fa fa-arrow-left"></i> <?= $prev_tx;?></a>
-					</div>
-					<?php
-				}
-				if($next_url){
-					$next_btn = $next_type === 'page' ? 'btn-success' : 'btn-primary';
-					$next_tx =  $next_type === 'page' ? ___('Next page') : ___('Next post');
-					?>
-					<div class="btn-group btn-group-lg" role="group">
-						<a href="<?= esc_url($next_url);?>" class="next-page btn btn-default"><?= $next_tx;?> <i class="fa fa-arrow-right"></i></a>
-					</div>
-					<?php
-				}
+		<nav class="page-pagination">
+			<?php
+			$page_attr_str = $page_pagination['page'] . '/' . $page_pagination['numpages'];
+			$page_str = '<span class="current-page">' . $page_pagination['page'] . '</span>' . '/' . $page_pagination['numpages'];
+			if(isset($page_pagination['prev_page'])){
 				?>
-			</nav>
-		</div>
+				<a 
+					href="<?= $page_pagination['prev_page']['url'];?>" 
+					class="prev" 
+					title="<?= ___('Previous page');?> <?= $page_attr_str;?>" 
+					data-number="<?= $page - 1;?>" 
+				><i class="fa fa-chevron-left"></i><span class="tx"><?= ___('Previous page');?> <?= $page_str;?></span></a>
+				<?php
+			}else{
+				?>
+				<a 
+					href="javascript:;" 
+					class="prev" 
+					title="<?= ___('Previous page');?> <?= $page_attr_str;?>" 
+					data-number="1" 
+				><i class="fa fa-chevron-left"></i><span class="tx"><?= ___('Previous page');?> <?= $page_str;?></span></a>
+				<?php
+			}
+			if(isset($page_pagination['next_page'])){
+				?>
+				<a 
+					href="<?= $page_pagination['next_page']['url'];?>" 
+					class="next" 
+					title="<?= ___('Next page');?> <?= $page_attr_str;?>" 
+				><span class="tx"><?= $page_str;?> <?= ___('Next page');?></span><i class="fa fa-chevron-right"></i></a>
+				<?php
+			}else{
+				?>
+				<a 
+					href="javascript:;" 
+					class="next" 
+					title="<?= ___('Next page');?> <?= $page_attr_str;?>" 
+				><span class="tx"><?= $page_str;?> <?= ___('Next page');?></span><i class="fa fa-chevron-right"></i></a>
+				<?php
+			}
+		?>
+		</nav>
 		<?php
 		$cache = html_minify(ob_get_contents());
 		ob_end_clean();
 
 		theme_cache::set($cache_id,$cache,$cache_group,3600);
-		echo $cache;
+		echo $cache;	
+		unset($cache);
+		
 	}
-	/**
-	 * Theme comment
-	 * 
-	 * 
-	 * @param object $comment
-	 * @param n/a $args
-	 * @param int $depth
-	 * @return string
-	 * @version 1.0.0
-	 * 
-	 * @author INN STUDIO
-	 * 
-	 */
 	public static function theme_comment( $comment, $args, $depth ) {
 		global $post;
 		
@@ -1152,39 +1217,40 @@ class theme_functions{
 		<?php
 		}
 	}
-	public static function the_related_posts_plus(array $args = []){
+	public static function the_related_posts(array $args = []){
 		global $post;
 
-		/**
-		 * cache
-		 */
 		$cache_group_id = 'related_posts';
-		$cache = wp_cache_get($post->ID,$cache_group_id);
+		$cache = theme_cache::get($post->ID,$cache_group_id);
 		if($cache){
 			echo $cache;
 			unset($cache);
-			return false;
+			return;
 		}
 		
-		$query_args = array(
-			'post__not_in' => array($post->ID),
-		);
-		$args = array_merge([
-			'posts_per_page' => 6,
+		$defaults = [
+			'posts_per_page' => 8,
 			'orderby' => 'latest',
-		],$args);
-		$content_args = [
-			'classes' => 'col-xs-6 col-sm-4 col-md-2'
 		];
-		$not_found = false;
+		$query_args = [
+			'post__not_in' => [$post->ID],
+		];
+		$args = array_merge($defaults,$args);
+		
+		$content_args = [
+			'classes' => ' ',
+		];
+		
 		ob_start();
 		?>
 		
-		<div class="related-posts panel panel-default" role="tabpanel">
-			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fa fa-heart-o"></i> <?= ___('Maybe you will like them');?></h3>
+		<div class="related-posts panel">
+			<div class="heading">
+				<h3 class="title">
+					<i class="fa fa-heart-o"></i> <?= ___('Maybe you will like them');?>
+				</h3>
 			</div>
-			<div class="panel-body">
+			<div class="body">
 				<?php
 				$same_tag_args = $args;
 				$same_tag_query = $query_args;
@@ -1194,7 +1260,7 @@ class theme_functions{
 				if(!get_the_tags()){
 					$same_tag_query['category__in'] = array_map(function($term){
 						return $term->term_id;
-					},get_the_category());
+					},get_the_category($post->ID));
 					$same_tag_args['orderby'] = 'random';
 				}else{
 					$same_tag_query['tag__in'] = array_map(function($term){
@@ -1204,18 +1270,20 @@ class theme_functions{
 				$query = self::get_posts_query($same_tag_args,$same_tag_query);
 				if($query->have_posts()){
 					?>
-					<div class="row list-group-type-img">
+					<div class="row">
 						<?php
 						foreach($query->posts as $post){
 							setup_postdata($post);
-							self::archive_img_content($content_args);
+							self::archive_card_xs($content_args);
 						}
 						wp_reset_postdata();
 					?>
 					</div>
-				<?php }else{
-					$not_found = true;
+				<?php }else{ ?>
+					<div class="page-tip"><?= status_tip('info',___('No data.'));?></div>
+				<?php
 				}
+				//wp_reset_query();
 				?>
 			</div>
 
@@ -1223,10 +1291,7 @@ class theme_functions{
 		<?php
 		$cache = ob_get_contents();
 		ob_end_clean();
-		wp_cache_set($post->ID,$cache,$cache_group_id,3600);
-		if($not_found)
-			return false;
-			
+		theme_cache::set($post->ID,$cache,$cache_group_id,3600);
 		echo $cache;
 		unset($cache);
 	}
@@ -1259,22 +1324,15 @@ class theme_functions{
 		$output .= theme_features::get_pagination($args);
 		return $output;
 	}
+	/**
+	 * Theme respond
+	 */
 	public static function theme_respond(){
 		global $post;
 		?>
-<div id="respond" class="panel panel-primary">
-	<div class="panel-heading">
-		<h3 id="reply-title" class="panel-title comment-reply-title">
-			<span class="leave-reply">
-				<i class="fa fa-commenting"></i> 
-				<?= ___('Leave a comment');?>
-			</span>
-			<a href="javascript:;" id="cancel-comment-reply-link" class="none" title="<?= ___('Cancel reply');?>">
-				<i class="fa fa-times fa-fw"></i>
-			</a>
-		</h3>		
-	</div>
-	<div class="panel-body">
+<div id="respond" class="panel">
+	<a href="javascript:;" id="cancel-comment-reply-link" class="none" title="<?= ___('Cancel reply');?>">&times;</a>
+	<div class="content">
 		<div class="page-tip" id="respond-loading-ready">
 			<?= status_tip('loading',___('Loading, please wait...'));?>
 		</div>
@@ -1283,7 +1341,7 @@ class theme_functions{
 			<?php 
 			echo sprintf(
 				___('You must be %s to post a comment.'),
-				'<a href="' . esc_url(wp_login_url(get_permalink($post->ID))) . '#respond' . '"><strong>' . ___('log-in') . '</strong></a>'
+				'<a href="' . esc_url(wp_login_url(theme_cache::get_permalink($post->ID))) . '#respond' . '"><strong>' . ___('log-in') . '</strong></a>'
 			);
 			?>
 		</p>
@@ -1294,11 +1352,12 @@ class theme_functions{
 			method="post" 
 			class="comment-form media none"
 		>
+		<div class="media">
 			<input type="hidden" name="comment_post_ID" id="comment_post_ID" value="<?= $post->ID;?>">
 			<input type="hidden" name="comment_parent" id="comment_parent" value="0">
 			
-			<div class="media-left media-top hidden-xs">
-				<img id="respond-avatar" src="<?= self::$avatar_placeholder;?>" alt="Avatar" class="media-object avatar" width="80" height="80">
+			<div class="media-left hidden-phone">
+				<img id="respond-avatar" src="<?= theme_functions::$avatar_placeholder;?>" alt="avatar" class="media-object avatar" width="100" height="100">
 			</div>
 			<div class="media-body">
 				<?php
@@ -1309,7 +1368,7 @@ class theme_functions{
 				?>
 				<!-- author name -->
 				<div id="area-respond-visitor" class="row">
-					<div class="col-sm-6">
+					<div class="g-tablet-1-2">
 						<div class="form-group">
 							<input type="text" 
 								class="form-control" 
@@ -1319,10 +1378,10 @@ class theme_functions{
 								<?= $req ? ' required ' : null;?>
 								title="<?= ___('Whats your nickname?');?>"
 							>
-						</div>
-					</div>
+						</div><!-- /.form-group -->
+					</div><!-- /.g-tablet-1-2 -->
 					<!-- author email -->
-					<div class="col-sm-6">
+					<div class="g-tablet-1-2">
 						<div class="form-group">
 							<input type="email" 
 								class="form-control" 
@@ -1333,9 +1392,9 @@ class theme_functions{
 								title="<?= ___('Whats your Email?');?>"
 							>
 						</div><!-- /.form-group -->
-					</div><!-- /.col-sm-6 -->
+					</div><!-- /.g-tablet-1-2 -->
 				</div><!-- /.row -->				
-				<div class="form-group btn-group-textarea">
+				<div class="form-group form-group-textarea">
 					<textarea 
 						name="comment" 
 						id="comment-form-comment" 
@@ -1345,6 +1404,8 @@ class theme_functions{
 						title="<?= ___('Nothing to say?');?>" 
 						required 
 					></textarea>
+				</div>
+				<div class="form-group btn-group-submit">
 					<?php
 					/**
 					 * theme comment emotion pop btn
@@ -1353,26 +1414,25 @@ class theme_functions{
 						theme_comment_emotion::display_frontend('pop');
 					}
 					?>
-					<div class="btn-group btn-group-submit">
-						<?php
-						/**
-						 * theme comment emotion
-						 */
-						if(class_exists('theme_comment_emotion') && (theme_comment_emotion::is_enabled('kaomoji') || theme_comment_emotion::is_enabled('img'))){
-							theme_comment_emotion::display_frontend('pop-btn');
-						}
-						?>
-						<button type="submit" class="submit btn btn-success" title="<?= ___('Post comment');?>">
-							<i class="fa fa-check"></i> 
-							<?= ___('Post comment');?>
-						</button>
-						
-					</div>
+					<?php
+					/**
+					 * theme comment emotion
+					 */
+					if(class_exists('theme_comment_emotion') && (theme_comment_emotion::is_enabled('kaomoji') || theme_comment_emotion::is_enabled('img'))){
+						theme_comment_emotion::display_frontend('pop-btn');
+					}
+					?>
+					<button type="submit" class="submit btn btn-success" title="<?= ___('Post comment');?>">
+						<i class="fa fa-check"></i> 
+						<?= ___('Post comment');?>
+					</button>
 				</div><!-- .form-group -->
 			</div><!-- /.media-body -->
+		</div><!-- /.media -->
 		</form>
 	</div>
 </div>
 		<?php
 	}
 }
+add_action('after_setup_theme','theme_functions::init');

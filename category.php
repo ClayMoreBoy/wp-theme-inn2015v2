@@ -1,15 +1,15 @@
 <?php get_header();?>
-<div class="main-container container">
+<div class="main-container g">
 	<div class="row">
-		<div class="col-sm-12 col-md-9">
-			<div class="main panel panel-default">
-				<div class="panel-heading">
-					<div class="panel-title">
+		<div class="g-desktop-3-4">
+			<div class="main panel">
+				<div class="heading">
+					<div class="title">
 						<?= theme_functions::get_crumb();?>
 					</div>
 				</div>
 				<?php if(have_posts()){ ?>
-					<ul class="archive-group list-group">
+					<div class="row main-card-group">
 						<?php
 						$i = 0;
 						while(have_posts()){
@@ -20,11 +20,9 @@
 							++$i;
 						}
 						?>
-					</ul>
+					</div>
 					<?php if($GLOBALS['wp_query']->max_num_pages > 1){ ?>
-						<div class="panel-footer">
-							<?= theme_functions::pagination();?>
-						</div>
+						<?= theme_functions::pagination();?>
 					<?php } ?>
 					<?php
 				}else{
@@ -35,5 +33,5 @@
 		</div>
 		<?php include __DIR__ . '/sidebar.php';?>
 	</div><!-- .row -->
-</div><!-- .container -->
+</div><!-- .g -->
 <?php get_footer();?>

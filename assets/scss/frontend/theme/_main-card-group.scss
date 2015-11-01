@@ -1,0 +1,13 @@
+@view-not-desktop{
+	.main-card-group{
+		@include prefix(column-count,2);
+		@include prefix(column-gap,0);
+		margin-bottom: $grid-g-gutter;
+		& > .card{
+			display: inline-block;
+			width: auto;
+			float: none;
+			@include prefix(column-break-inside,avoid);
+		}
+	}
+}

@@ -1,4 +1,4 @@
-<div class="sidebar-container col-md-3 col-sm-12">
+<div class="sidebar-container g-desktop-1-4">
 <div class="sidebar widget-area" role="complementary">
 	<?php
 	/** 
