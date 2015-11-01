@@ -1,4 +1,4 @@
-@view-desktop{
+@include view-desktop{
 	.main-card-group{
 		@include prefix(column-count,2);
 		@include prefix(column-gap,0);
