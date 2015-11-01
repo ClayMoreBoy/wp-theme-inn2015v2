@@ -2170,7 +2170,7 @@ body.menu-on {
     margin: 0 1rem 1rem 0;
     width: auto; }
 
-@view-not-desktop {
+@view-desktop {
   .main-card-group {
     -webkit-column-count: #value;
     -moz-column-count: #value;
