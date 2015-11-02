@@ -21,7 +21,9 @@
 			width: 10rem;
 			padding-right: 0;
 			border-radius: $global-border-radius;
-			
+			@include view-not-desktop{
+				width: 3rem;
+			}
 		}
 		.media-body{
 			padding-left: $grid-g-gutter;

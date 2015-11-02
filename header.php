@@ -78,7 +78,7 @@ if(wp_is_mobile()){
 			?>
 			
 			<a 
-				class="tool search fa fa-search fa-fw fa-2x" 
+				class="tool search fa fa-search" 
 				href="javascript:;" 
 				data-toggle-target="#fm-search" 
 				data-focus-target="#fm-search-s" 
